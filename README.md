@@ -1,2 +1,2 @@
 # CuriousReaderAuthoring
-Curious Reader authoring tool implementation in H5P
+Curious Reader interactive functions implementation in H5P
