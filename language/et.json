@@ -1,199 +1,383 @@
 {
   "semantics": [
     {
-      "label": "Luba tiitelleht",
-      "description": "Leht, mis näitab teavet raamatu kohta enne selle avamist"
-    },
-    {
-      "label": "Tiitelleht",
       "fields": [
         {
-          "label": "Tiitellehe kirjeldus",
-          "description": "See tekst kirjeldab sinu raamatut."
-        },
-        {
-          "label": "Tiitellehe pilt",
-          "description": "Valikuline taustapilt tutvustusele."
-        },
-        {
-          "label": "Tiitellehe pildi alternatiivtekst",
-          "description": "Alternatiivne tekst tiitellehe pildile"
-        }
-      ]
-    },
-    {
-      "label": "Peatükid",
-      "entity": "Peatükk",
-      "widgets": [
-        {
-          "label": "Vaikimisi"
-        }
-      ],
-      "field": {
-        "label": "Üksus",
-        "fields": [
-          {
-            "label": "Peatükk"
+          "field": {
+            "fields": [
+              {
+                "field": {
+                  "fields": [
+                    {},
+                    {},
+                    {},
+                    {},
+                    {},
+                    {
+                      "label": "Kommentaarid",
+                      "description": "Kommentaare näidatakse siis, kui kasutaja vaatab kõigi lehekülgede soovitatud vastuseid."
+                    },
+                    {
+                      "label": "Näita kommentaare alati"
+                    },
+                    {
+                      "label": "Tausta läbipaistvus (0 = läbipaistev, 100 = valge)"
+                    },
+                    {
+                      "label": "Näita nupuna"
+                    },
+                    {
+                      "label": "Nupu suurus",
+                      "options": [
+                        {
+                          "label": "Väike"
+                        },
+                        {
+                          "label": "Suur"
+                        }
+                      ]
+                    },
+                    {
+                      "label": "Pealkiri"
+                    },
+                    {
+                      "label": "Mine",
+                      "options": [
+                        {
+                          "label": "Määra lehekülje number"
+                        },
+                        {
+                          "label": "Järgmine lehekülg"
+                        },
+                        {
+                          "label": "Eelmine lehekülg"
+                        }
+                      ]
+                    },
+                    {
+                      "label": "Mine leheküljele",
+                      "description": "Kasutatav vaid siis, kui 'Määra lehekülje number' on valitud"
+                    },
+                    {
+                      "label": "Nähtamatu",
+                      "description": "Vaikimisi kursor, ilma pealkirja ja ilma vahekaardi arvuta. Hoiatus: puudega inimestel või ainult klaviatuuriga kasutajail on raske seda elementi kasutada."
+                    }
+                  ]
+                }
+              },
+              {},
+              {
+                "fields": [
+                  {
+                    "label": "Pilt",
+                    "description": "Taustapildi mõõtude suhe peaks olema 2:1, et vältida pildi venimist. Suurtel ekraanidel paistavad kõrge resolutsiooniga pildid paremad välja.."
+                  },
+                  {
+                    "label": "Vali värv",
+                    "default": ""
+                  }
+                ]
+              }
+            ]
           }
-        ]
-      }
-    },
-    {
-      "label": "Käitumisseaded",
-      "fields": [
+        },
+        {},
         {
-          "label": "Kuva vaikimisi sisukorda",
-          "description": "Kui on lubatud, siis raamatu avamisel näidatakse sisukorda"
+          "label": "Võtmesõnade loetelu"
         },
         {
-          "label": "Näida edenemisosutit",
-          "description": "Kui on lubatud, siis on lehel osutid, mis näitavad kasutajale, kas ta on lehega lõpule jõudnud või mitte."
+          "label": "Näita alati"
         },
         {
-          "label": "Võimalda automaatne edenemine",
-          "description": "Kui on lubatud, siis ülesanneteta lehekülg loetakse vaatamisel läbituks, ülesannetega lehekülg peale kõigi ülesannete täitmist. Kui keelatud, siis on iga lehe all nupp, mida kasutaja peab lehe läbituks märkimiseks vajutama."
+          "label": "Peida alati"
         },
         {
-          "label": "Display summary",
-          "description": "When enabled the user can see a summary and submit the progress/answers"
+          "label": "Läbipaistvus"
+        },
+        {
+          "fields": [
+            {
+              "label": "Pilt",
+              "description": "Taustapildi mõõtude suhe peaks olema 2:1, et vältida pildi venimist. Suurtel ekraanidel paistavad kõrge resolutsiooniga pildid paremad välja."
+            },
+            {
+              "label": "Vali värv",
+              "default": ""
+            }
+          ]
         }
       ]
     },
     {
-      "label": "\"Loe\" nupu tõlge",
-      "default": "Loe"
-    },
-    {
-      "label": "\"Kuva 'sisukord'\" nupu tõlge",
-      "default": "Kuva 'sisukord'"
-    },
-    {
-      "label": "\"Peida 'sisukord'\" nupu tõlge",
-      "default": "Peida 'sisukord'"
-    },
-    {
-      "label": "\"Järgmine lehekülg\" nupu tõlge",
-      "default": "Järgmine lehekülg"
-    },
-    {
-      "label": "\"Eelmine lehekülg\" nupu tõlge",
-      "default": "Eelmine lehekülg"
-    },
-    {
-      "label": "\"Peatükk läbitud!\" tõlge",
-      "default": "Peatükk läbitud!"
-    },
-    {
-      "label": "Tõlge tehtud \"@pages leheküljele @total leheküljest\" (@pages ja @total asendatakse tegelike väärtusega)",
-      "default": "@pages / @total läbitud"
-    },
-    {
-      "label": "\"Peatükk pooleli\" tõlge",
-      "default": "Peatükk pooleli"
-    },
-    {
-      "label": "\"Liigu lehekülje ülaossa\" tõlge",
-      "default": "Liigu lehkülje ülaossa"
-    },
-    {
-      "label": "\"Olen selle lehe läbinud\" tõlge",
-      "default": "Olen selle lehe läbinud"
-    },
-    {
-      "label": "Täisekraan nupu silt",
-      "default": "Täisekraan"
-    },
-    {
-      "label": "Välju täisekraanilt nupu silt",
-      "default": "Välju täisekraanilt"
-    },
-    {
-      "label": "Page progress in book",
-      "description": "\"@count\" will be replaced by page count, and \"@total\" with the total number of pages",
-      "default": "@count of @total pages"
-    },
-    {
-      "label": "Interaction progress",
-      "description": "\"@count\" will be replaced by interaction count, and \"@total\" with the total number of interactions",
-      "default": "@count of @total interactions"
-    },
-    {
-      "label": "Translation for \"Submit report\"",
-      "default": "Submit Report"
-    },
-    {
-      "label": "Label for \"restart\" button",
-      "default": "Restart"
-    },
-    {
-      "label": "Summary header",
-      "default": "Summary"
-    },
-    {
-      "label": "Translation for \"All interactions\"",
-      "default": "All interactions"
-    },
-    {
-      "label": "Translation for \"Unanswered interactions\"",
-      "default": "Unanswered interactions"
-    },
-    {
-      "label": "Score",
-      "description": "\"@score\" will be replaced with current score, and \"@maxscore\" will be replaced with max achievable score",
-      "default": "@score / @maxscore"
-    },
-    {
-      "label": "Per page interactions completion",
-      "description": "\"@left\" will be replaced with remaining interactions, and \"@max\" will be replaced with total number of interactions on the page",
-      "default": "@left of @max interactions completed"
-    },
-    {
-      "label": "Translation for \"No interactions\"",
-      "default": "No interactions"
-    },
-    {
-      "label": "Translation for \"Score\"",
-      "default": "Score"
-    },
-    {
-      "label": "Label for \"Summary &amp; submit\" button",
-      "default": "Summary &amp; submit"
-    },
-    {
-      "label": "Translation for \"You have not interacted with any pages.\"",
-      "default": "You have not interacted with any pages."
-    },
-    {
-      "label": "Translation for \"You have to interact with at least one page before you can see the summary.\"",
-      "default": "You have to interact with at least one page before you can see the summary."
-    },
-    {
-      "label": "Translation for \"Your answers are submitted for review!\"",
-      "default": "Your answers are submitted for review!"
-    },
-    {
-      "label": "Summary progress label",
-      "default": "Book progress"
-    },
-    {
-      "label": "Interactions progress label",
-      "default": "Interactions progress"
-    },
-    {
-      "label": "Total score label",
-      "default": "Total score"
-    },
-    {
-      "label": "Puudega inimest toetavad tekstid",
+      "label": "Kohanda",
       "fields": [
         {
-          "label": "Lehekülje edenemise tekstialternatiiv",
-          "description": "Alternatiivtekst visuaalsele lehel edenemise osutile. Kasutatavad muutujad on @page ja @total.",
-          "default": "Lehekülg @page kokku @total lehest."
+          "label": "Tõlge tekstile \"Slide\"",
+          "default": "Lehekülg"
         },
         {
-          "label": "Silt navigeerimismenüü avamiseks ja sulgemiseks",
-          "default": "Ava või sulge navigeerimismenüü"
+          "label": "Tõlge tekstile \"Score\"",
+          "default": "Punktisumma"
+        },
+        {
+          "label": "Tõlge tekstile \"Your Score\"",
+          "default": "Sinu punktisumma"
+        },
+        {
+          "label": "Tõlge tekstile \"Max Score\"",
+          "default": "Suurim võimalik punktisumma"
+        },
+        {
+          "label": "Tõlge tekstile \"Total\"",
+          "default": "Kokku"
+        },
+        {
+          "label": "Tõlge tekstile \"Total Score\"",
+          "default": "Punktisumma kokku"
+        },
+        {
+          "label": "Näita lahendusi nupu silt",
+          "default": "Näita lahendusi"
+        },
+        {
+          "label": "Proovi uuesti nupu silt",
+          "default": "Proovi uuesti"
+        },
+        {
+          "label": "Teksti ekspordi nupu silt",
+          "default": "Ekspordi tekst"
+        },
+        {
+          "label": "Peida võtmesõnade loetelu nupu silt",
+          "default": "Peida võtmesõnade loetelu"
+        },
+        {
+          "label": "Näita võtmesõnade loetelu nupu silt",
+          "default": "Näita võtmesõnade loetelu"
+        },
+        {
+          "label": "Täisekraani silt",
+          "default": "Täisekraan"
+        },
+        {
+          "label": "Välju täisekraanilt silt",
+          "default": "Välju täisekraanilt"
+        },
+        {
+          "label": "Eelmise lehekülje silt",
+          "default": "Eelmine lehekülg"
+        },
+        {
+          "label": "Järgmise lehekülje silt",
+          "default": "Järgmine lehekülg"
+        },
+        {
+          "label": "Jooksva lehekülje silt",
+          "default": "Jooksev lehekülg"
+        },
+        {
+          "label": "Viimase lehekülje silt",
+          "default": "Viimane lehekülg"
+        },
+        {
+          "label": "Välju lahendusvaatest silt",
+          "default": "Välju lahendusvaatest"
+        },
+        {
+          "label": "Lahendusvaate silt",
+          "default": "Lahendusvaade"
+        },
+        {
+          "label": "Mitme ülesandega lehekülje tekst",
+          "default": "Mitu ülesannet"
+        },
+        {
+          "label": "Tulemuse sõnumi silt",
+          "default": "Sinu punktitulemus:"
+        },
+        {
+          "label": "Jaga Facebookis silt",
+          "default": "Jaga Facebookis"
+        },
+        {
+          "label": "Jaga Twitteris silt",
+          "default": "Jaga Twitteris"
+        },
+        {
+          "label": "Jaga Googles silt",
+          "default": "Jaga Google+ keskkonnas"
+        },
+        {
+          "label": "Kokkuvõtva lehekülje pealkiri",
+          "default": "Kokkuvõte"
+        },
+        {
+          "label": "Kommentaaride ikooni pealkiri",
+          "default": "Näita kommentaare"
+        },
+        {
+          "label": "Trüki nupu silt",
+          "default": "Trüki"
+        },
+        {
+          "label": "Trükidialoogi avamisel",
+          "default": "Kuidas soovid seda esitlust trükkida?"
+        },
+        {
+          "label": "\"Trüki kõik leheküljed\" nupu silt",
+          "default": "Trüki kõik leheküljed"
+        },
+        {
+          "label": "\"Trüki jooksev lehekülg\" nupu silt",
+          "default": "Trüki jooksev lehekülg"
+        },
+        {
+          "label": "Ilma pealkirjata lehekülgede silt",
+          "default": "Pealkirjata"
+        },
+        {
+          "label": "Lehekülgedel liikumise selgitus assisteeriva tehnoloogia kasutamisel",
+          "default": "Kasuta nooleklahve vasakule ja paremale lehekülgede vahel liikumiseks - tee eelnevalt taust aktiivseks (kliki sellel)."
+        },
+        {
+          "label": "Taustasilt assisteerivale tehnoloogiale",
+          "default": "Esitluse taust. Kasuta nooleklahve vasakule ja paremale lehekülgede vahel liikumiseks."
+        },
+        {
+          "label": "Lõpetamata tegevuse silt",
+          "default": "@slideName sisaldab lõpetamata tegevust"
+        },
+        {
+          "label": "Lõpetatud tegevuse silt",
+          "default": "@slideName sisaldab lõpetatud tegevust"
+        },
+        {
+          "label": "Lehekülgede loenduri silt. Muutujad on @index, @total",
+          "default": "Lehekülg @index / @total"
+        },
+        {
+          "label": "Ainult õigeid vastuseid sisaldavate lehekülgede silt",
+          "default": "@slideName sisaldab vaid õigeid vastuseid"
+        },
+        {
+          "label": "Valesid vastuseid sisaldavate lehekülgede silt",
+          "default": "@slideName sisaldab valesid vastuseid"
+        },
+        {
+          "label": "Sotsiaalmeedias jagamise riba silt",
+          "default": "Jaga tulemust"
+        },
+        {
+          "label": "Kogupunktisumma teavitus assisteeriva tehnoloogia puhul",
+          "default": "Sinu punktisumma on @score punkti (maksimaalne võimalik on @maxScore)",
+          "description": "Kasutatavad muutujad on @score ja @maxScore"
+        },
+        {
+          "label": "Entered fullscreen announcement for assistive technologies",
+          "default": "Entered fullscreen"
+        },
+        {
+          "label": "Exited fullscreen announcement for assistive technologies",
+          "default": "Exited fullscreen"
+        }
+      ]
+    },
+    {
+      "label": "Käitumisseadistused.",
+      "description": "Nende valikutega saad muuta vaikekäitumist.",
+      "fields": [
+        {
+          "label": "Aktiveeri Active Surface Mode",
+          "description": "Kasutajal ei saa navigeerida. Kasuta navigeerimiseks 'Mine leheküljele'."
+        },
+        {
+          "label": "Peida kokkuvõttev lehekülg",
+          "description": "Peidab kokkuvõtva lehekülje."
+        },
+        {
+          "label": "Määra \"Näita lahendust\" nupu olek",
+          "description": "See valik määrab, kas \"Näita lahendust\" nuppu näidatakse kõigile küsimustele või mitte või on see iga küsimuse puhul eraldi määratud.",
+          "options": [
+            {
+              "label": "Luba"
+            },
+            {
+              "label": "Keela"
+            }
+          ]
+        },
+        {
+          "label": "Määra \"Proovi uuesti\" nupu olek",
+          "description": "See valik määrab, kas \"Proovi uuesti\" nuppu näidatakse kõigile küsimustele või mitte või on see iga küsimuse puhul eraldi määratud.",
+          "options": [
+            {
+              "label": "Luba"
+            },
+            {
+              "label": "Keela"
+            }
+          ]
+        },
+        {
+          "label": "Show \"Show solution\" button in the summary slide",
+          "description": "If enabled, the learner will be able to show the solutions for all question when they reach the summary slide"
+        },
+        {
+          "label": "Show \"Retry\" button in the summary slide",
+          "description": "If enabled, the learner will be able to retry all questions when they reach the summary slide. Be advised that by refreshing the page the learners will be able to retry even if this button isn't showing."
+        },
+        {
+          "label": "Luba trüki nupp",
+          "description": "Lubab trüki nupu kasutamise."
+        },
+        {
+          "label": "Sotsiaalmeedia seaded",
+          "description": "Need valikud määravad sotsiaalmeediaga seotud käitumise. Kui link antakse ette, täidetakse tühjad väärtused automaatselt, vastasel juhul väärtused genereeritakse.",
+          "fields": [
+            {
+              "label": "Näita Facebookis jagamise ikooni"
+            },
+            {
+              "label": "Facebookis jagamise seaded",
+              "fields": [
+                {
+                  "label": "Jaga Facebookis link",
+                  "default": "@currentpageurl"
+                },
+                {
+                  "label": "Jaga tsitaati Facebookis",
+                  "default": "Minu @currentpageurl ülesande tulemus oli @score maksimaalsest @maxScore punktist!"
+                }
+              ]
+            },
+            {
+              "label": "Näita Twitteris jagamise ikooni"
+            },
+            {
+              "label": "Twitteris jagamise seaded",
+              "fields": [
+                {
+                  "label": "Jaga Twitteris lause",
+                  "default": "Minu @currentpageurl ülesande tulemus oli @score maksimaalsest @maxScore punktist!"
+                },
+                {
+                  "label": "Jaga Twitteris link",
+                  "default": "@currentpageurl"
+                },
+                {
+                  "label": "Jaga Twitteris hashtagid",
+                  "default": "h5p, e-ope"
+                }
+              ]
+            },
+            {
+              "label": "Näita Google+ jagamise ikooni"
+            },
+            {
+              "label": "Jaga Google Plussis link",
+              "default": "@currentpageurl"
+            }
+          ]
         }
       ]
     }

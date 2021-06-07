@@ -10,7 +10,6 @@ src
 .gitmodules
 .h5pignore
 .travis.yml
-.sass-lint.yml
 karma.conf.js
 webpack.config.js
 webpack.dev.config.js
@@ -18,3 +17,4 @@ README.md
 CONTRIBUTING.md
 package.json
 worknotes
+crowdin.yml

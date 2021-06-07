@@ -1,199 +1,383 @@
 {
   "semantics": [
     {
-      "label": "Activer la couverture du livre",
-      "description": "Une couverture  montre les informations concernant le livre avant l'accès"
-    },
-    {
-      "label": "Page de couverture",
       "fields": [
         {
-          "label": "Description de la couverture",
-          "description": "Ce texte sera la description de votre livre"
-        },
-        {
-          "label": "Image de couverture",
-          "description": "Une image de fond facultative pour l'introduction."
-        },
-        {
-          "label": "Texte alternatif de l'image de couverture",
-          "description": "Un texte alternatif pour l'image de couverture"
-        }
-      ]
-    },
-    {
-      "label": "Pages",
-      "entity": "Page",
-      "widgets": [
-        {
-          "label": "Par défaut"
-        }
-      ],
-      "field": {
-        "label": "Item",
-        "fields": [
-          {
-            "label": "Page"
+          "field": {
+            "fields": [
+              {
+                "field": {
+                  "fields": [
+                    {},
+                    {},
+                    {},
+                    {},
+                    {},
+                    {
+                      "label": "Commentaires",
+                      "description": "Les commentaires sont affichés pour aider les utilisateurs lors de la présentation."
+                    },
+                    {
+                      "label": "Toujours afficher les commentaires"
+                    },
+                    {
+                      "label": "Opacité"
+                    },
+                    {
+                      "label": "Afficher sous forme de bouton"
+                    },
+                    {
+                      "label": "La taille de bouton",
+                      "options": [
+                        {
+                          "label": "Petite"
+                        },
+                        {
+                          "label": "Grande"
+                        }
+                      ]
+                    },
+                    {
+                      "label": "Titre"
+                    },
+                    {
+                      "label": "Aller vers",
+                      "options": [
+                        {
+                          "label": "Le numéro de diapositive spécifique"
+                        },
+                        {
+                          "label": "Diapositive suivante"
+                        },
+                        {
+                          "label": "Diapositive précédente"
+                        }
+                      ]
+                    },
+                    {
+                      "label": "Aller à la diapositive",
+                      "description": "N'est appliquable qu'avec le bouton 'Le numéro de diapositive spécifique' séléctionné"
+                    },
+                    {
+                      "label": "Invisible",
+                      "description": "Curseur par défaut, pas de titre, pas d'onglets. Attention : Les utilisateurs ayant des handicaps ou ceux qui n'utilisent que le clavier auront des difficultés à réaliser cette activité."
+                    }
+                  ]
+                }
+              },
+              {},
+              {
+                "fields": [
+                  {
+                    "label": "Image",
+                    "description": "Pour que l'image d'arrière-plan ne soit pas déformée, elle doit avoir un ratio largeur/hauteur de 2 pour 1. Les images en haute résolution offrent un meilleur rendu sur les grands écrans."
+                  },
+                  {
+                    "label": "Sélectionnez une couleur",
+                    "default": ""
+                  }
+                ]
+              }
+            ]
           }
-        ]
-      }
-    },
-    {
-      "label": "Paramètres d'affichage",
-      "fields": [
+        },
+        {},
         {
-          "label": "Afficher la table des matières par défaut",
-          "description": "Lorsque cette option est activée, la table des matières s'affiche à l'ouverture du livre"
+          "label": "Liste des mots-clés"
         },
         {
-          "label": "Afficher les indicateurs de progrès",
-          "description": "Lorsqu'il est activé, il y aura des indicateurs par page indiquant à l'utilisateur s'il en a fini ou non avec la page."
+          "label": "Toujours l'afficher"
         },
         {
-          "label": "Activer la progression automatique",
-          "description": "Si elle est activée, une page sans tâches est considérée comme terminée lorsqu'elle est visualisée. Une page avec des tâches lorsque toutes les tâches sont effectuées. Si elle est désactivée, un bouton sera placé au bas de chaque page pour que l'utilisateur puisse cliquer lorsqu'il a terminé la page."
+          "label": "La cacher automatiquement"
         },
         {
-          "label": "Afficher le résumé",
-          "description": "Lorsqu'il est activé, l'utilisateur peut voir un résumé et soumettre les progrès/réponses"
+          "label": "Opacité"
+        },
+        {
+          "fields": [
+            {
+              "label": "Image d'arrière-plan",
+              "description": "Pour que l'image d'arrière-plan ne soit pas déformée, elle doit avoir un ratio largeur/hauteur de 2 pour 1. Les images en haute résolution offrent un meilleur rendu sur les grands écrans."
+            },
+            {
+              "label": "Sélectionnez une couleur",
+              "default": ""
+            }
+          ]
         }
       ]
     },
     {
-      "label": "Intitulé pour \"Lire\"",
-      "default": "Lire"
-    },
-    {
-      "label": "Intitulé pour \"Aficcher la 'Table des matières'\"",
-      "default": "Afficher la 'Table des matières'"
-    },
-    {
-      "label": "Intitulé pour \"Cacher la 'Table des matières'\"",
-      "default": "Cacher la 'Table des matières'"
-    },
-    {
-      "label": "Intitulé pour \"Page suivante\"",
-      "default": "Page suivante"
-    },
-    {
-      "label": "Intitulé pour \"Page précédente\"",
-      "default": "Page précédente"
-    },
-    {
-      "label": "Intitulé pour \"Page terminée!\"",
-      "default": "Page terminée!"
-    },
-    {
-      "label": "Intitulé pour \"@pages sur @total terminé\" (@pages et @total sera remplacé par des valeurs réelles)",
-      "default": "@pages sur @total terminé"
-    },
-    {
-      "label": "Intitulé pour \"Page non terminée\"",
-      "default": "Page non terminée"
-    },
-    {
-      "label": "Intitulé pour \"Revenir en haut\"",
-      "default": "Revenir en haut"
-    },
-    {
-      "label": "Intitulé pour \"J'ai terminé cette page\"",
-      "default": "J'ai terminé cette page"
-    },
-    {
-      "label": "Libellé du bouton plein écran",
-      "default": "Plein écran"
-    },
-    {
-      "label": "Libellé du bouton de sortie en plein écran",
-      "default": "Réduire"
-    },
-    {
-      "label": "Progression de la page dans le livre",
-      "description": "\"@count\"  sera remplacé par le nombre de pages, et \"@total\" avec le nombre total de pages",
-      "default": "@count sur @total pages"
-    },
-    {
-      "label": "Progrès de l'interaction",
-      "description": "\"@count\" sera remplacé par le comptage des interactions, et \"@total\" avec le nombre total d'interactions",
-      "default": "@count sur @total interactions"
-    },
-    {
-      "label": "Intitulé pour \"Soumettre le rapport\"",
-      "default": "Soumettre le rapport"
-    },
-    {
-      "label": "Libellé du bouton \"relancer\"",
-      "default": "Relancer"
-    },
-    {
-      "label": "Sommaire",
-      "default": "Sommaire"
-    },
-    {
-      "label": "Intitulé pour \"Toutes les interactions\"",
-      "default": "Toutes les interactions"
-    },
-    {
-      "label": "Intitulé pour \"Interactions sans réponse\"",
-      "default": "Interactions sans réponse"
-    },
-    {
-      "label": "Score",
-      "description": "\"@score\" sera remplacé par le score actuel, et \"@maxscore\" sera remplacé par le score maximum réalisable",
-      "default": "@score / @maxscore"
-    },
-    {
-      "label": "Achèvement des interactions par page",
-      "description": "\"@left\" sera remplacé par les interactions restantes, et \"@max\" sera remplacé par le nombre total d'interactions sur la page",
-      "default": "@left sur @max interactions réalisées"
-    },
-    {
-      "label": "Intitulé pour \"Aucune interaction\"",
-      "default": "Aucune interaction"
-    },
-    {
-      "label": "Intitulé pour \"Score\"",
-      "default": "Score"
-    },
-    {
-      "label": "Libellé du bouton \"Résumé et transmission\"",
-      "default": "Résumé et transmission"
-    },
-    {
-      "label": "Intitulé pour \"Vous n'avez interagi avec aucune page.\"",
-      "default": "Vous n'avez interagi avec aucune page."
-    },
-    {
-      "label": "Intitulé pour \"Vous devez interagir avec au moins une page avant de pouvoir voir le résumé.\"",
-      "default": "Vous devez interagir avec au moins une page avant de pouvoir voir le résumé."
-    },
-    {
-      "label": "Intitulé pour \"Vos réponses sont soumises à examen !\"",
-      "default": "Vos réponses sont soumises à examen !"
-    },
-    {
-      "label": "Étiquette de progrès sommaire",
-      "default": "Progression du livre"
-    },
-    {
-      "label": "Intitulé pour Progression des interactions",
-      "default": "Progression des interactions"
-    },
-    {
-      "label": "Intitulé pour Score total",
-      "default": "Score total"
-    },
-    {
-      "label": "Textes sur l'accessibilité",
+      "label": "Options générales.",
       "fields": [
         {
-          "label": "Alternative textuelle à l'avancement de la page",
-          "description": "Un texte alternatif pour la progression visuelle de la page. Les variables @page et @total sont disponibles.",
-          "default": "Page @page sur @total."
+          "label": "Traduction pour \"Diapositive\"",
+          "default": "Diapositive"
         },
         {
-          "label": "Intitulé pour étendre/réduire le menu de navigation",
-          "default": "étendre/réduire"
+          "label": "Traduction pour \"Score\"",
+          "default": "Score"
+        },
+        {
+          "label": "Traduction pour \"Votre score\"",
+          "default": "Votre score"
+        },
+        {
+          "label": "Traduction pour \"Score maximum\"",
+          "default": "Score maximum"
+        },
+        {
+          "label": "Traduction pour \"Total\"",
+          "default": "Total"
+        },
+        {
+          "label": "Traduction pour \"Score total\"",
+          "default": "Score total"
+        },
+        {
+          "label": "Texte pour le bouton \"Voir la correction\"",
+          "default": "Voir la correction"
+        },
+        {
+          "label": "Texte pour le bouton \"Recommencer\"",
+          "default": "Recommencer"
+        },
+        {
+          "label": "Texte pour le bouton d'exportation",
+          "default": "Exporter"
+        },
+        {
+          "label": "Cacher le bouton d'affichage de la liste des mots-clés",
+          "default": "Cacher la liste des mots-clés"
+        },
+        {
+          "label": "Montrer le bouton d'affichage de la liste des mots-clés",
+          "default": "Afficher la liste des mots-clés"
+        },
+        {
+          "label": "Activer le bouton \"Recommencer\"",
+          "default": "Plein écran"
+        },
+        {
+          "label": "Obliger l'utilisateur à saisir une réponse avant de pouvoir afficher la correction.",
+          "default": "Quitter le plein écran"
+        },
+        {
+          "label": "Texte d'accès à la diapositive précédente",
+          "default": "Diapositive précédente"
+        },
+        {
+          "label": "Texte d'accès à la diapositive suivante",
+          "default": "Diapositive suivante"
+        },
+        {
+          "label": "Texte pour la diapositive courante",
+          "default": "Diapositive courante"
+        },
+        {
+          "label": "Texte de la dernière diapositive",
+          "default": "Dernière diapositive"
+        },
+        {
+          "label": "Texte de sortie du mode \"Correction\"",
+          "default": "Sortir du mode \"Correction\""
+        },
+        {
+          "label": "Intitulé du mode \"correction\"",
+          "default": "Passer en mode \"correction\""
+        },
+        {
+          "label": "Texte affiché dans le cas où une page contient plusieurs activités",
+          "default": "Activités multiples"
+        },
+        {
+          "label": "Texte d'affichage du score",
+          "default": "Votre score :"
+        },
+        {
+          "label": "Texte de partage sur Facebook",
+          "default": "Partager sur Facebook"
+        },
+        {
+          "label": "Texte de partage sur Twitter",
+          "default": "Partager sur Twitter"
+        },
+        {
+          "label": "Partager sur Google text",
+          "default": "Partager sur Google+"
+        },
+        {
+          "label": "Titre de la diapositive récapitulative",
+          "default": "Résumé"
+        },
+        {
+          "label": "Titre pour l'icône des commentaires",
+          "default": "Afficher les commentaires"
+        },
+        {
+          "label": "Titre du bouton \"Imprimer\"",
+          "default": "Imprimer"
+        },
+        {
+          "label": "Texte pour la boîte de dialogue d'impression",
+          "default": "Comment souhaitez-vous imprimer cette présentation ?"
+        },
+        {
+          "label": "Texte du bouton \"Imprimer toutes les diapositives\"",
+          "default": "Imprimer toutes les diapositives"
+        },
+        {
+          "label": "Texte du bouton \"Imprimer la diapositive courante\"",
+          "default": "Imprimer la diapositive courante"
+        },
+        {
+          "label": "Etiquette pour des diapositives sans intitulé",
+          "default": "Sans intitulé"
+        },
+        {
+          "label": "Explication de la navigation par diapositive pour les technologies d'assistance",
+          "default": "Utilisez les fleches gauche et droite pour pour naviguer entre les diapositives"
+        },
+        {
+          "label": "Etiquette de champs pour les technologies d'assistance",
+          "default": "Le champs de présentation. Utilisez les fleches gauche et droite pour naviguer entre les diapositives."
+        },
+        {
+          "label": "Etiquette pour des interactions incomplètes",
+          "default": "@slideName contient des interactions incomplètes"
+        },
+        {
+          "label": "Etiquette pour les interactions complètes",
+          "default": "@slideName ccontient des interactions complètes"
+        },
+        {
+          "label": "Etiquette pour le compteur de diapositive. Variables sont @index, @total",
+          "default": "Diapositive a @index de @total"
+        },
+        {
+          "label": "Etiquette pour les diapositives qui n'ont que de réponses correctes",
+          "default": "toutes les réponses sont bonnes sur @slideName"
+        },
+        {
+          "label": "Etiquette pour les diapositives qui ont des réponses incorrectes",
+          "default": "@slideName contient des réponses incorrectes"
+        },
+        {
+          "label": "Etiquette pour le panneau Partager sur les réseaux sociaux",
+          "default": "Partager le résultat"
+        },
+        {
+          "label": "Total score announcement for assistive technologies",
+          "default": "You got @score of @maxScore points in total",
+          "description": "Available variables are @score and @maxScore"
+        },
+        {
+          "label": "Entered fullscreen announcement for assistive technologies",
+          "default": "Entered fullscreen"
+        },
+        {
+          "label": "Exited fullscreen announcement for assistive technologies",
+          "default": "Exited fullscreen"
+        }
+      ]
+    },
+    {
+      "label": "Réglages généraux",
+      "description": "Ces options vous permettent d'enlever certains réglages.",
+      "fields": [
+        {
+          "label": "Activer le mode \"Surface active\"",
+          "description": "Cela supprime les boutons de navigation entre diapositives pour l'utilisateur. Il faut utiliser les boutons \"Aller à la diapositive\" pour naviguer entre les diapositives."
+        },
+        {
+          "label": "Cacher le récapitulatif de fin",
+          "description": "Cela cache la diapositive finale qui liste les scores obtenus aux diverses activités."
+        },
+        {
+          "label": "Cacher le bouton \"Voir la solution\"",
+          "description": "Cette option détermine si le bouton \"Voir la solution\" sera affiché pour toutes les questions, désactivé pour toutes ou configuré pour chaque question individuellement.",
+          "options": [
+            {
+              "label": "Activé"
+            },
+            {
+              "label": "Désactivé"
+            }
+          ]
+        },
+        {
+          "label": "Cacher le bouton \"Recommencer\"",
+          "description": "Cette option détermine si le bouton \"Recommencer\" sera affiché pour toutes les questions, désactivé pour toutes ou configuré pour chaque question individuellement.",
+          "options": [
+            {
+              "label": "Activé"
+            },
+            {
+              "label": "Désactivé"
+            }
+          ]
+        },
+        {
+          "label": "Show \"Show solution\" button in the summary slide",
+          "description": "If enabled, the learner will be able to show the solutions for all question when they reach the summary slide"
+        },
+        {
+          "label": "Show \"Retry\" button in the summary slide",
+          "description": "If enabled, the learner will be able to retry all questions when they reach the summary slide. Be advised that by refreshing the page the learners will be able to retry even if this button isn't showing."
+        },
+        {
+          "label": "Activer le bouton \"Imprimer\"",
+          "description": "Cela active le bouton d'impression."
+        },
+        {
+          "label": "Paramètres sociaux",
+          "description": "Ces options permettent de contourner les paramètres sociaux de comportement. Les valeurs vides seront remplies automatiquement s'il y a un lien, sinon toutes les valeurs seront générées.",
+          "fields": [
+            {
+              "label": "Montrer l'icône Partager sur Facebook"
+            },
+            {
+              "label": "Les paramètres de partage sur Facebook",
+              "fields": [
+                {
+                  "label": "Le lien pour partager sur Facebook",
+                  "default": "@currentpageurl"
+                },
+                {
+                  "label": "Citation Partager sur Facebook",
+                  "default": "J'ai un score de @score sur un total de @maxScore pour @currentpageurl."
+                }
+              ]
+            },
+            {
+              "label": "Montrer l'icône partager sur Twitter"
+            },
+            {
+              "label": "Les paramètres de partage sur Twitter",
+              "fields": [
+                {
+                  "label": "La citation pour partager sur Twitter",
+                  "default": "J'ai un score de @score sur un total de @maxScore pour @currentpageurl."
+                },
+                {
+                  "label": "Le lien pour partager sur Twitter",
+                  "default": "@currentpageurl"
+                },
+                {
+                  "label": "Les hashtags pour partager sur Twitter",
+                  "default": "h5p, course"
+                }
+              ]
+            },
+            {
+              "label": "Montrer l'icône Partager sur Google+"
+            },
+            {
+              "label": "Lien Partager sur Google",
+              "default": "@currentpageurl"
+            }
+          ]
         }
       ]
     }

@@ -1,199 +1,383 @@
 {
   "semantics": [
     {
-      "label": "Enable book cover",
-      "description": "A cover that shows info regarding the book before access"
-    },
-    {
-      "label": "Cover Page",
       "fields": [
         {
-          "label": "Cover description",
-          "description": "This text will be the description of your book."
-        },
-        {
-          "label": "Cover image",
-          "description": "An optional background image for the introduction."
-        },
-        {
-          "label": "Cover image alternative text",
-          "description": "An alternative text for the cover image"
-        }
-      ]
-    },
-    {
-      "label": "Pages",
-      "entity": "Page",
-      "widgets": [
-        {
-          "label": "Default"
-        }
-      ],
-      "field": {
-        "label": "Item",
-        "fields": [
-          {
-            "label": "Page"
+          "field": {
+            "fields": [
+              {
+                "field": {
+                  "fields": [
+                    {},
+                    {},
+                    {},
+                    {},
+                    {},
+                    {
+                      "label": "Comments",
+                      "description": "The comments are shown when the user displays the suggested answers for all slides."
+                    },
+                    {
+                      "label": "Always display comments"
+                    },
+                    {
+                      "label": "Background Opacity"
+                    },
+                    {
+                      "label": "Display as button"
+                    },
+                    {
+                      "label": "Button size",
+                      "options": [
+                        {
+                          "label": "Small"
+                        },
+                        {
+                          "label": "Big"
+                        }
+                      ]
+                    },
+                    {
+                      "label": "Title"
+                    },
+                    {
+                      "label": "Go to",
+                      "options": [
+                        {
+                          "label": "Specific slide number"
+                        },
+                        {
+                          "label": "Next slide"
+                        },
+                        {
+                          "label": "Previous slide"
+                        }
+                      ]
+                    },
+                    {
+                      "label": "Specific slide number",
+                      "description": "Only applicable when 'Specific slide number' is selected"
+                    },
+                    {
+                      "label": "Invisible",
+                      "description": "Default cursor, no title and no tab index. Warning: Users with disabilities or keyboard only users will have trouble using this element."
+                    }
+                  ]
+                }
+              },
+              {},
+              {
+                "fields": [
+                  {
+                    "label": "Image",
+                    "description": "Image background should have a 2:1 width to height ratio to avoid stretching. High resolution images will display better on larger screens."
+                  },
+                  {
+                    "label": "Pick a color",
+                    "default": ""
+                  }
+                ]
+              }
+            ]
           }
-        ]
-      }
-    },
-    {
-      "label": "Behavioural settings",
-      "fields": [
+        },
+        {},
         {
-          "label": "Display table of contents as default",
-          "description": "When enabled the table of contents is showed when opening the book"
+          "label": "Keyword list"
         },
         {
-          "label": "Display Progress Indicators",
-          "description": "When enabled there will be indicators per page showing the user if he is done with the page or not."
+          "label": "Always show"
         },
         {
-          "label": "Enable automatic progress",
-          "description": "If enabled a page without tasks is considered done when viewed. A page with tasks when all tasks are done. If disabled there will be a button at the bottom of every page for the user to click when done with the page."
+          "label": "Auto hide"
         },
         {
-          "label": "Display summary",
-          "description": "When enabled the user can see a summary and submit the progress/answers"
+          "label": "Opacity"
+        },
+        {
+          "fields": [
+            {
+              "label": "Image",
+              "description": "Image background should have a 2:1 width to height ratio to avoid stretching. High resolution images will display better on larger screens."
+            },
+            {
+              "label": "Pick a color",
+              "default": ""
+            }
+          ]
         }
       ]
     },
     {
-      "label": "Translation for \"Read\"",
-      "default": "Read"
-    },
-    {
-      "label": "Translation for \"Display 'Table of contents'\"",
-      "default": "Display 'Table of contents'"
-    },
-    {
-      "label": "Translation for \"Hide 'Table of contents'\"",
-      "default": "Hide 'Table of contents'"
-    },
-    {
-      "label": "Translation for \"Next page\"",
-      "default": "Next page"
-    },
-    {
-      "label": "Translation for \"Previous page\"",
-      "default": "Previous page"
-    },
-    {
-      "label": "Translation for \"Page completed!\"",
-      "default": "Page completed!"
-    },
-    {
-      "label": "Translation for \"@pages of @total completed\" (@pages and @total will be replaced by actual values)",
-      "default": "@pages of @total completed"
-    },
-    {
-      "label": "Translation for \"Incomplete page\"",
-      "default": "Incomplete page"
-    },
-    {
-      "label": "Translation for \"Navigate to the top\"",
-      "default": "Navigate to the top"
-    },
-    {
-      "label": "Translation for \"I have finished this page\"",
-      "default": "I have finished this page"
-    },
-    {
-      "label": "Fullscreen button label",
-      "default": "Fullscreen"
-    },
-    {
-      "label": "Exit fullscreen button label",
-      "default": "Exit fullscreen"
-    },
-    {
-      "label": "Page progress in book",
-      "description": "\"@count\" will be replaced by page count, and \"@total\" with the total number of pages",
-      "default": "@count of @total pages"
-    },
-    {
-      "label": "Interaction progress",
-      "description": "\"@count\" will be replaced by interaction count, and \"@total\" with the total number of interactions",
-      "default": "@count of @total interactions"
-    },
-    {
-      "label": "Translation for \"Submit report\"",
-      "default": "Submit Report"
-    },
-    {
-      "label": "Label for \"restart\" button",
-      "default": "Restart"
-    },
-    {
-      "label": "Summary header",
-      "default": "Summary"
-    },
-    {
-      "label": "Translation for \"All interactions\"",
-      "default": "All interactions"
-    },
-    {
-      "label": "Translation for \"Unanswered interactions\"",
-      "default": "Unanswered interactions"
-    },
-    {
-      "label": "Score",
-      "description": "\"@score\" will be replaced with current score, and \"@maxscore\" will be replaced with max achievable score",
-      "default": "@score / @maxscore"
-    },
-    {
-      "label": "Per page interactions completion",
-      "description": "\"@left\" will be replaced with remaining interactions, and \"@max\" will be replaced with total number of interactions on the page",
-      "default": "@left of @max interactions completed"
-    },
-    {
-      "label": "Translation for \"No interactions\"",
-      "default": "No interactions"
-    },
-    {
-      "label": "Translation for \"Score\"",
-      "default": "Score"
-    },
-    {
-      "label": "Label for \"Summary &amp; submit\" button",
-      "default": "Summary &amp; submit"
-    },
-    {
-      "label": "Translation for \"You have not interacted with any pages.\"",
-      "default": "You have not interacted with any pages."
-    },
-    {
-      "label": "Translation for \"You have to interact with at least one page before you can see the summary.\"",
-      "default": "You have to interact with at least one page before you can see the summary."
-    },
-    {
-      "label": "Translation for \"Your answers are submitted for review!\"",
-      "default": "Your answers are submitted for review!"
-    },
-    {
-      "label": "Summary progress label",
-      "default": "Book progress"
-    },
-    {
-      "label": "Interactions progress label",
-      "default": "Interactions progress"
-    },
-    {
-      "label": "Total score label",
-      "default": "Total score"
-    },
-    {
-      "label": "Accessibility texts",
+      "label": "Localize",
       "fields": [
         {
-          "label": "Page progress textual alternative",
-          "description": "An alternative text for the visual page progress. @page and @total variables available.",
-          "default": "Page @page of @total."
+          "label": "Translation for \"Slide\"",
+          "default": "Slide"
         },
         {
-          "label": "Label for expanding/collapsing navigation menu",
-          "default": "Toggle navigation menu"
+          "label": "Translation for \"Score\"",
+          "default": "Score"
+        },
+        {
+          "label": "Translation for \"Your Score\"",
+          "default": "Your Score"
+        },
+        {
+          "label": "Translation for \"Max Score\"",
+          "default": "Max Score"
+        },
+        {
+          "label": "Translation for \"Total\"",
+          "default": "Total"
+        },
+        {
+          "label": "Translation for \"Total Score\"",
+          "default": "Total Score"
+        },
+        {
+          "label": "Title for show solutions button",
+          "default": "Show solutions"
+        },
+        {
+          "label": "Text for the retry button",
+          "default": "Retry"
+        },
+        {
+          "label": "Text for the export text button",
+          "default": "Export text"
+        },
+        {
+          "label": "Hide keywords list button title",
+          "default": "Hide keywords list"
+        },
+        {
+          "label": "Show keywords list button title",
+          "default": "Show keywords list"
+        },
+        {
+          "label": "Fullscreen label",
+          "default": "Fullscreen"
+        },
+        {
+          "label": "Exit fullscreen label",
+          "default": "Exit fullscreen"
+        },
+        {
+          "label": "Previous slide label",
+          "default": "Previous slide"
+        },
+        {
+          "label": "Next slide label",
+          "default": "Next slide"
+        },
+        {
+          "label": "Current slide label",
+          "default": "Current slide"
+        },
+        {
+          "label": "Last slide label",
+          "default": "Last slide"
+        },
+        {
+          "label": "Exit solution mode text",
+          "default": "Exit solution mode"
+        },
+        {
+          "label": "Solution mode text",
+          "default": "Solution Mode"
+        },
+        {
+          "label": "Text when multiple tasks on a page",
+          "default": "Multiple tasks"
+        },
+        {
+          "label": "Score message text",
+          "default": "You achieved:"
+        },
+        {
+          "label": "Share to Facebook text",
+          "default": "Share on Facebook"
+        },
+        {
+          "label": "Share to Twitter text",
+          "default": "Share on Twitter"
+        },
+        {
+          "label": "Share to Google text",
+          "default": "Share on Google+"
+        },
+        {
+          "label": "Title for summary slide",
+          "default": "Summary"
+        },
+        {
+          "label": "Title for the comments icon",
+          "default": "Show comments"
+        },
+        {
+          "label": "Title for print button",
+          "default": "Print"
+        },
+        {
+          "label": "Print dialog ingress",
+          "default": "How would you like to print this presentation?"
+        },
+        {
+          "label": "Label for \"Print all slides\" button",
+          "default": "Print all slides"
+        },
+        {
+          "label": "Label for \"Print current slide\" button",
+          "default": "Print current slide"
+        },
+        {
+          "label": "Label for slides without a title",
+          "default": "No title"
+        },
+        {
+          "label": "Explanation of slide navigation for assistive technologies",
+          "default": "Use left and right arrow to change slide in that direction whenever canvas is selected"
+        },
+        {
+          "label": "Canvas label for assistive technologies",
+          "default": "Presentation canvas. Use left and right arrow to move between slides."
+        },
+        {
+          "label": "Label for uncompleted interactions",
+          "default": "@slideName contains not completed interaction"
+        },
+        {
+          "label": "Label for completed interactions",
+          "default": "@slideName contains completed interaction"
+        },
+        {
+          "label": "Label for slide counter. Variables are @index, @total",
+          "default": "Slide @index of @total"
+        },
+        {
+          "label": "Label for slides that only contains correct answers",
+          "default": "@slideName only has correct answers"
+        },
+        {
+          "label": "Label for slides that has incorrect answers",
+          "default": "@slideName has incorrect answers"
+        },
+        {
+          "label": "Label for social sharing bar",
+          "default": "Share Result"
+        },
+        {
+          "label": "Total score announcement for assistive technologies",
+          "default": "You got @score of @maxScore points in total",
+          "description": "Available variables are @score and @maxScore"
+        },
+        {
+          "label": "Entered fullscreen announcement for assistive technologies",
+          "default": "Entered fullscreen"
+        },
+        {
+          "label": "Exited fullscreen announcement for assistive technologies",
+          "default": "Exited fullscreen"
+        }
+      ]
+    },
+    {
+      "label": "Behaviour settings.",
+      "description": "These options will let you override behaviour settings.",
+      "fields": [
+        {
+          "label": "Activate Active Surface Mode",
+          "description": "Removes navigation controls for the end user. Use Go To Slide to navigate."
+        },
+        {
+          "label": "Hide Summary Slide",
+          "description": "Hides the summary slide."
+        },
+        {
+          "label": "Override \"Show Solution\" button",
+          "description": "This option determines if the \"Show Solution\" button will be shown for all questions, disabled for all or configured for each question individually.",
+          "options": [
+            {
+              "label": "Enabled"
+            },
+            {
+              "label": "Disabled"
+            }
+          ]
+        },
+        {
+          "label": "Override \"Retry\" button",
+          "description": "This option determines if the \"Retry\" button will be shown for all questions, disabled for all or configured for each question individually.",
+          "options": [
+            {
+              "label": "Enabled"
+            },
+            {
+              "label": "Disabled"
+            }
+          ]
+        },
+        {
+          "label": "Show \"Show solution\" button in the summary slide",
+          "description": "If enabled, the learner will be able to show the solutions for all question when they reach the summary slide"
+        },
+        {
+          "label": "Show \"Retry\" button in the summary slide",
+          "description": "If enabled, the learner will be able to retry all questions when they reach the summary slide. Be advised that by refreshing the page the learners will be able to retry even if this button isn't showing."
+        },
+        {
+          "label": "Enable print button",
+          "description": "Enables the print button."
+        },
+        {
+          "label": "Social Settings",
+          "description": "These options will let you override social behaviour settings. Empty values will be filled in automatically if a link is provided, otherwise all values will be generated.",
+          "fields": [
+            {
+              "label": "Display Facebook share icon"
+            },
+            {
+              "label": "Facebook share settings",
+              "fields": [
+                {
+                  "label": "Share to Facebook link",
+                  "default": "@currentpageurl"
+                },
+                {
+                  "label": "Share to Facebook quote",
+                  "default": "I scored @score out of @maxScore on a task at @currentpageurl."
+                }
+              ]
+            },
+            {
+              "label": "Display Twitter share icon"
+            },
+            {
+              "label": "Twitter share settings",
+              "fields": [
+                {
+                  "label": "Share to Twitter statement",
+                  "default": "I scored @score out of @maxScore on a task at @currentpageurl."
+                },
+                {
+                  "label": "Share to Twitter link",
+                  "default": "@currentpageurl"
+                },
+                {
+                  "label": "Share to Twitter hashtags",
+                  "default": "h5p, course"
+                }
+              ]
+            },
+            {
+              "label": "Display Google+ share icon"
+            },
+            {
+              "label": "Share to Google link",
+              "default": "@currentpageurl"
+            }
+          ]
         }
       ]
     }

@@ -1,41 +1,52 @@
 var path = require('path');
 var nodeEnv = process.env.NODE_ENV || 'development';
 var isDev = (nodeEnv !== 'production');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+const extractStyles = new ExtractTextPlugin({
+  filename: "h5p-course-presentation.css"
+});
 
 var config = {
-  mode: nodeEnv,
   entry: {
-    dist: './src/entries/main.js'
+    dist: './src/entries/dist.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'h5p-interactive-book.js'
+    filename: 'h5p-course-presentation.js'
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, 'src'),
         loader: 'babel-loader'
       },
       {
-        test:/\.scss$/,
-        include: path.resolve(__dirname, 'src/styles'),
-        use:['style-loader','css-loader', 'sass-loader']
+        test: /\.css$/,
+        include: path.resolve(__dirname, 'src'),
+        use: extractStyles.extract({
+          use: ["css-loader?sourceMap", "resolve-url-loader"],
+          fallback: "style-loader"
+        }),
       },
       {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        include: path.resolve(__dirname, 'src'),
-        loader: 'url-loader?limit=100000'
+        test: /\.scss$/,
+        use: extractStyles.extract({
+          use: ["css-loader?sourceMap", "sass-loader?outputStyle=expanded&sourceMap=true&sourceMapContents=true"],
+          fallback: "style-loader"
+        })
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        include: path.join(__dirname, 'src/fonts'),
+        loader: 'file-loader?name=fonts/[name].[ext]'
       }
     ]
   },
-  externals: {
-    jquery: 'H5P.jQuery'
-  }
+  plugins: [extractStyles]
 };
 
-if (isDev) {
+if(isDev) {
   config.devtool = 'inline-source-map';
 }
 

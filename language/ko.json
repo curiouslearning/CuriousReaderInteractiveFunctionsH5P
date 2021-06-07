@@ -1,199 +1,383 @@
 {
   "semantics": [
     {
-      "label": "책 표지 활성화",
-      "description": "접근 전 책에 대한 정보를 보여주는 표지"
-    },
-    {
-      "label": "커버 페이지",
       "fields": [
         {
-          "label": "커버 설명",
-          "description": "이 텍스트는 당신의 책에 대한 설명이 될 겁니다."
-        },
-        {
-          "label": "커버 이미지",
-          "description": "(선택사항)소개의 배경 이미지."
-        },
-        {
-          "label": "표지 이미지 대체 텍스트",
-          "description": "표지 이미지에 대한 대체 텍스트"
-        }
-      ]
-    },
-    {
-      "label": "페이지",
-      "entity": "페이지",
-      "widgets": [
-        {
-          "label": "기본값"
-        }
-      ],
-      "field": {
-        "label": "항목",
-        "fields": [
-          {
-            "label": "페이지"
+          "field": {
+            "fields": [
+              {
+                "field": {
+                  "fields": [
+                    {},
+                    {},
+                    {},
+                    {},
+                    {},
+                    {
+                      "label": "주석",
+                      "description": "사용자가 모든 슬라이드의 질문에 답변했을 때 주석을 표시합니다"
+                    },
+                    {
+                      "label": "항상 주석을 보여줍니다"
+                    },
+                    {
+                      "label": "배경 투명도"
+                    },
+                    {
+                      "label": "버튼 보이기"
+                    },
+                    {
+                      "label": "버튼 크기",
+                      "options": [
+                        {
+                          "label": "작음"
+                        },
+                        {
+                          "label": "큼"
+                        }
+                      ]
+                    },
+                    {
+                      "label": "제목"
+                    },
+                    {
+                      "label": "이동",
+                      "options": [
+                        {
+                          "label": "슬라이드 번호로 이동"
+                        },
+                        {
+                          "label": "다음 슬라이드"
+                        },
+                        {
+                          "label": "이전"
+                        }
+                      ]
+                    },
+                    {
+                      "label": "슬라이드 번호 입력",
+                      "description": "'슬라이드 번호로 이동'을 선택했을 때에만 활성화 "
+                    },
+                    {
+                      "label": "투명화",
+                      "description": "기본 커서, 제목 및 탭 인덱스 없음. 경고 : 이 요소를 사용하면 마우스가 없는 사용자, 또는 장애인은 사용에 문제가 있을 수 있습니다."
+                    }
+                  ]
+                }
+              },
+              {},
+              {
+                "fields": [
+                  {
+                    "label": "이미지",
+                    "description": "늘어남을 방지하기 위해 넓이와 길이 비율을 2:1로 지정하세요. 고해상도 이미지는 큰 화면에서 더 잘 보입니다"
+                  },
+                  {
+                    "label": "색깔을 고르세요",
+                    "default": ""
+                  }
+                ]
+              }
+            ]
           }
-        ]
-      }
-    },
-    {
-      "label": "행동 설절",
-      "fields": [
+        },
+        {},
         {
-          "label": "목차를 기본값으로 표시",
-          "description": "활성화했을 때 책을 열 때 목차가 표시됨"
+          "label": "키워드 목록"
         },
         {
-          "label": "학습 진도 표시",
-          "description": "활성화하면 사용자가 페이지별로 완료했는지 여부를 나타내는 진도가 표시됨."
+          "label": "항상 보이기"
         },
         {
-          "label": "자동 학습 진도 표시 활성화",
-          "description": "활성화하면 과제없는 페이지는 페이지를 보았을 때 완료된 것으로 간주됨. 과제가 있는 경우 과제 완료시 페이지 완료 표시. 비활성화시 모든 페이지 하단에 사용자가 페이지 과제를 마쳤을 때 클릭할 수 있는 버튼이 있음."
+          "label": "자동 숨기기"
         },
         {
-          "label": "요약 표시",
-          "description": "활성화되면 요약 정보를 보고 학습진도/정답을 제출할 수 있음."
+          "label": "투명도"
+        },
+        {
+          "fields": [
+            {
+              "label": "이미지",
+              "description": "늘어남을 방지하기 위해 넓이와 길이 비율을 2:1로 지정하세요. 고해상도 이미지는 큰 화면에서 더 잘 보입니다"
+            },
+            {
+              "label": "색깔을 고르세요",
+              "default": ""
+            }
+          ]
         }
       ]
     },
     {
-      "label": "\"Read\" (읽기)에 대한 맞춤형 텍스트",
-      "default": "읽기"
-    },
-    {
-      "label": "\"Display 'Table of contents'\" (목차 표시)에 대한 맞춤형 텍스트",
-      "default": "목차 표시"
-    },
-    {
-      "label": "\"Hide 'Table of contents'\" (목차 숨기기)에 대한 맞춤형 텍스트",
-      "default": "목차 숨기기"
-    },
-    {
-      "label": "\"Next page\" (다음 페이지)에 대한 맞춤형 텍스트",
-      "default": "다음 페이지"
-    },
-    {
-      "label": "\"Previous page\" (이전 페이지)에 대한 맞춤형 텍스트",
-      "default": "이전 페이지"
-    },
-    {
-      "label": "\"Page completed!\" (페이지 완료)에 대한 맞춤형 텍스트",
-      "default": "페이지 완료!"
-    },
-    {
-      "label": "\"@pages of @total completed\" 총 @total 중 @pages 완료 (@pages 와 @total 실제값으로 대체)에 대한 맞춤형 텍스트",
-      "default": "총 @total 중 @pages 완료"
-    },
-    {
-      "label": "\"Incomplete page\" (페이지 미완료)에 대한 맞춤형 텍스트",
-      "default": "페이지 미완료"
-    },
-    {
-      "label": "\"Navigate to the top\" (맨 위로 이동)에 대한 맞춤형 텍스트",
-      "default": "(맨 위로 이동)"
-    },
-    {
-      "label": " \"I have finished this page\" (이 페이지 완료)에 대한 맞춤형 텍스트",
-      "default": "이 페이지를 완료했습니다."
-    },
-    {
-      "label": "전체 화면 버튼 레이블",
-      "default": "전체화면"
-    },
-    {
-      "label": "전체 화면 종료 버튼 레이블",
-      "default": "전체 화면 종료"
-    },
-    {
-      "label": "책의 페이지 진행",
-      "description": "\"@count\"는 페이지 수로 대체되며, \"@total\"는 전체 페이지 수로 변경된다.",
-      "default": "총 @total 페이지 중 @count"
-    },
-    {
-      "label": "상호작용 진행",
-      "description": "\"@count\"는 상호 작용 횟수로 대체되며, \"@total\"은 총 상호 작용 횟수로 대체된다.",
-      "default": " 총 @total 상호작용 중 @count"
-    },
-    {
-      "label": "\"Submit report\" (보고서 제출)에 대한 맞춤형 텍스트",
-      "default": "보고서 제출"
-    },
-    {
-      "label": "\"restart\" (재시작) 버튼",
-      "default": "재시작"
-    },
-    {
-      "label": "요약 머릿말",
-      "default": "요약"
-    },
-    {
-      "label": "\"All interactions\"(모든 상호작용)에 대한 맞춤형 텍스트",
-      "default": "모든 상호작용"
-    },
-    {
-      "label": "\"Unanswered interactions\" (미답변 상호작용)에 대한 맞춤형 텍스트",
-      "default": "미답변 상호작용"
-    },
-    {
-      "label": "점수",
-      "description": "\"@score\"는 현재 점수로 대체되고 \"@maxscore\" 는 달성 가능한 최대 점수로 대체됨.",
-      "default": "@score / @maxscore"
-    },
-    {
-      "label": "페이지 단위 상호 작용 완료",
-      "description": "\"@left\"는 나머지 상호 작용으로 대체되며, \"@max\"는 페이지의 총 상호 작용 수로 대체된다",
-      "default": "총 @max 상호작용 남은 상호작용 @left"
-    },
-    {
-      "label": "\"No interactions\"(상호작용 없음)에 대한 맞춤형 텍스트",
-      "default": "상호작용 없음"
-    },
-    {
-      "label": "\"Score\"(점수)에 대한 맞춤형 텍스트",
-      "default": "점수"
-    },
-    {
-      "label": "\"Summary &amp; submit\" (요약 및 제출) 버튼",
-      "default": "요약 및 제출"
-    },
-    {
-      "label": "\"You have not interacted with any pages.\" (상호작용이 없습니다)에 대한 맞춤형 텍스트",
-      "default": "상호작용이 없습니다."
-    },
-    {
-      "label": "\"You have to interact with at least one page before you can see the summary.\" (요약보기에 앞서 적어도 한 페이지에서 상호작용 필수)에 대한 맞춤형 텍스트",
-      "default": "요약보기에 앞서 적어도 한 페이지에서 상호작용 필수"
-    },
-    {
-      "label": "\"Your answers are submitted for review!\" (검토를 위해 답이 제출됨)에 대한 맞춤형 텍스트",
-      "default": "검토를 위해 답이 제출됨!"
-    },
-    {
-      "label": "학습진도 요약 레이블",
-      "default": "책 진도"
-    },
-    {
-      "label": "상호작용 진도 레이블",
-      "default": "상호작용 진도"
-    },
-    {
-      "label": "전체 점수 레이블",
-      "default": "전체 점수"
-    },
-    {
-      "label": "접근성 표시 텍스트",
+      "label": "Localize",
       "fields": [
         {
-          "label": "페이지 진도 텍스트형으로 표시",
-          "description": "시각화 진도표시에 대한 대체 텍스트. @page 및 @total 변수 이용가능.",
-          "default": "총 @total 중 @page 페이지."
+          "label": "\"Slide\"의 번역",
+          "default": "슬라이드"
         },
         {
-          "label": "네비게이션 메뉴 확장/축소 레이블",
-          "default": "네비게이션 메뉴 온 오프"
+          "label": "\"Score\"의 번역",
+          "default": "점수"
+        },
+        {
+          "label": "\"Your Score\"의 번역",
+          "default": "당신의 점수"
+        },
+        {
+          "label": "\"Max Score\"의 번역",
+          "default": "최고 점수"
+        },
+        {
+          "label": "\"Total\"의 번역",
+          "default": "총합"
+        },
+        {
+          "label": "\"Total Score\"의 번역",
+          "default": "총점"
+        },
+        {
+          "label": "해답 보이기 버튼의 제목",
+          "default": "해답 보이기"
+        },
+        {
+          "label": "재시도 버튼에 들어갈 내용",
+          "default": "재시도"
+        },
+        {
+          "label": "텍스트 내보내기 버튼에 들어갈 내용",
+          "default": "텍스트 내보내기"
+        },
+        {
+          "label": "키워드 목록 버튼 숨기기",
+          "default": "키워드 목록 숨기기"
+        },
+        {
+          "label": "키워드 목록 버튼 제목 보이기",
+          "default": "키워드 목록 보이기"
+        },
+        {
+          "label": "전체화면 레이블",
+          "default": "전체화면"
+        },
+        {
+          "label": "전체화면 해제",
+          "default": "전체화면 해제"
+        },
+        {
+          "label": "이전 슬라이드 레이블",
+          "default": "이전 슬라이드"
+        },
+        {
+          "label": "다음 슬라이드 레이블",
+          "default": "다음 슬라이드"
+        },
+        {
+          "label": "현재 슬라이드 레이블",
+          "default": "현재 슬라이드"
+        },
+        {
+          "label": "마지막 슬라이드 레이블",
+          "default": "마지막 슬라이드"
+        },
+        {
+          "label": "해답 모드 나가기 텍스트",
+          "default": "해답 모드 나가기"
+        },
+        {
+          "label": "해답모드 텍스트",
+          "default": "해답 모드"
+        },
+        {
+          "label": "두 개 이상의 과제가 있는 경우 텍스트",
+          "default": "두 개 이상의 과제가 있습니다"
+        },
+        {
+          "label": "점수 메시지 텍스트",
+          "default": "획득한 점수:"
+        },
+        {
+          "label": "페이스북 공유 텍스트",
+          "default": "페이스북에 공유하기"
+        },
+        {
+          "label": "트위터 공유 텍스트",
+          "default": "트위터에 공유하기"
+        },
+        {
+          "label": "구글 공유 텍스트",
+          "default": "구글플러스에 공유하기"
+        },
+        {
+          "label": "요약 슬라이드의 제목",
+          "default": "요약"
+        },
+        {
+          "label": "코멘트 아이콘의 제목",
+          "default": "코멘트"
+        },
+        {
+          "label": "인쇄 버튼의 제목",
+          "default": "인쇄"
+        },
+        {
+          "label": "인쇄 대화 상자에 들어갈 내용",
+          "default": "인쇄 범위 지정"
+        },
+        {
+          "label": "\"Print all slides\" (모든 슬라이드 인쇄) 버튼 텍스트",
+          "default": "모든 슬라이드 인쇄"
+        },
+        {
+          "label": "\"Print current slide\" (현재 슬라이드 인쇄) 버튼 라벨",
+          "default": "현재 슬라이드 인쇄"
+        },
+        {
+          "label": "제목없는 슬라이드 라벨",
+          "default": "제목없음"
+        },
+        {
+          "label": "보조 기술용 슬라이드 탐색 설명",
+          "default": "캔버스가 선택된 상태에서 왼쪽, 오른쪽 화살표 키로 슬라이드를 이동할 수 있습니다."
+        },
+        {
+          "label": "보조 기술용 캔버스 레이블",
+          "default": "캔버스가 선택된 상태에서 왼쪽, 오른쪽 화살표 키로 슬라이드를 이동할 수 있습니다."
+        },
+        {
+          "label": "완료되지 않은 상호작용에 대한 레이블",
+          "default": "@slideName 에 수행하지 않은 상호작용이 있습니다."
+        },
+        {
+          "label": "완료된 상호작용에 대한 레이블",
+          "default": "@slideName 의 상호작용을 마쳤습니다."
+        },
+        {
+          "label": "슬라이드 카운터의 레이블. 변수는 @index, @total",
+          "default": " 총 @total 에서 슬라이드 @index"
+        },
+        {
+          "label": "정답만 포함된 슬라이드의 레이블",
+          "default": "@slideName 의 답을 모두 맞췄습니다"
+        },
+        {
+          "label": "오답이 있는 슬라이드의 레이블",
+          "default": "@slideName 에 오답이 있습니다"
+        },
+        {
+          "label": "소셜 공유 표시줄의 레이블",
+          "default": "결과 공유하기"
+        },
+        {
+          "label": "보조 기술을 위한 총점 발표",
+          "default": "총점 @maxScore 에서 점수 @점수",
+          "description": "사용 가능한 변수는 @core 및 @maxScore 입니다."
+        },
+        {
+          "label": "보조 기술에 대한 전체 화면 공지 입력",
+          "default": "전체 화면입니다."
+        },
+        {
+          "label": "보조 기술에 대한 전체 화면 공지 종료",
+          "default": "전체화면 종료됨"
+        }
+      ]
+    },
+    {
+      "label": "동작 설정",
+      "description": "이 옵션들은 동작 설정을 덮어쓰기 합니다",
+      "fields": [
+        {
+          "label": "액티브 서피스 모드 활성화",
+          "description": "최종 사용자에 대한 탐색 컨트롤 제거. 슬라이드로 이동 기능을 사용하여 탐색하십시오."
+        },
+        {
+          "label": "요약 슬라이드 숨기기",
+          "description": "요약 슬라이드 숨기기"
+        },
+        {
+          "label": "\"Show Solution\" (해답 보이기) 버튼 덮어쓰기",
+          "description": "이 옵션은 \"Show Solution\" 버튼을 모든 문제에 보이게 할지, 모두 숨길지, 각 문제마다 개별적으로 설정할지를 결정합니다.",
+          "options": [
+            {
+              "label": "활성화"
+            },
+            {
+              "label": "비활성화"
+            }
+          ]
+        },
+        {
+          "label": "\"Retry\" (재시도) 버튼 덮어쓰기",
+          "description": "이 옵션은 \"Retry\" (재시도) 버튼을 모든 문제에 보이게 할지, 모두 숨길지, 각 문제마다 개별적으로 설정할지를 결정합니다",
+          "options": [
+            {
+              "label": "활성화"
+            },
+            {
+              "label": "비활성화"
+            }
+          ]
+        },
+        {
+          "label": "요약 슬라이드에 \"Show solution\" (해답표시) 표시 단추",
+          "description": "활성화된 경우 학습자가 요약 슬라이드에 도달하면 모든 질문에 대한 해결책을 보여줄 수 있다."
+        },
+        {
+          "label": "\"Retry\" 버튼 요약 슬라이드에 보이기",
+          "description": "활성화된 경우 학습자는 요약 슬라이드에 도달하면 모든 질문을 다시 시도할 수 있다. 페이지를 새로 고침으로써 학습자가 이 버튼이 표시되지 않더라도 재시도할 수 있다는 점을 유념하십시오."
+        },
+        {
+          "label": "인쇄 버튼 활성화",
+          "description": "인쇄버튼을 활성화합니다"
+        },
+        {
+          "label": "소셜 공유 설정",
+          "description": "이 선택사항들은 당신이 SNS 설정을 덮어쓸 수 있게 해줄 것이다. 링크가 제공되면 빈 값이 자동으로 입력되며, 그렇지 않으면 모든 값이 생성된다.",
+          "fields": [
+            {
+              "label": "페이스북 공유 아이콘 보이기"
+            },
+            {
+              "label": "페이스북 공유 설정",
+              "fields": [
+                {
+                  "label": "페이스북에 링크를 공유",
+                  "default": "@currentpageurl"
+                },
+                {
+                  "label": "페이스북에 문장을 공유",
+                  "default": "@currentpageurl 과제에서 총점 @maxScore 중에서 @core를 득점했다."
+                }
+              ]
+            },
+            {
+              "label": "트위터 공유 아이콘 보이기"
+            },
+            {
+              "label": "트위터 공유 설정",
+              "fields": [
+                {
+                  "label": "트위터에 문장을 공유",
+                  "default": "@currentpageurl 과제에서 총점 @maxScore 중에서 @core를 득점했다."
+                },
+                {
+                  "label": "트위터에 링크를 공유",
+                  "default": "@currentpageurl"
+                },
+                {
+                  "label": "트위터에 해쉬태그를 공유",
+                  "default": "h5p, course"
+                }
+              ]
+            },
+            {
+              "label": "구글 플러스 공유 아이콘 보이기"
+            },
+            {
+              "label": "구글에 링크를 공유",
+              "default": "@currentpageurl"
+            }
+          ]
         }
       ]
     }

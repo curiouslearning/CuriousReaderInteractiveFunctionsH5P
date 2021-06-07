@@ -1,199 +1,383 @@
 {
   "semantics": [
     {
-      "label": "Enable book cover",
-      "description": "A cover that shows info regarding the book before access"
-    },
-    {
-      "label": "Cover Page",
       "fields": [
         {
-          "label": "Cover description",
-          "description": "This text will be the description of your book."
-        },
-        {
-          "label": "Cover image",
-          "description": "An optional background image for the introduction."
-        },
-        {
-          "label": "Cover image alternative text",
-          "description": "An alternative text for the cover image"
-        }
-      ]
-    },
-    {
-      "label": "Pages",
-      "entity": "Page",
-      "widgets": [
-        {
-          "label": "Default"
-        }
-      ],
-      "field": {
-        "label": "Item",
-        "fields": [
-          {
-            "label": "Page"
+          "field": {
+            "fields": [
+              {
+                "field": {
+                  "fields": [
+                    {},
+                    {},
+                    {},
+                    {},
+                    {},
+                    {
+                      "label": "Kommentarar",
+                      "description": "Kommentarane visast når brukaren ser på fasit."
+                    },
+                    {
+                      "label": "Alltid vis kommentarer"
+                    },
+                    {
+                      "label": "Opasitet for bakgrunn"
+                    },
+                    {
+                      "label": "Vis som knapp"
+                    },
+                    {
+                      "label": "Button size",
+                      "options": [
+                        {
+                          "label": "Small"
+                        },
+                        {
+                          "label": "Big"
+                        }
+                      ]
+                    },
+                    {
+                      "label": "Tittel"
+                    },
+                    {
+                      "label": "Go to to",
+                      "options": [
+                        {
+                          "label": "Specific slide number"
+                        },
+                        {
+                          "label": "Neste side"
+                        },
+                        {
+                          "label": "Forrige side"
+                        }
+                      ]
+                    },
+                    {
+                      "label": "Gå til lysbilete",
+                      "description": "Only applicable when 'Specific slide number' is selected"
+                    },
+                    {
+                      "label": "Usynlig",
+                      "description": "Standard musepeker, ingen tittel eller tabulatorstopp. Advarsel: brukarar med funksjonshemminger eller kun tastatur vil ha problemer med å bruke elementet."
+                    }
+                  ]
+                }
+              },
+              {},
+              {
+                "fields": [
+                  {
+                    "label": "Bilete",
+                    "description": "Bakgrunnsbilder bør ha en 2:1 vidde til høyde ratio for å unngå strekking av bildet. Høyoppløselige bilder vil se bedre ut på større skjermer."
+                  },
+                  {
+                    "label": "Velg farge",
+                    "default": ""
+                  }
+                ]
+              }
+            ]
           }
-        ]
-      }
-    },
-    {
-      "label": "Behavioural settings",
-      "fields": [
+        },
+        {},
         {
-          "label": "Display table of contents as default",
-          "description": "When enabled the table of contents is showed when opening the book"
+          "label": "Nøkkelordsliste"
         },
         {
-          "label": "Display Progress Indicators",
-          "description": "When enabled there will be indicators per page showing the user if he is done with the page or not."
+          "label": "Vis alltid"
         },
         {
-          "label": "Enable automatic progress",
-          "description": "If enabled a page without tasks is considered done when viewed. A page with tasks when all tasks are done. If disabled there will be a button at the bottom of every page for the user to click when done with the page."
+          "label": "Auto skjul"
         },
         {
-          "label": "Display summary",
-          "description": "When enabled the user can see a summary and submit the progress/answers"
+          "label": "Opasitet"
+        },
+        {
+          "fields": [
+            {
+              "label": "Bilete",
+              "description": "Bakgrunnsbilder bør ha en 2:1 vidde til høyde ratio for å unngå strekking av bildet. Høyoppløselige bilder vil se bedre ut på større skjermer."
+            },
+            {
+              "label": "Velg farge",
+              "default": ""
+            }
+          ]
         }
       ]
     },
     {
-      "label": "Translation for \"Read\"",
-      "default": "Les"
-    },
-    {
-      "label": "Translation for \"Display 'Table of contents'\"",
-      "default": "Vis 'Table of contents'"
-    },
-    {
-      "label": "Translation for \"Hide 'Table of contents'\"",
-      "default": "Skjul 'Table of contents'"
-    },
-    {
-      "label": "Translation for \"Next page\"",
-      "default": "Neste side"
-    },
-    {
-      "label": "Translation for \"Previous page\"",
-      "default": "Førre side"
-    },
-    {
-      "label": "Translation for \"Page completed!\"",
-      "default": "Kapittel ferdig!"
-    },
-    {
-      "label": "Translation for \"@pages of @total completed\" (@pages and @total will be replaced by actual values)",
-      "default": "@pages av @total fullført"
-    },
-    {
-      "label": "Translation for \"Incomplete page\"",
-      "default": "Ikkje fullført kapittel"
-    },
-    {
-      "label": "Translation for \"Navigate to the top\"",
-      "default": "Gå til toppen"
-    },
-    {
-      "label": "Translation for \"I have finished this page\"",
-      "default": "Eg er ferdig med sida"
-    },
-    {
-      "label": "Fullscreen button label",
-      "default": "Fullskjerm"
-    },
-    {
-      "label": "Exit fullscreen button label",
-      "default": "Lukk fullskjerm"
-    },
-    {
-      "label": "Page progress in book",
-      "description": "\"@count\" will be replaced by page count, and \"@total\" with the total number of pages",
-      "default": "@count of @total pages"
-    },
-    {
-      "label": "Interaction progress",
-      "description": "\"@count\" will be replaced by interaction count, and \"@total\" with the total number of interactions",
-      "default": "@count of @total interactions"
-    },
-    {
-      "label": "Translation for \"Submit report\"",
-      "default": "Submit Report"
-    },
-    {
-      "label": "Label for \"restart\" button",
-      "default": "Restart"
-    },
-    {
-      "label": "Summary header",
-      "default": "Summary"
-    },
-    {
-      "label": "Translation for \"All interactions\"",
-      "default": "All interactions"
-    },
-    {
-      "label": "Translation for \"Unanswered interactions\"",
-      "default": "Unanswered interactions"
-    },
-    {
-      "label": "Score",
-      "description": "\"@score\" will be replaced with current score, and \"@maxscore\" will be replaced with max achievable score",
-      "default": "@score / @maxscore"
-    },
-    {
-      "label": "Per page interactions completion",
-      "description": "\"@left\" will be replaced with remaining interactions, and \"@max\" will be replaced with total number of interactions on the page",
-      "default": "@left of @max interactions completed"
-    },
-    {
-      "label": "Translation for \"No interactions\"",
-      "default": "No interactions"
-    },
-    {
-      "label": "Translation for \"Score\"",
-      "default": "Score"
-    },
-    {
-      "label": "Label for \"Summary &amp; submit\" button",
-      "default": "Summary &amp; submit"
-    },
-    {
-      "label": "Translation for \"You have not interacted with any pages.\"",
-      "default": "You have not interacted with any pages."
-    },
-    {
-      "label": "Translation for \"You have to interact with at least one page before you can see the summary.\"",
-      "default": "You have to interact with at least one page before you can see the summary."
-    },
-    {
-      "label": "Translation for \"Your answers are submitted for review!\"",
-      "default": "Your answers are submitted for review!"
-    },
-    {
-      "label": "Summary progress label",
-      "default": "Book progress"
-    },
-    {
-      "label": "Interactions progress label",
-      "default": "Interactions progress"
-    },
-    {
-      "label": "Total score label",
-      "default": "Total score"
-    },
-    {
-      "label": "Accessibility texts",
+      "label": "Innstillinger for oppgave-oppførsel",
       "fields": [
         {
-          "label": "Page progress textual alternative",
-          "description": "An alternative text for the visual page progress. @page and @total variables available.",
-          "default": "Side @page av @total."
+          "label": "Oversetting for \"Lysbilete\"",
+          "default": "Side"
         },
         {
-          "label": "Label for expanding/collapsing navigation menu",
-          "default": "Slå på navigasjonsmeny"
+          "label": "Translation for \"Score\"",
+          "default": "Poengsum"
+        },
+        {
+          "label": "Oversetting for \"Din poengsum\"",
+          "default": "Din poengsum"
+        },
+        {
+          "label": "Oversetting for \"Topp poengsum\"",
+          "default": "Topp poengsum"
+        },
+        {
+          "label": "Translation for \"Total\"",
+          "default": "Total"
+        },
+        {
+          "label": "Translation for \"Total Score\"",
+          "default": "Total Score"
+        },
+        {
+          "label": "Tittel på \"Vis fasit\" knappen",
+          "default": "Vis fasit"
+        },
+        {
+          "label": "Tekst til \"Omstart\" knappen",
+          "default": "Prøv igjen"
+        },
+        {
+          "label": "Oversetting for \"Eksporter tekst\"",
+          "default": "Eksporter dokument"
+        },
+        {
+          "label": "Tittel for \"Skjul nøkkelordliste\"-knapp",
+          "default": "Skjul nøkkelordliste"
+        },
+        {
+          "label": "Tittel for \"Vis nøkkelordliste\"-knapp",
+          "default": "Vis nøkkelordliste"
+        },
+        {
+          "label": "Aktiver \"Prøv igjen\"-knapp",
+          "default": "Fullskjerm"
+        },
+        {
+          "label": "Krev inndata fra brukeren før fasit gis.",
+          "default": "Forlat fullskjerm"
+        },
+        {
+          "label": "Tittel for \"Forrige side\"-knapp",
+          "default": "Førre side"
+        },
+        {
+          "label": "Tittel for \"Neste side\"-knapp",
+          "default": "Neste side"
+        },
+        {
+          "label": "Tittel for \"Denne side\"-knapp",
+          "default": "Denne sida"
+        },
+        {
+          "label": "Tittel for \"Siste side\"-knapp",
+          "default": "Siste side"
+        },
+        {
+          "label": "Tittel for \"Avslutt fasit modus\"-knapp",
+          "default": "Avslutt fasitmodus"
+        },
+        {
+          "label": "Avslutt fasit modus tekst",
+          "default": "Fasitmodus"
+        },
+        {
+          "label": "Tekst ved flere oppgaver på en side",
+          "default": "Fleire oppgåver"
+        },
+        {
+          "label": "poengTekst",
+          "default": "Du klarte:"
+        },
+        {
+          "label": "Del på Facebook tekst",
+          "default": "Del på Facebook"
+        },
+        {
+          "label": "Del på Twitter tekst",
+          "default": "Del på Twitter"
+        },
+        {
+          "label": "Share to Google text",
+          "default": "Del på Google+"
+        },
+        {
+          "label": "Tittel for \"Oppsummering\" siden",
+          "default": "Oppsummering"
+        },
+        {
+          "label": "Tittel for kommentarikonet",
+          "default": "Vis kommentarar"
+        },
+        {
+          "label": "Tittel for \"Skriv ut\"-knapp",
+          "default": "Skriv ut"
+        },
+        {
+          "label": "Skriv ut dialog ingress",
+          "default": "Korleis vil du skrive ut denne presentasjonen?"
+        },
+        {
+          "label": "Tittel for \"Skriv ut alle sider\"-knapp",
+          "default": "Skriv ut alle sider"
+        },
+        {
+          "label": "Tittel for \"Skriv ut nåværende side\"-knapp",
+          "default": "Skriv ut noverande side"
+        },
+        {
+          "label": "Label for slides without a title",
+          "default": "Ingen tittel"
+        },
+        {
+          "label": "Explanation of slide navigation for assistive technologies",
+          "default": "Bruk venstre og høgre piltast for å skifte lysbilete i den retninga når lerret er valt"
+        },
+        {
+          "label": "Canvas label for assistive technologies",
+          "default": "Presentasjonslerret. Bruk høgre og venstre piltast til å navigere mellom lysbilete."
+        },
+        {
+          "label": "Label for uncompleted interactions",
+          "default": "@slideName inneheld ikkje avslutta interaksjon"
+        },
+        {
+          "label": "Label for completed interactions",
+          "default": "@slideName inneheld avslutta interaksjon"
+        },
+        {
+          "label": "Label for slide counter. Variables are @index, @total",
+          "default": "Lysbilete @index av @total"
+        },
+        {
+          "label": "Label for slides that only contains correct answers",
+          "default": "@slideName har berre rette svar"
+        },
+        {
+          "label": "Label for slides that has incorrect answers",
+          "default": "@slideName har feil svar"
+        },
+        {
+          "label": "Label for social sharing bar",
+          "default": "Del resultat"
+        },
+        {
+          "label": "Total score announcement for assistive technologies",
+          "default": "Du fekk @score av totalt @maxScore poeng",
+          "description": "Available variables are @score and @maxScore"
+        },
+        {
+          "label": "Entered fullscreen announcement for assistive technologies",
+          "default": "Går inn i fullskjerm"
+        },
+        {
+          "label": "Exited fullscreen announcement for assistive technologies",
+          "default": "Gjekk ut av fullskjerm"
+        }
+      ]
+    },
+    {
+      "label": "Innstillinger for oppførsel.",
+      "description": "Disse alternativene vil la deg overstyre innstillinger.",
+      "fields": [
+        {
+          "label": "Slå på aktiv flate",
+          "description": "Fjerner navigasjonskontroller for sluttbrukeren. Bruk 'Gå Til Lysbilde' for å navigere"
+        },
+        {
+          "label": "Skjul sammendrag.",
+          "description": "Aktivering vil føre til at sammendrag siden ikke vises."
+        },
+        {
+          "label": "Overstyr «Fasit»-knapp",
+          "description": "Dette valget avgjør om «Fasit»-knappen vil vises for alle spørsmål, skjules for alle eller konfigureres individuelt for hvert spørsmål.",
+          "options": [
+            {
+              "label": "Aktivert"
+            },
+            {
+              "label": "Deaktivert"
+            }
+          ]
+        },
+        {
+          "label": "Overstyr «Prøv igjen»-knapp",
+          "description": "Dette valget avgjør om «Prøv igjen»-knappen vil vises for alle spørsmål, skjules for alle eller konfigureres individuelt for hvert spørsmål.",
+          "options": [
+            {
+              "label": "Aktivert"
+            },
+            {
+              "label": "Deaktivert"
+            }
+          ]
+        },
+        {
+          "label": "Show \"Show solution\" button in the summary slide",
+          "description": "If enabled, the learner will be able to show the solutions for all question when they reach the summary slide"
+        },
+        {
+          "label": "Show \"Retry\" button in the summary slide",
+          "description": "If enabled, the learner will be able to retry all questions when they reach the summary slide. Be advised that by refreshing the page the learners will be able to retry even if this button isn't showing."
+        },
+        {
+          "label": "Aktiver print-knapp",
+          "description": "Aktiverer print-knappen."
+        },
+        {
+          "label": "Social Settings",
+          "description": "These options will let you override social behaviour settings. Empty values will be filled in automatically if a link is provided, otherwise all values will be generated.",
+          "fields": [
+            {
+              "label": "Display Facebook share icon"
+            },
+            {
+              "label": "Facebook share settings",
+              "fields": [
+                {
+                  "label": "Share to Facebook link",
+                  "default": "@currentpageurl"
+                },
+                {
+                  "label": "Share to Facebook quote",
+                  "default": "I scored @score out of @maxScore on a task at @currentpageurl."
+                }
+              ]
+            },
+            {
+              "label": "Display Twitter share icon"
+            },
+            {
+              "label": "Twitter share settings",
+              "fields": [
+                {
+                  "label": "Share to Twitter statement",
+                  "default": "I scored @score out of @maxScore on a task at @currentpageurl."
+                },
+                {
+                  "label": "Share to Twitter link",
+                  "default": "@currentpageurl"
+                },
+                {
+                  "label": "Share to Twitter hashtags",
+                  "default": "h5p, course"
+                }
+              ]
+            },
+            {
+              "label": "Display Google+ share icon"
+            },
+            {
+              "label": "Share to Google link",
+              "default": "@currentpageurl"
+            }
+          ]
         }
       ]
     }
