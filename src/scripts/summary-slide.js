@@ -5,7 +5,7 @@ const SummarySlide = (function () {
 
   /**
    * Constructor for summary slide
-   * @param {H5P.CoursePresentation} coursePresentation Course presentation parent of summary slide
+   * @param {H5P.CuriousReader} coursePresentation Course presentation parent of summary slide
    * @param {$} $summarySlide Summary slide element
    * @constructor
    */

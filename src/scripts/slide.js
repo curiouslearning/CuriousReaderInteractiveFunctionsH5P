@@ -42,7 +42,7 @@ function Slide(parameters) {
     self.parent.elementsAttached[self.index] = true;
     self.parent.trigger('domChanged', {
       '$target': $wrapper,
-      'library': 'CoursePresentation',
+      'library': 'CuriousReader',
       'key': 'newSlide'
     }, {'bubbles': true, 'external': true});
   };

@@ -4,7 +4,7 @@ var isDev = (nodeEnv !== 'production');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const extractStyles = new ExtractTextPlugin({
-  filename: "h5p-course-presentation.css"
+  filename: "h5p-curious-reader.css"
 });
 
 var config = {
@@ -13,7 +13,7 @@ var config = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'h5p-course-presentation.js'
+    filename: 'h5p-curious-reader.js'
   },
   module: {
     rules: [
