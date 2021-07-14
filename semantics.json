@@ -103,6 +103,14 @@
                     "optional": true
                   },
                   {
+                    "name": "willDoAnimation",
+                    "type": "boolean",
+                    "label": "Will Do Animation",
+                    "importance": "medium",
+                    "default": false,
+                    "optional": true
+                  },
+                  {
                     "name": "displayAsButton",
                     "type": "boolean",
                     "label": "Display as button",
