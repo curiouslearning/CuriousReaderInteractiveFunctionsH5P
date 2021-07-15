@@ -17,6 +17,7 @@ H5P.CRAudio = (function ($) {
     this.contentId = id;
     this.params = params;
     this.extras = extras;
+    this.splittedText = this.params['Each duration and text']
 
     this.toggleButtonEnabled = true;
 
@@ -63,6 +64,7 @@ H5P.CRAudio = (function ($) {
 
     var audioButton = $('<button/>', {
       'class': AUDIO_BUTTON + " " + PLAY_BUTTON,
+      'id': 'aud',
       'aria-label': this.params.playAudio
     }).appendTo(self.$inner)
       .click( function () {
@@ -98,6 +100,30 @@ H5P.CRAudio = (function ($) {
       self.play();
     }
 
+    $(document).ready(function() {
+      $('#headId')[0].addEventListener('click', function (event) {
+        for (let l = 0; l < self.splittedText.length; l++) {
+          if (event.target.id != 'headid') {
+            $('#splittedText' + l).css('color', 'black')
+            $('#splittedText' + l).css("font-size", "20px");
+            if ('#splittedText' + event.target.id.endsWith(l)) {
+              spanTagId = parseInt((event.target.id).charAt((event.target.id.length - 1)))
+              self.audio.currentTime = self.splittedText[spanTagId]['Starting Duration'];
+              self.audioEndTime = self.splittedText[spanTagId]['End Duration'];
+              self.play()
+              //setTimeout(function(){self.pause()},splittedTextCopy[spanNumberId]['End Duration']-splittedTextCopy[spanNumberId]['Starting Duration'])
+            }
+            $('#splittedText' + spanTagId).css('color', 'yellow')
+            $('#splittedText' + spanTagId).css("font-size", "40px");
+            setTimeout(function () {
+              $('#splittedText' + l).css('color', 'black')
+              $('#splittedText' + l).css("font-size", "20px");
+            }, 600);
+          }
+        }
+      })
+    });
+
     //Event listeners that change the look of the player depending on events.
     self.audio.addEventListener('ended', function () {
       audioButton
@@ -123,6 +149,15 @@ H5P.CRAudio = (function ($) {
         .removeClass(PAUSE_BUTTON)
         .addClass(PLAY_BUTTON_PAUSED);
     });
+
+    self.audio.addEventListener('timeupdate', function() {
+      if (self.audio.currentTime >= self.audioEndTime) {
+        self.pause();
+        self.audio.currentTime = 0;
+      }
+    });
+
+
 
     this.$audioButton = audioButton;
     //Scale icon to container
@@ -291,6 +326,7 @@ H5P.CRAudio.prototype.attachFlash = function ($wrapper) {
  * @returns {undefined}
  */
 H5P.CRAudio.prototype.stop = function () {
+  console.log('stop');
   if (this.flowplayer !== undefined) {
     this.flowplayer.stop().close().unload();
   }
