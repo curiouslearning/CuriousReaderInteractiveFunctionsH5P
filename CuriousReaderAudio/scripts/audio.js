@@ -102,8 +102,8 @@ H5P.CRAudio = (function ($) {
 
     $(document).ready(function() {
       $('#headId')[0].addEventListener('click', function (event) {
-        for (let l = 0; l < self.splittedText.length; l++) {
-          if (event.target.id != 'headid') {
+        if (event.target.id != 'headId') {
+          for (let l = 0; l < self.splittedText.length; l++) {
             $('#splittedText' + l).css('color', 'black')
             $('#splittedText' + l).css("font-size", "20px");
             if ('#splittedText' + event.target.id.endsWith(l)) {
