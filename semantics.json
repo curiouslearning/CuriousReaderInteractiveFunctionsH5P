@@ -111,6 +111,24 @@
                     "optional": true
                   },
                   {
+                    "name": "animationType",
+                    "type": "select",
+                    "label": "Animation Type",
+                    "importance": "low",
+                    "optional": false,
+                    "default": "pop",
+                    "options": [
+                      {
+                        "value": "spin",
+                        "label": "Spin"
+                      },
+                      {
+                        "value": "pop",
+                        "label": "Pop"
+                      }
+                    ]
+                  },
+                  {
                     "name": "displayAsButton",
                     "type": "boolean",
                     "label": "Display as button",
