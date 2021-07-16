@@ -4,8 +4,14 @@ var H5P = H5P || {};
  * H5P audio module
  *
  * @external {jQuery} $ H5P.jQuery
+ * 
+ * 
  */
+
 H5P.CRAudio = (function ($) {
+  let splittedTextCopy;
+  let self1;
+  let spanNumberId
   /**
   * @param {Object} params Options for this library.
   * @param {Number} id Content identifier.
@@ -19,27 +25,88 @@ H5P.CRAudio = (function ($) {
     this.extras = extras;
 
     this.toggleButtonEnabled = true;
+    this.splittedText = this.params['Each duration and text']
+    if(this.splittedText!=undefined)
+    {
+      for (let k = 0; k < this.splittedText.length; k++) {
+        this.splittedText[k]['highlighted'] = false
+      }
 
+    }
+   
+    splittedTextCopy = this.splittedText
+    console.log(this.splittedText)
     // Retrieve previous state
     if (extras && extras.previousState !== undefined) {
       this.oldTime = extras.previousState.currentTime;
     }
-
+    console.log($('#headid'))
     this.params = $.extend({}, {
       playerMode: 'minimalistic',
       fitToWrapper: false,
       controls: true,
-      autoplay: false,
+      autoplay: true,
       audioNotSupported: "Your browser does not support this audio",
       playAudio: "Play audio",
       pauseAudio: "Pause audio"
     }, params);
 
+
     this.on('resize', this.resize, this);
   }
 
+
+
+
   C.prototype = Object.create(H5P.EventDispatcher.prototype);
   C.prototype.constructor = C;
+
+
+
+
+
+
+  C.prototype.playSplittedAudios = function () {
+
+
+    // if (this.audio.currentTime > splittedTextCopy[spanNumberId]['End Duration']) {
+    //   console.log('entered else')
+    //   console.log(this.audio.currentTime)
+    //   if (this.audio !== undefined) {
+    //     this.audio.pause();
+    //     this.audio.currentTime = 0;
+    //   }
+    // }
+
+    var time = this.audio.currentTime, j = 0, word;
+    console.log("These are the words")
+    console.log(time)
+    console.log(this.splittedText.length)
+    for (j = 0; j < this.splittedText.length; j++) {
+      // console.log(word)
+      word = this.splittedText[j]
+      console.log(word)
+      if (time >= word['Starting Duration'] && time < word['End Duration']) {
+        console.log("inside if")
+        if (!word.highlighted) {
+          console.log("Hi Hello")
+          word.highlighted = true;
+          $('#splittedText' + j).css("color", "yellow");
+          $('#splittedText' + j).css("font-size", "200%");
+          // $(j).css('width', '300px')
+          // $(j).css('height', 'auto');
+        }
+      }
+      else if (word.highlighted) {
+        $('#splittedText' + j).css("color", "black");
+        $('#splittedText' + j).css("font-size", "100%");
+        // $(j).css('width', '150px')
+        // $(j).css('height', 'auto');
+        word.highlighted = false;
+      }
+    }
+  }
+
 
   /**
    * Adds a minimalistic audio player with only "play" and "pause" functionality.
@@ -47,6 +114,11 @@ H5P.CRAudio = (function ($) {
    * @param {jQuery} $container Container for the player.
    * @param {boolean} transparentMode true: the player is only visible when hovering over it; false: player's UI always visible
    */
+  this.curTime = function (abc) {
+    this.cTime = abc
+    console.log(this.cTime)
+  }
+
   C.prototype.addMinimalAudioPlayer = function ($container, transparentMode) {
     var INNER_CONTAINER = 'h5p-audio-inner';
     var AUDIO_BUTTON = 'h5p-audio-minimal-button';
@@ -57,24 +129,29 @@ H5P.CRAudio = (function ($) {
     var self = this;
     this.$container = $container;
 
+
     self.$inner = $('<div/>', {
       'class': INNER_CONTAINER + (transparentMode ? ' h5p-audio-transparent' : '')
     }).appendTo($container);
 
     var audioButton = $('<button/>', {
       'class': AUDIO_BUTTON + " " + PLAY_BUTTON,
+      'id': "Button_id",
       'aria-label': this.params.playAudio
     }).appendTo(self.$inner)
-      .click( function () {
+      .click(function () {
+        console.log("Clicked")
         if (!self.isEnabledToggleButton()) {
           return;
         }
 
         // Prevent ARIA from playing over audio on click
         this.setAttribute('aria-hidden', 'true');
+        this.setAttribute('id', 'aud')
 
         if (self.audio.paused) {
           self.play();
+
         }
         else {
           self.pause();
@@ -95,9 +172,40 @@ H5P.CRAudio = (function ($) {
 
     // cpAutoplay is passed from coursepresentation
     if (this.params.autoplay) {
+      console.log(this.params.autoplay)
       self.play();
     }
+    $(document).ready(function () {
+      if((splittedTextCopy!=undefined) && ($('#headid')!=undefined))
+      {
+        $('#headid')[0].addEventListener('click', function (event) {
+          for (let l = 0; l < splittedTextCopy.length; l++) {
+            if (event.target.id != 'headid') {
+              $('#splittedText' + l).css('color', 'black')
+              $('#splittedText' + l).css("font-size", "20px");
+              if ('#splittedText' + event.target.id.endsWith(l)) {
+                spanNumberId = parseInt((event.target.id).charAt((event.target.id.length - 1)))
+                self.audio.currentTime = splittedTextCopy[spanNumberId]['Starting Duration']
+  
+                self.play()
+                //setTimeout(function(){self.pause()},splittedTextCopy[spanNumberId]['End Duration']-splittedTextCopy[spanNumberId]['Starting Duration']);
+  
+              }
+              $('#splittedText' + spanNumberId).css('color', 'yellow')
+              $('#splittedText' + spanNumberId).css("font-size", "40px");
+              setTimeout(function () {
+                $('#splittedText' + l).css('color', 'black')
+                $('#splittedText' + l).css("font-size", "20px");
+              }, 600);
+            }
+  
+  
+          }
+        })
+      }
+      
 
+    });
     //Event listeners that change the look of the player depending on events.
     self.audio.addEventListener('ended', function () {
       audioButton
@@ -108,15 +216,21 @@ H5P.CRAudio = (function ($) {
         .addClass(PLAY_BUTTON);
     });
 
+
     self.audio.addEventListener('play', function () {
+      console.log("Playing")
+      // self.trigger('giveTime',audio.name)
       audioButton
         .attr('aria-label', self.params.pauseAudio)
         .removeClass(PLAY_BUTTON)
         .removeClass(PLAY_BUTTON_PAUSED)
         .addClass(PAUSE_BUTTON);
     });
+    self.audio.addEventListener('timeupdate', this.playSplittedAudios.bind(this));
+    
 
     self.audio.addEventListener('pause', function () {
+      console.log('paused')
       audioButton
         .attr('aria-hidden', false)
         .attr('aria-label', self.params.playAudio)
@@ -124,8 +238,11 @@ H5P.CRAudio = (function ($) {
         .addClass(PLAY_BUTTON_PAUSED);
     });
 
+   
+
     this.$audioButton = audioButton;
     //Scale icon to container
+    self1 = self
     self.resize();
   };
 
@@ -138,10 +255,10 @@ H5P.CRAudio = (function ($) {
       var w = this.$container.width();
       var h = this.$container.height();
       if (w < h) {
-        this.$audioButton.css({'font-size': w / 2 + 'px'});
+        this.$audioButton.css({ 'font-size': w / 2 + 'px' });
       }
       else {
-        this.$audioButton.css({'font-size': h / 2 + 'px'});
+        this.$audioButton.css({ 'font-size': h / 2 + 'px' });
       }
     }
   };
@@ -156,7 +273,9 @@ H5P.CRAudio = (function ($) {
  * @param {jQuery} $wrapper Our poor container.
  */
 H5P.CRAudio.prototype.attach = function ($wrapper) {
+  //$container.append('<h2>This is heading</h2>')
   $wrapper.addClass('h5p-audio-wrapper');
+
 
   // Check if browser supports audio.
   var audio = document.createElement('audio');
@@ -191,6 +310,7 @@ H5P.CRAudio.prototype.attach = function ($wrapper) {
   }
 
   audio.className = 'h5p-audio';
+  audio.setAttribute('id', 'aud')
   audio.controls = this.params.controls === undefined ? true : this.params.controls;
   audio.preload = 'auto';
   audio.style.display = 'block';
@@ -244,8 +364,8 @@ H5P.CRAudio.prototype.attachFlash = function ($wrapper) {
     $wrapper.addClass('h5p-audio-not-supported');
     $wrapper.html(
       '<div class="h5p-audio-inner">' +
-        '<div class="h5p-audio-not-supported-icon"><span/></div>' +
-        '<span>' + this.params.audioNotSupported + '</span>' +
+      '<div class="h5p-audio-not-supported-icon"><span/></div>' +
+      '<span>' + this.params.audioNotSupported + '</span>' +
       '</div>'
     );
 
@@ -316,6 +436,7 @@ H5P.CRAudio.prototype.play = function () {
  * Pauses the audio.
  */
 H5P.CRAudio.prototype.pause = function () {
+  console.log('audio paused')
   if (this.audio !== undefined) {
     this.audio.pause();
   }

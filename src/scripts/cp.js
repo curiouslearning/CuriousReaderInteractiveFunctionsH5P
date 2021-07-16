@@ -32,6 +32,10 @@ let CuriousReader = function (params, id, extras) {
   this.hasAnswerElements = false;
   this.ignoreResize = false;
   this.isTask = false;
+  // $('.h5p-audio').('timeupdate',function(){
+  //   console.log("Executing time update")
+  // })
+  console.log("This is CP")
 
   if (extras.cpEditor) {
     this.editor = extras.cpEditor;
@@ -117,8 +121,9 @@ let CuriousReader = function (params, id, extras) {
     }
   }
 
+
   this.keywordMenu = new KeywordsMenu({
-    l10n : this.l10n,
+    l10n: this.l10n,
     currentIndex: this.previousState !== undefined ? this.previousState.progress : 0
   });
 
@@ -165,7 +170,7 @@ CuriousReader.prototype.getCurrentState = function () {
       for (var element = 0; element < this.elementInstances[slide].length; element++) {
         var instance = this.elementInstances[slide][element];
         if (instance.getCurrentState instanceof Function ||
-            typeof instance.getCurrentState === 'function') {
+          typeof instance.getCurrentState === 'function') {
           if (!state.answers[slide]) {
             state.answers[slide] = [];
           }
@@ -207,22 +212,22 @@ CuriousReader.prototype.attach = function ($container) {
   }
 
   var html =
-          '<div class="h5p-keymap-explanation hidden-but-read">' + this.l10n.accessibilitySlideNavigationExplanation + '</div>' +
-          '<div class="h5p-fullscreen-announcer hidden-but-read" aria-live="polite"></div>' +
-          '<div class="h5p-wrapper" tabindex="0" aria-label="' + this.l10n.accessibilityCanvasLabel + '">' +
-          '  <div class="h5p-current-slide-announcer hidden-but-read" aria-live="polite"></div>' +
-          '  <div tabindex="-1"></div>' +
-          '  <div class="h5p-box-wrapper">' +
-          '    <div class="h5p-presentation-wrapper">' +
-          '      <div class="h5p-keywords-wrapper"></div>' +
-          '     <div class="h5p-slides-wrapper"></div>' +
-          '    </div>' +
-          '  </div>' +
-          '  <nav class="h5p-cp-navigation">' +
-          '    <ol class="h5p-progressbar list-unstyled"></ol>' +
-          '  </nav>' +
-          '  <div class="h5p-footer"></div>' +
-          '</div>';
+    '<div class="h5p-keymap-explanation hidden-but-read">' + this.l10n.accessibilitySlideNavigationExplanation + '</div>' +
+    '<div class="h5p-fullscreen-announcer hidden-but-read" aria-live="polite"></div>' +
+    '<div class="h5p-wrapper" tabindex="0" aria-label="' + this.l10n.accessibilityCanvasLabel + '">' +
+    '  <div class="h5p-current-slide-announcer hidden-but-read" aria-live="polite"></div>' +
+    '  <div tabindex="-1"></div>' +
+    '  <div class="h5p-box-wrapper">' +
+    '    <div class="h5p-presentation-wrapper">' +
+    '      <div class="h5p-keywords-wrapper"></div>' +
+    '     <div class="h5p-slides-wrapper"></div>' +
+    '    </div>' +
+    '  </div>' +
+    '  <nav class="h5p-cp-navigation">' +
+    '    <ol class="h5p-progressbar list-unstyled"></ol>' +
+    '  </nav>' +
+    '  <div class="h5p-footer"></div>' +
+    '</div>';
 
   $container
     .attr('role', 'application')
@@ -277,9 +282,9 @@ CuriousReader.prototype.attach = function ($container) {
     }
 
     if (that.presentation.keywordListEnabled &&
-        !that.presentation.keywordListAlwaysShow &&
-        that.presentation.keywordListAutoHide &&
-        !$target.is('textarea, .h5p-icon-pencil, span')) {
+      !that.presentation.keywordListAlwaysShow &&
+      that.presentation.keywordListAutoHide &&
+      !$target.is('textarea, .h5p-icon-pencil, span')) {
       that.hideKeywords(); // Auto-hide keywords
     }
   });
@@ -301,7 +306,7 @@ CuriousReader.prototype.attach = function ($container) {
   var wrapperHeight = parseInt(this.$wrapper.css('height'));
   this.height = wrapperHeight !== 0 ? wrapperHeight : 400;
 
-  this.ratio = 16/9;
+  this.ratio = 16 / 9;
   // Intended base font size cannot be read from CSS, as it might be modified
   // by mobile browsers already. (The Android native browser does this.)
   this.fontSize = 16;
@@ -537,6 +542,26 @@ CuriousReader.prototype.createSlides = function () {
     if (self.isEditor() || i === 0 || i === 1 || isCurrentSlide) {
       self.children[i].appendElements();
     }
+    console.log("This is cp")
+    if (!self.isEditor() && (self!=undefined)) {
+      console.log(self.children[i].getElement()[0].children)
+      let spanTagText = "";
+      for (let j = i; j < this.elementInstances[i].length; j++) {
+        if (this.elementInstances[i][j].audio != undefined) {
+          let timeStampText = this.elementInstances[i][j].params['Each duration and text'].map(a => a.Text);
+
+          for (let k = 0; k < timeStampText.length; k++) {
+            spanTagText = spanTagText + '<span' + ' id=' + 'splittedText' + k + '>' + timeStampText[k] + " " + '</span>'
+          }
+          console.log(self.children[i].getElement())
+
+          self.children[i].getElement()[0].children[1].children[0].children[0].innerHTML = '<p id=headid>'+spanTagText+'</p>'
+          console.log($("span:last-child"));
+        }
+      }
+
+    }
+   
   }
 };
 
@@ -592,7 +617,7 @@ CuriousReader.prototype.setProgressBarFeedback = function (slideScores) {
   if (slideScores !== undefined && slideScores) {
     // Set feedback icons for progress bar.
     slideScores.forEach(singleSlide => {
-      const $indicator = this.progressbarParts[singleSlide.slide-1]
+      const $indicator = this.progressbarParts[singleSlide.slide - 1]
         .find('.h5p-progressbar-part-has-task');
 
       if ($indicator.hasClass('h5p-answered')) {
@@ -838,13 +863,13 @@ CuriousReader.prototype.setElementsOverride = function (override) {
     if (override.showSolutionButton) {
       // Override show solutions button
       this.elementsOverride.params.behaviour.enableSolutionsButton =
-          (override.showSolutionButton === 'on' ? true : false);
+        (override.showSolutionButton === 'on' ? true : false);
     }
 
     if (override.retryButton) {
       // Override retry button
       this.elementsOverride.params.behaviour.enableRetry =
-          (override.retryButton === 'on' ? true : false);
+        (override.retryButton === 'on' ? true : false);
     }
   }
 };
@@ -871,7 +896,7 @@ CuriousReader.prototype.attachElements = function ($slide, index) {
     '$target': $slide,
     'library': 'CuriousReader',
     'key': 'newSlide'
-  }, {'bubbles': true, 'external': true});
+  }, { 'bubbles': true, 'external': true });
 
   this.elementsAttached[index] = true;
 };
@@ -1277,13 +1302,13 @@ CuriousReader.prototype.showPopup = function (popupContent, $focusOnClose, paren
 
   const $popup = $(
     '<div class="h5p-popup-overlay ' + classes + '">' +
-      '<div class="h5p-popup-container" role="dialog">' +
-        '<div class="h5p-cp-dialog-titlebar">' +
-          '<div class="h5p-dialog-title"></div>' +
-          '<div role="button" tabindex="0" class="h5p-close-popup" title="' + this.l10n.close + '"></div>' +
-        '</div>' +
-        '<div class="h5p-popup-wrapper" role="document"></div>' +
-      '</div>' +
+    '<div class="h5p-popup-container" role="dialog">' +
+    '<div class="h5p-cp-dialog-titlebar">' +
+    '<div class="h5p-dialog-title"></div>' +
+    '<div role="button" tabindex="0" class="h5p-close-popup" title="' + this.l10n.close + '"></div>' +
+    '</div>' +
+    '<div class="h5p-popup-wrapper" role="document"></div>' +
+    '</div>' +
     '</div>');
 
   const $popupWrapper = $popup.find('.h5p-popup-wrapper');
@@ -1398,7 +1423,7 @@ CuriousReader.prototype.showPopup = function (popupContent, $focusOnClose, paren
  */
 CuriousReader.prototype.checkForSolutions = function (elementInstance) {
   return (elementInstance.showSolutions !== undefined ||
-          elementInstance.showCPComments !== undefined);
+    elementInstance.showCPComments !== undefined);
 };
 
 
@@ -1591,7 +1616,7 @@ CuriousReader.prototype.updateTouchPopup = function ($container, slideNumber, xP
     keyword += this.$keywords.children(':eq(' + slideNumber + ')').find('span').html();
   }
   else {
-    var slideIndexToNumber = slideNumber+1;
+    var slideIndexToNumber = slideNumber + 1;
     keyword += this.l10n.slide + ' ' + slideIndexToNumber;
   }
 
@@ -1683,14 +1708,14 @@ CuriousReader.prototype.getCurrentSlideIndex = function () {
 CuriousReader.prototype.attachAllElements = function () {
   var $slides = this.$slidesWrapper.children();
 
-  for (var i=0; i<this.slides.length; i++) {
+  for (var i = 0; i < this.slides.length; i++) {
     this.attachElements($slides.eq(i), i);
   }
 
   // Need to force updating summary slide! This is normally done
   // only when summary slide is about to be viewed
   if (this.summarySlideObject !== undefined) {
-    this.summarySlideObject.updateSummarySlide(this.slides.length-1, true);
+    this.summarySlideObject.updateSummarySlide(this.slides.length - 1, true);
   }
 };
 
@@ -1774,11 +1799,11 @@ CuriousReader.prototype.jumpToSlide = function (slideNumber, noScroll = false, h
       for (var i = 0; i < instances.length; i++) {
         // TODO: Check instance type instead to avoid accidents?
         if (instanceParams[i] &&
-            instanceParams[i].action &&
-            instanceParams[i].action.params &&
-            instanceParams[i].action.params.cpAutoplay &&
-            !instanceParams[i].displayAsButton &&
-            typeof instances[i].play === 'function') {
+          instanceParams[i].action &&
+          instanceParams[i].action.params &&
+          instanceParams[i].action.params.cpAutoplay &&
+          !instanceParams[i].displayAsButton &&
+          typeof instances[i].play === 'function') {
 
           // Autoplay media if not button
           instances[i].play();
@@ -1843,7 +1868,7 @@ CuriousReader.prototype.setOverflowTabIndex = function () {
     return;
   }
 
-  this.$current.find('.h5p-element-inner').each( function () {
+  this.$current.find('.h5p-element-inner').each(function () {
     const $inner = $(this);
 
     // Currently, this rule is for tables only
@@ -2014,7 +2039,7 @@ CuriousReader.prototype.getCopyrights = function () {
 
   // Check for a common background image shared by all slides
   if (this.presentation && this.presentation.globalBackgroundSelector &&
-      this.presentation.globalBackgroundSelector.imageGlobalBackground) {
+    this.presentation.globalBackgroundSelector.imageGlobalBackground) {
 
     // Add image copyrights to the presentation scope
     var globalBackgroundImageParams = this.presentation.globalBackgroundSelector.imageGlobalBackground;
@@ -2029,7 +2054,7 @@ CuriousReader.prototype.getCopyrights = function () {
 
     // Check for a slide specific background image
     if (this.slides[slide] && this.slides[slide].slideBackgroundSelector &&
-        this.slides[slide].slideBackgroundSelector.imageSlideBackground) {
+      this.slides[slide].slideBackgroundSelector.imageSlideBackground) {
 
       // Add image copyrights to the slide scope
       var slideBackgroundImageParams = this.slides[slide].slideBackgroundSelector.imageSlideBackground;
@@ -2059,7 +2084,7 @@ CuriousReader.prototype.getCopyrights = function () {
           // Create a generic flat copyright list
           elementCopyrights = new H5P.ContentCopyrights();
           // In metadata alone there's no way of knowing what the machineName is.
-          H5P.findCopyrights(elementCopyrights, params, this.contentId, {metadata: metadata, machineName: instance.libraryInfo.machineName});
+          H5P.findCopyrights(elementCopyrights, params, this.contentId, { metadata: metadata, machineName: instance.libraryInfo.machineName });
         }
         var label = (element + 1);
         if (params.contentName !== undefined) {
@@ -2090,19 +2115,19 @@ CuriousReader.prototype.getCopyrights = function () {
 CuriousReader.prototype.pauseMedia = function (instance) {
   try {
     if (instance.pause !== undefined &&
-        (instance.pause instanceof Function ||
-          typeof instance.pause === 'function')) {
+      (instance.pause instanceof Function ||
+        typeof instance.pause === 'function')) {
       instance.pause();
     }
     else if (instance.video !== undefined &&
-             instance.video.pause !== undefined &&
-             (instance.video.pause instanceof Function ||
-               typeof instance.video.pause === 'function')) {
+      instance.video.pause !== undefined &&
+      (instance.video.pause instanceof Function ||
+        typeof instance.video.pause === 'function')) {
       instance.video.pause();
     }
     else if (instance.stop !== undefined &&
-             (instance.stop instanceof Function ||
-               typeof instance.stop === 'function')) {
+      (instance.stop instanceof Function ||
+        typeof instance.stop === 'function')) {
       instance.stop();
     }
   }

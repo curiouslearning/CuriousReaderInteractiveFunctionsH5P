@@ -82,5 +82,44 @@
     "importance": "low",
     "common": true,
     "default": "Your browser does not support this audio"
-  }
+  },
+  {
+    "name": "Each duration and text",
+    "type": "list",
+    "label": "Each duration and text",
+    "description": "Description of audio",
+    "optional": false,
+    "min": 1,
+    "defaultNum": 1,
+    "field": {
+        "name": "answer",
+        "type": "group",
+        "label": "Option",
+        "expanded":false,
+        "fields": [
+            {
+                "name": "Starting Duration",
+                "type": "text",
+                "label": "Time Stamp"
+              },
+              {
+                "name": "End Duration",
+                "type": "text",
+                "label":"Time Stamp"
+              },
+              {
+                "name": "Text",
+                "type": "text",
+                "default": " ",
+                "label":"Text Sample"
+              },
+              {
+                "label": "Image for particular Text",
+                "name": "Text Image",
+                "type": "image",
+                "description": "Image for particular Text"
+            }
+        ]
+    }
+}
 ]
