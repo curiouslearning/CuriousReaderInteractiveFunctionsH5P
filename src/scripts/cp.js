@@ -6,7 +6,7 @@ import KeywordsMenu from './keyword-menu';
 import { jQuery as $ } from './globals';
 import { flattenArray, addClickAndKeyboardListeners, isFunction, kebabCase, stripHTML, keyCode } from './utils';
 import Slide from './slide.js';
-
+import {spin,pop} from './animations'
 /**
  * @const {string}
  */
@@ -905,23 +905,11 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
         let currWidth = element.width;
         let imageTobeAnimated = $(`#${instance.subContentId}`);
         console.log(element.animationType);
-        console.log('we are using code formated');
+        console.log('we are using modular format');
         if (element.animationType == "spin") {
-          imageTobeAnimated.css("transform", "rotate(360deg)");
-          imageTobeAnimated.css("transition", "transform 2s");
-          setTimeout(function () {
-            imageTobeAnimated.css("transform", "rotate(0deg)");
-            imageTobeAnimated.css("transition", "transform 2s");
-          }, 3000);
+          spin({imageTobeAnimated:imageTobeAnimated});
         } else {
-          imageTobeAnimated.css("height", `${currHeight + 7}%`);
-          imageTobeAnimated.css("width", `${currWidth + 7}%`);
-          imageTobeAnimated.css("transition", "width 2s,height 2s");
-          setTimeout(function () {
-            imageTobeAnimated.css("height", `${currHeight}%`);
-            imageTobeAnimated.css("width", `${currWidth}%`);
-            imageTobeAnimated.css("transition", "width 2s,height 2s");
-          }, 3000);
+          pop({imageTobeAnimated:imageTobeAnimated ,currHeight:currHeight,currWidth:currWidth});
         }
       }
     }).appendTo($slide);
