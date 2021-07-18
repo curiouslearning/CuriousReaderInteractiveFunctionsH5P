@@ -75,12 +75,55 @@
     "common": true,
     "default": "Audio"
   },
+  
   {
-    "name": "audioNotSupported",
-    "type": "text",
-    "label": "Audio not supported message",
-    "importance": "low",
-    "common": true,
-    "default": "Your browser does not support this audio"
+    "name": "Sentence",
+    "type": "library",
+    "label": "Slide Sentence",
+    "description":"This is sentence of slide",
+    "options": ["H5P.AdvancedText 1.1"]
+  },
+  {
+    "name": "timeStampForEachText",
+    "type": "list",
+    "label": "Duration for each text",
+    "description": "Add duration for particular text in sequence",
+    "optional": false,
+    "min": 1,
+    "defaultNum": 1,
+    "field": {
+      "name": "eachWordTimeStampInfo",
+      "type": "group",
+      "label": "Word duration",
+      "expanded": false,
+      "fields": [
+        {
+          "name": "text",
+          "type": "text",
+          "default": " ",
+          "optional": false,
+          "label": "Word"
+        },
+        {
+          "name": "startDuration",
+          "type": "text",
+          "optional": false,
+          "label": "Start time for word"
+        },
+        {
+          "name": "endDuration",
+          "type": "text",
+          "optional": false,
+          "label": "End time for word"
+        },
+        {
+          "label": "Image for particular Text",
+          "name": "Text Image",
+          "type": "image",
+          "optional": true,
+          "description": "Image for particular Text"
+        }
+      ]
+    }
   }
 ]
