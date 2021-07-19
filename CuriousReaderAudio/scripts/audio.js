@@ -81,23 +81,27 @@ H5P.CRAudio = (function ($) {
           self.audio.currentTime = self.splittedWord[spanTagId]['startDuration'];
           self.audioEndTime = self.splittedWord[spanTagId]['endDuration'] - 0.23;
           self.play();
-          $('#'+spanTagId).css({
-            'font-size' : '50px',
-            'color' : 'yellow',
-          });
+          $('.h5p-current').each(function () {
+            $(this).find('#' +spanTagId).css({
+              'font-size' : '50px',
+              'color' : 'yellow',
+            })
+          })
           setTimeout(function () {
-            $('#'+spanTagId).css({
-              'font-size' : selectedFontSize,
-              'color' : selectedTextColor
-            });
-          }, 600);
+            $('.h5p-current').each(function () {
+              $(this).find('#' +spanTagId).css({
+                'font-size' : selectedFontSize,
+                'color' : selectedTextColor
+              })
+            })
+          }, 600)
         }
       })
 
     if (this.params.fitToWrapper) {
       audioButton.css({
-        //   'width': '100%',
-        //   'height': '100%'
+          // 'width': '100%',
+          // 'height': '100%'
       });
     }
 
