@@ -900,12 +900,15 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     width: element.width + '%',
     height: element.height + '%'
   }).click(function (event) {
+console.log('now...........');
       if (element.willDoAnimation == true) {
         let currHeight = element.height;
         let currWidth = element.width;
-        let imageTobeAnimated = $(`#${instance.subContentId}`);
-        console.log(element.animationType);
-        console.log('we are using modular format');
+         let imageTobeAnimated;
+        let id = instance.subContentId;
+        $('.h5p-current').each(function () {
+              imageTobeAnimated=$(this).find('#' + id);
+            }); 
         if (element.animationType == "spin") {
           spin({imageTobeAnimated:imageTobeAnimated});
         } else {
