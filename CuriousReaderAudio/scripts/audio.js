@@ -21,7 +21,7 @@ H5P.CRAudio = (function ($) {
     this.splittedWord = params.timeStampForEachText;
     this.sentenceStyles = (params.Sentence != undefined) ? params.Sentence.params.text : '';
     this.toggleButtonEnabled = true;
-    this.setAutoPlay=( this.params.cpAutoplay!=undefined)?this.params.cpAutoplay:false;
+    this.setAutoPlay = (this.params.cpAutoplay != undefined) ? this.params.cpAutoplay : false;
     // Retrieve previous state
     if (extras && extras.previousState !== undefined) {
       this.oldTime = extras.previousState.currentTime;
@@ -77,15 +77,6 @@ H5P.CRAudio = (function ($) {
           return;
         }
 
-        // Prevent ARIA from playing over audio on click
-        //this.setAttribute('aria-hidden', 'true');
-
-        // if (self.audio.paused) {
-        //   self.play();
-        // }
-        // else {
-        //   self.pause();
-        // }
       })
 
 
@@ -100,71 +91,75 @@ H5P.CRAudio = (function ($) {
 
     // cpAutoplay is passed from coursepresentation
     $(document).ready(function () {
-      if (self.setAutoPlay) {
-        if (self.audio.paused) {
-          self.play();
-        }
-      }
+      setTimeout(function () { self.play(); }, 1000)
+      // self.play();
+      // if (self.setAutoPlay) {
+      //   if (self.audio.paused) {
+      //     self.play();
+      //   }
+      // }
     })
 
 
     //Event listeners that change the look of the player depending on events.
-    self.audio.addEventListener('ended', function () {
-      // $('.h5p-element-inner').css({
-      //   'color':'black'
-      // })
-    });
 
-    self.audio.addEventListener('play', function () {
-      // audioButton
-      //   .attr('aria-label', self.params.pauseAudio)
-      //   .removeClass(PLAY_BUTTON)
-      //   .removeClass(PLAY_BUTTON_PAUSED)
-      //   .addClass(PAUSE_BUTTON);
-    });
 
     self.audio.addEventListener('pause', function () {
       $('.h5p-element-inner').css({
         'color': 'black'
       })
-      // audioButton
-      //   .attr('aria-hidden', false)
-      //   .attr('aria-label', self.params.playAudio)
-      //   .removeClass(PAUSE_BUTTON)
-      //   .addClass(PLAY_BUTTON_PAUSED);
     });
     self.audio.addEventListener('timeupdate', function () {
+      if (self.splittedWord != undefined) {
+        var time = self.audio.currentTime, j = 0, word;
+        var originalFont;
+        originalFont = $('#' + 0).css('font-size')
+        for (j = 0; j < self.splittedWord.length; j++) {
 
-      var time = self.audio.currentTime, j = 0, word;
-      var originalFont;
-      originalFont = $('#' + 0).css('font-size')
-      for (j = 0; j < self.splittedWord.length; j++) {
+          word = self.splittedWord[j]
 
-        word = self.splittedWord[j]
+          if (word.highlighted == undefined) {
+            word.highlighted = false
+          }
+          if (time > word['startDuration'] && time < word['endDuration']) {
+            if (!word.highlighted) {
+              word.highlighted = true;
+              console.log()
+              if (self.parent != undefined) {
+                $('.h5p-current').each(function () {
+                  $(this).find('#' + j).css({
+                    "color": "yellow",
+                    // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
+                  })
 
-        if (word.highlighted == undefined)
-          word.highlighted = false
-        if (time > word['startDuration'] && time < word['endDuration']) {
-          if (!word.highlighted) {
-            word.highlighted = true;
-            $('.h5p-current').each(function () {
-              $(this).find('#' + j).css({
-                "color": "yellow",
-                // 'font-size':'6px',
+                });
+              }
+              else {
+                $('#' + j).css({
+                  "color": "yellow",
+                  // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
+                })
+              }
+            }
+          }
+          else if (word.highlighted) {
+            if (self.parent != undefined) {
+              $('.h5p-current').each(function () {
+                $(this).find('#' + j).css({
+                  "color": "black",
+                  // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
+                })
+
+              });
+            }
+            else {
+              $('#' + j).css({
+                "color": "black",
                 // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
               })
-
-            });
+            }
+            word.highlighted = false;
           }
-        }
-        else if (word.highlighted) {
-          $('.h5p-current').each(function () {
-            $(this).find('#' + j).css({
-              "color": "black",
-              // "font-size": originalFont,
-            })
-          });
-          word.highlighted = false;
         }
       }
     })
@@ -354,7 +349,6 @@ H5P.CRAudio.prototype.play = function () {
     this.flowplayer.play();
   }
   if (this.audio !== undefined) {
-    if(this.setAutoPlay)
     this.audio.play();
   }
 };
@@ -368,9 +362,6 @@ H5P.CRAudio.prototype.pause = function () {
   if (this.audio !== undefined) {
 
     this.audio.pause();
-    // $('.h5p-element-inner').css({
-    //   'color':'black'
-    // })
     this.audio.currentTime = 0
   }
 };
