@@ -539,18 +539,6 @@ CuriousReader.prototype.createSlides = function () {
       self.children[i].appendElements();
     }
 
-    if (!self.isEditor()) {
-      let spanTagText = "";
-      for (let j = i; j < this.elementInstances[i].length; j++) {
-        if (this.elementInstances[i][j].audio != undefined) {
-          let timeStampText = this.elementInstances[i][j].params['Each duration and text'].map(a => a.Text);
-          for (let k = 0; k < timeStampText.length; k++) {
-            spanTagText = spanTagText + '<span'+' id='+'splittedText'+k+'>'+timeStampText[k]+" "+'</span>'
-          }
-        }
-      }
-      $("p:last-child")[i].children[0].innerHTML = '<h2 id=headId>'+spanTagText+'<h2/>'
-    }
   }
 };
 

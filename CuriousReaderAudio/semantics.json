@@ -84,40 +84,51 @@
     "default": "Your browser does not support this audio"
   },
   {
-    "name": "Each duration and text",
+    "name": "sentence",
+    "type": "library",
+    "label": "Slide Sentence",
+    "description":"This is sentence of slide",
+    "options": ["H5P.AdvancedText 1.1"]
+  },
+  {
+    "name": "timeStampForEachText",
     "type": "list",
-    "label": "Each duration and text",
-    "description": "Description of audio",
+    "label": "Duration for each text",
+    "description": "Add duration for particular text in sequence",
     "optional": false,
     "min": 1,
     "defaultNum": 1,
     "field": {
-      "name": "answer",
+      "name": "eachWordTimeStampInfo",
       "type": "group",
-      "label": "Option",
-      "expanded":false,
+      "label": "Word duration",
+      "expanded": false,
       "fields": [
         {
-            "name": "Starting Duration",
-            "type": "text",
-            "label": "TimeStamp"
-          },
-          {
-            "name": "End Duration",
-            "type": "text",
-            "label":"TimeStamp"
-          },
-          {
-            "name": "Text",
-            "type": "text",
-            "default": " ",
-            "label":"Text Sample"
-          },
-          {
-            "label": "Image for particular Text",
-            "name": "Text Image",
-            "type": "image",
-            "description": "Image for particular Text"
+          "name": "text",
+          "type": "text",
+          "default": " ",
+          "optional": false,
+          "label": "Word"
+        },
+        {
+          "name": "startDuration",
+          "type": "text",
+          "optional": false,
+          "label": "Start time for word"
+        },
+        {
+          "name": "endDuration",
+          "type": "text",
+          "optional": false,
+          "label": "End time for word"
+        },
+        {
+          "label": "Image for particular Text",
+          "name": "Text Image",
+          "type": "image",
+          "optional": true,
+          "description": "Image for particular Text"
         }
       ]
     }
