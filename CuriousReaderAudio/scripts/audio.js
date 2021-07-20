@@ -18,7 +18,6 @@ H5P.CRAudio = (function ($) {
     this.extras = extras;
     this.splittedWord = params.timeStampForEachText;
     this.toggleButtonEnabled = true;
-    this.params.autoPlay = true
 
     // Retrieve previous state
     if (extras && extras.previousState !== undefined) {
@@ -34,7 +33,7 @@ H5P.CRAudio = (function ($) {
       playAudio: "Play audio",
       pauseAudio: "Pause audio"
     }, params);
-    
+
     this.on('resize', this.resize, this);
   }
 
@@ -55,7 +54,6 @@ H5P.CRAudio = (function ($) {
     var PLAY_BUTTON_PAUSED = 'h5p-audio-minimal-play-paused';
     var PAUSE_BUTTON = 'h5p-audio-minimal-pause';
 
-    var originalFontSize;
     var self = this;
     this.$container = $container;
     var playOnDemand = false;
@@ -63,14 +61,16 @@ H5P.CRAudio = (function ($) {
     self.$inner = $('<div/>', {
       'class': INNER_CONTAINER + (transparentMode ? ' h5p-audio-transparent' : '')
     }).appendTo($container);
+
     var slideTextElement = '';
     for (let i = 0; i < this.splittedWord.length; i++) {
       slideTextElement = slideTextElement + "<span id=" + i + ">" + this.splittedWord[i].text.trim() + ' </span>'
     }
-    var audioButton = $(slideTextElement).appendTo(self.$inner)
+
+    var audioButton = $(slideTextElement, {
+    }).appendTo(self.$inner)
       .click(function (event) {
         if (!self.isEnabledToggleButton()) {
-          console.log("toggle")
           return;
         }
         if (self.audio.paused) {
@@ -81,36 +81,44 @@ H5P.CRAudio = (function ($) {
           self.audio.currentTime = self.splittedWord[spanTagId]['startDuration'];
           self.audioEndTime = self.splittedWord[spanTagId]['endDuration'] - 0.23;
           self.play();
-          $('.h5p-current').each(function () {
-            $(this).find('#' +spanTagId).css({
-              'font-size' : '50px',
-              'color' : 'yellow',
-            })
-          })
-          setTimeout(function () {
+          if (self.parent != undefined) {
             $('.h5p-current').each(function () {
               $(this).find('#' +spanTagId).css({
+                'font-size' : '50px',
+                'color' : 'yellow',
+              })
+            })
+            setTimeout(function () {
+              $('.h5p-current').each(function () {
+                $(this).find('#' +spanTagId).css({
+                  'font-size' : selectedFontSize,
+                  'color' : selectedTextColor
+                })
+              })
+            }, 600)
+          } else {
+            $('#' +spanTagId).css({
+              'font-size' : '50px',
+              'color' : 'yellow',
+            });
+            setTimeout(function () {
+              $('#' +spanTagId).css({
                 'font-size' : selectedFontSize,
                 'color' : selectedTextColor
               })
-            })
-          }, 600)
+            }, 600)
+          }
         }
       })
 
     if (this.params.fitToWrapper) {
       audioButton.css({
-          // 'width': '100%',
-          // 'height': '100%'
+        //   'width': '100%',
+        //   'height': '100%'
       });
     }
 
     // cpAutoplay is passed from coursepresentation
-    $(document).ready(function(){
-      if (self.params.autoplay) {
-        self.play();
-      }
-    })
 
     //Event listeners that change the look of the player depending on events.
     self.audio.addEventListener('ended', function () {
@@ -137,48 +145,21 @@ H5P.CRAudio = (function ($) {
     });
 
     self.audio.addEventListener('timeupdate', function () {
-      if (self.playOnDemand) {
-        if (self.audio.currentTime >= self.audioEndTime) {
-          self.pause();
-          self.audio.currentTime = 0;
-        }
-      } else {
-        var time = self.audio.currentTime, j = 0, word;
-        for (j = 0; j < 4; j++) {
-          word = self.splittedWord[j]
-          if (word.highlighted == undefined)
-            word.highlighted = false
-          if (time >= word['startDuration'] && time < word['endDuration']) {
-            if (!word.highlighted) {
-              word.highlighted = true;
-              self.originalFontSize = $('#' + j).css('font-size')
-              $('.h5p-current').each(function () {
-                $(this).find('#' + j).css({
-                  "color": "yellow",
-                  "font-size": ((Number(self.originalFontSize.slice(0, self.originalFontSize.length - 2)) + 20).toString() + 'px'),
-                })
-              });
-            }
-          }
-          else if (word.highlighted) {
-            $('.h5p-current').each(function () {
-              $(this).find('#' + j).css({
-                "color": "black",
-                "font-size": self.originalFontSize,
-              })
-            });
-            word.highlighted = false;
-          }
-        }
+      if (self.audio.currentTime >= self.audioEndTime) {
+        self.pause();
+        self.audio.currentTime = 0;
       }
     })
+
     this.$audioButton = audioButton;
     //Scale icon to container
     self.resize();
   };
+
   /**
    * Resizes the audio player icon when the wrapper is resized.
    */
+
   C.prototype.resize = function () {
     // Find the smallest value of height and width, and use it to choose the font size.
     if (this.params.fitToWrapper && this.$container && this.$container.width()) {
@@ -256,8 +237,8 @@ H5P.CRAudio.prototype.attach = function ($wrapper) {
   if (this.oldTime) {
     this.seekTo(this.oldTime);
   }
-  console.log($wrapper)
 };
+
 /**
  * Attaches a flash audio player to the wrapper.
  *
@@ -343,7 +324,8 @@ H5P.CRAudio.prototype.play = function () {
 H5P.CRAudio.prototype.pause = function () {
   if (this.audio !== undefined) {
     this.audio.pause();
-    this.audio.currentTime = 0
+    this.audio.currentTime = 0;
+
   }
 };
 /**
