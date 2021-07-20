@@ -124,7 +124,23 @@
                       },
                       {
                         "value": "pop",
-                        "label": "Pop"
+                        "label": "Popop"
+                      },
+                      {
+                        "value": "bounce",
+                        "label": "Bounce"
+                      },
+                       {
+                        "value": "jiggle",
+                        "label": "Jiggle"
+                      },
+                       {
+                        "value": "pulse",
+                        "label": "Pulse"
+                      },
+                       {
+                        "value": "glow",
+                        "label": "Glow"
                       }
                     ]
                   },
