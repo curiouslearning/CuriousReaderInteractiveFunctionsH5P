@@ -6,7 +6,6 @@ import KeywordsMenu from './keyword-menu';
 import { jQuery as $ } from './globals';
 import { flattenArray, addClickAndKeyboardListeners, isFunction, kebabCase, stripHTML, keyCode } from './utils';
 import Slide from './slide.js';
-import { createElement } from 'h5p-lib-controls/src/scripts/utils/elements';
 
 /**
  * @const {string}
@@ -538,7 +537,6 @@ CuriousReader.prototype.createSlides = function () {
     if (self.isEditor() || i === 0 || i === 1 || isCurrentSlide) {
       self.children[i].appendElements();
     }
-
   }
 };
 
