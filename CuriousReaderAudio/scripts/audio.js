@@ -61,7 +61,7 @@ H5P.CRAudio = (function ($) {
 
     var self = this;
     this.$container = $container;
-    var playOnDemand = false;
+    this.playOnDemand = false;
 
     self.$inner = $('<div/>', {
       'class': INNER_CONTAINER + (transparentMode ? ' h5p-audio-transparent' : '')
@@ -89,7 +89,7 @@ H5P.CRAudio = (function ($) {
             break;
           }
         } else {
-            sentence.id ="sentence-style"
+            sentence.id = "sentence-style"
             sentence.innerHTML = slideTextElement;
             break;
         }
@@ -162,6 +162,7 @@ H5P.CRAudio = (function ($) {
         if (self.audio.currentTime >= self.audioEndTime) {
           self.pause();
           self.audio.currentTime = 0;
+          self.playOnDemand = false;
         }
       } else {
         if (self.splittedWord != undefined) {
