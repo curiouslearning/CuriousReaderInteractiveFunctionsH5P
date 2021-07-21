@@ -124,7 +124,7 @@
 .h5p-dragnbar-table-button:before,
 .h5p-dragnbar-link-button:before,
 .h5p-dragnbar-image-button:before,
-.h5p-dragnbar-audio-button:before,
+.h5p-dragnbar-craudio-button:before,
 .h5p-dragnbar-video-button:before,
 .h5p-dragnbar-more-button:before,
 .h5p-dragnbar-twitteruserfeed-button:before,
@@ -161,7 +161,7 @@
 .h5p-dragnbar-image-button:before {
   content: "\f03e";
 }
-.h5p-dragnbar-audio-button:before {
+.h5p-dragnbar-craudio-button:before {
   content: "\f028";
 }
 .h5p-dragnbar-video-button:before {
