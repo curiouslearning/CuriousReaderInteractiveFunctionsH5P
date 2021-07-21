@@ -158,9 +158,9 @@ H5PEditor.CuriousReader.prototype.addElement = function (library, options) {
       var libraryName = library.split(' ')[0];
       switch (libraryName) {
         case 'H5P.CRAudio':
-          elementParams.width = 2.577632696;
-          elementParams.height = 5.091753604;
-          elementParams.action.params.fitToWrapper = true;
+          elementParams.width = 40.577632696;
+          elementParams.height = 40.091753604;
+          elementParams.action.params.fitToWrapper = false;
           break;
 
         case 'H5P.DragQuestion':

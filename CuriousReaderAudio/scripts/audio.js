@@ -37,7 +37,6 @@ H5P.CRAudio = (function ($) {
     }, params);
     this.on('resize', this.resize, this);
   }
-
   C.prototype = Object.create(H5P.EventDispatcher.prototype);
   C.prototype.constructor = C;
 
@@ -58,6 +57,22 @@ H5P.CRAudio = (function ($) {
 
     var self = this;
     this.$container = $container;
+    var $text =(this.params.sentence!=undefined)? $.parseHTML(this.params.sentence.params.text):$();
+    $($text).children().each(function(index, element) {
+      
+      var firstElement = $(this);
+      if (($(this).children().length > 0)) {
+        $(this).find('span').each(function (index, element) { 
+          // $text.append(element)
+          if ($(this).html() == (firstElement.text())) {
+            $(this).attr('id', 'yeppi');
+            $(this)[0].innerHTML = slideTextElement
+          }
+        });
+      } else {
+        $(this).attr('id', 'yeppi');
+      }
+    });
 
     self.$inner = $('<div/>', {
       'class': INNER_CONTAINER + (transparentMode ? ' h5p-audio-transparent' : '')
@@ -70,16 +85,33 @@ H5P.CRAudio = (function ($) {
       }
     }
 
+    var $elementText = $.parseHTML(this.params.sentence.params.text);
+    var sentence = $($elementText)[0]
+     do {
+      var temp;
+      if (sentence.children.length != 0) {
+        sentence = sentence.children[0];
+        if(sentence.children.length==0)
+        {
+          temp = $(sentence)
+          sentence.id="sentence-style"
+          sentence.innerHTML = slideTextElement;
+          break;
+        }
+      }
+    } while (sentence.children.length != 0)
 
-    var audioButton = $(slideTextElement).appendTo(self.$inner)
+
+
+    var audioButton = $($elementText).appendTo(self.$inner)
       .click(function () {
         if (!self.isEnabledToggleButton()) {
           return;
         }
 
       })
-
-
+    
+    
 
     if (this.params.fitToWrapper) {
       audioButton.css({
@@ -113,7 +145,9 @@ H5P.CRAudio = (function ($) {
       if (self.splittedWord != undefined) {
         var time = self.audio.currentTime, j = 0, word;
         var originalFont;
-        originalFont = $('#' + 0).css('font-size')
+        //originalFont = $('#' + 0).css('font-size')
+        self.originalFontColor=(($('#sentence-style'))!=undefined)?$('#sentence-style').css('color'):'black'
+       
         for (j = 0; j < self.splittedWord.length; j++) {
 
           word = self.splittedWord[j]
@@ -123,10 +157,12 @@ H5P.CRAudio = (function ($) {
           }
           if (time > word['startDuration'] && time < word['endDuration']) {
             if (!word.highlighted) {
+              
               word.highlighted = true;
-              console.log()
               if (self.parent != undefined) {
+                
                 $('.h5p-current').each(function () {
+                  
                   $(this).find('#' + j).css({
                     "color": "yellow",
                     // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
@@ -146,7 +182,7 @@ H5P.CRAudio = (function ($) {
             if (self.parent != undefined) {
               $('.h5p-current').each(function () {
                 $(this).find('#' + j).css({
-                  "color": "black",
+                  "color": self.originalFontColor,
                   // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
                 })
 
@@ -154,7 +190,7 @@ H5P.CRAudio = (function ($) {
             }
             else {
               $('#' + j).css({
-                "color": "black",
+                "color": self.originalFontColor,
                 // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
               })
             }

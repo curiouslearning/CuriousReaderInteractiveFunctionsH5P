@@ -1,6 +1,5 @@
 .h5p-audio-inner {
-  height: 300%;
-  width: 700%;
+  padding: 25px 5px 20px 5px;
 }
 
 .h5p-course-presentation .h5p-element.h5p-audio-wrapper {
