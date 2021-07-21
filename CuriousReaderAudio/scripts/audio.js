@@ -67,23 +67,24 @@ H5P.CRAudio = (function ($) {
       slideTextElement = slideTextElement + "<span id=" + i + ">" + this.splittedWord[i].text.trim() + ' </span>'
     }
 
-    var $text = $.parseHTML(this.params.sentence.params.text);
-    $($text).attr('id', 'first-tag-text');
-    $($text).children().each(function(index, element) {
-      var firstElement = $(this);
-      if (($(this).children().length > 0)) {
-        $(this).find('span').each(function (index, element) { 
-          if ($(this).html() == (firstElement.text())) {
-            $(this).attr('id', 'sentence');
-            $(this)[0].innerHTML = slideTextElement
-          }
-        });
-      } else {
-        $(this).attr('id', 'sentence');
+    var $elementText = $.parseHTML(this.params.sentence.params.text);
+    var sentence = $($elementText)[0]
+     do {
+      var temp;
+      if (sentence.children.length != 0) {
+        sentence = sentence.children[0];
+        if(sentence.children.length==0)
+        {
+          temp = $(sentence)
+          sentence.id="sentence-style"
+          sentence.innerHTML = slideTextElement;
+          break;
+        }
       }
-    });
+    } while (sentence.children.length != 0)
 
-    var audioButton = $($text).appendTo(self.$inner)
+
+    var audioButton = $($elementText).appendTo(self.$inner)
       .click(function (event) {
         if (!self.isEnabledToggleButton()) {
           return;
