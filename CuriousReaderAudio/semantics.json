@@ -91,6 +91,15 @@
     "options": ["H5P.AdvancedText 1.1"]
   },
   {
+    "name": "highlightingColor",
+    "type": "text",
+    "label": "Color for word highlight",
+    "description": "The color of the element",
+    "optional": false,
+    "default": "000000",
+    "widget": "colorSelector"
+  },
+  {
     "name": "timeStampForEachText",
     "type": "list",
     "label": "Duration for each text",

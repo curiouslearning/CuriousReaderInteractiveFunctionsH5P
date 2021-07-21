@@ -17,13 +17,13 @@ H5P.CRAudio = (function ($) {
     this.params = params;
     this.extras = extras;
     this.splittedWord = params.timeStampForEachText;
+    this.hightlightingColor = params.hightlightingColor;
     this.toggleButtonEnabled = true;
 
     // Retrieve previous state
     if (extras && extras.previousState !== undefined) {
       this.oldTime = extras.previousState.currentTime;
     }
-    
     this.params = $.extend({}, {
       playerMode: 'minimalistic',
       fitToWrapper: false,
@@ -31,7 +31,7 @@ H5P.CRAudio = (function ($) {
       autoplay: false,
       audioNotSupported: "Your browser does not support this audio",
       playAudio: "Play audio",
-      pauseAudio: "Pause audio"
+      pauseAudio: "Pause audio",
     }, params);
 
     this.on('resize', this.resize, this);
@@ -67,22 +67,27 @@ H5P.CRAudio = (function ($) {
       slideTextElement = slideTextElement + "<span id=" + i + ">" + this.splittedWord[i].text.trim() + ' </span>'
     }
 
-    var $elementText = $.parseHTML(this.params.sentence.params.text);
-    var sentence = $($elementText)[0]
-     do {
-      var temp;
-      if (sentence.children.length != 0) {
-        sentence = sentence.children[0];
-        if(sentence.children.length==0)
-        {
-          temp = $(sentence)
-          sentence.id="sentence-style"
-          sentence.innerHTML = slideTextElement;
-          break;
+    if (this.params.sentence.params.text != undefined) {
+      var $elementText = $.parseHTML(this.params.sentence.params.text);
+      var sentence = $($elementText)[0]
+      do {
+        var temp;
+        if (sentence.children.length != 0) {
+          sentence = sentence.children[0];
+          if(sentence.children.length==0)
+          {
+            temp = $(sentence)
+            sentence.id="sentence-style"
+            sentence.innerHTML = slideTextElement;
+            break;
+          }
+        } else {
+            sentence.id="sentence-style"
+            sentence.innerHTML = slideTextElement;
+            break;
         }
-      }
-    } while (sentence.children.length != 0)
-
+      } while (sentence.children.length != 0)
+    }
 
     var audioButton = $($elementText).appendTo(self.$inner)
       .click(function (event) {
@@ -92,8 +97,8 @@ H5P.CRAudio = (function ($) {
         if (event.target.id != "" && self.audio.paused) {
           self.playOnDemand = true;
           spanTagId = parseInt((event.target.id).charAt((event.target.id.length - 1)));
-          var selectedFontSize = $('#'+spanTagId).css('font-size');
-          var selectedTextColor = $('#'+spanTagId).css('color');
+          var selectedFontSize = self.parent == undefined ? $('#'+spanTagId).css('font-size'): $('.h5p-current').find('#'+spanTagId).css('font-size');
+          var selectedTextColor = self.parent == undefined ? $('#'+spanTagId).css('color'): $('.h5p-current').find('#'+spanTagId).css('color');
           self.audio.currentTime = self.splittedWord[spanTagId]['startDuration'];
           self.audioEndTime = self.splittedWord[spanTagId]['endDuration'] - 0.23;
           self.play();
@@ -101,7 +106,7 @@ H5P.CRAudio = (function ($) {
             $('.h5p-current').each(function () {
               $(this).find('#' +spanTagId).css({
                 'font-size' : '40px',
-                'color' : 'yellow',
+                'color' : self.params.highlightingColor
               })
             })
             setTimeout(function () {
@@ -115,7 +120,7 @@ H5P.CRAudio = (function ($) {
           } else {
             $('#' +spanTagId).css({
               'font-size' : '40px',
-              'color' : 'yellow',
+              'color' : self.params.highlightingColor
             });
             setTimeout(function () {
               $('#' +spanTagId).css({
