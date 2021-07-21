@@ -77,11 +77,20 @@
   },
   
   {
-    "name": "Sentence",
+    "name": "sentence",
     "type": "library",
     "label": "Slide Sentence",
     "description":"This is sentence of slide",
     "options": ["H5P.AdvancedText 1.1"]
+  },
+  {
+    "name": "highlightingColor",
+    "type": "text",
+    "label": "Highlight Word Color",
+    "description": "Select the color for highlighting word", 
+    "optional": false,
+    "default": "000000",
+    "widget": "colorSelector"
   },
   {
     "name": "timeStampForEachText",
@@ -100,19 +109,21 @@
         {
           "name": "text",
           "type": "text",
-          "default": " ",
+          "default":"",
           "optional": false,
           "label": "Word"
         },
         {
           "name": "startDuration",
           "type": "text",
+          "default":" ",
           "optional": false,
           "label": "Start time for word"
         },
         {
           "name": "endDuration",
           "type": "text",
+          "default":" ",
           "optional": false,
           "label": "End time for word"
         },
