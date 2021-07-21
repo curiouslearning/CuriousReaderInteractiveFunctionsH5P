@@ -618,7 +618,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .h5p-course-presentation .h5p-element .h5p-element-outer.h5p-advancedtext-outer-element,
@@ -636,9 +636,9 @@
 }
 
 .h5p-course-presentation .h5p-element .h5p-element-inner:not(.h5p-interactive-video) {
-  overflow: hidden;
-  overflow-y: auto;
   background: transparent;
+  overflow: hidden;
+  overflow-y: hidden;
 }
 
 .h5p-course-presentation .h5p-element .h5p-element-inner.curious-reader-audio-wrapper,
@@ -824,3 +824,5 @@
   margin-left: 0.1em;
   vertical-align: middle;
 }
+
+

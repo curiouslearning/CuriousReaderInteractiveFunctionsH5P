@@ -36,5 +36,12 @@
       "majorVersion": 4,
       "minorVersion": 5
     }
-  ]
+  ],
+  "editorDependencies": [
+    {
+      "machineName": "H5PEditor.ColorSelector",
+      "majorVersion": 1,
+      "minorVersion": 0
+    }
+  ] 
 }

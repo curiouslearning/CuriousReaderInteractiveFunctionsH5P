@@ -103,6 +103,48 @@
                     "optional": true
                   },
                   {
+                    "name": "willDoAnimation",
+                    "type": "boolean",
+                    "label": "Will Do Animation",
+                    "importance": "medium",
+                    "default": false,
+                    "optional": true
+                  },
+                  {
+                    "name": "animationType",
+                    "type": "select",
+                    "label": "Animation Type",
+                    "importance": "low",
+                    "optional": false,
+                    "default": "pop",
+                    "options": [
+                      {
+                        "value": "spin",
+                        "label": "Spin"
+                      },
+                      {
+                        "value": "pop",
+                        "label": "Popop"
+                      },
+                      {
+                        "value": "bounce",
+                        "label": "Bounce"
+                      },
+                       {
+                        "value": "jiggle",
+                        "label": "Jiggle"
+                      },
+                       {
+                        "value": "pulse",
+                        "label": "Pulse"
+                      },
+                       {
+                        "value": "glow",
+                        "label": "Glow"
+                      }
+                    ]
+                  },
+                  {
                     "name": "displayAsButton",
                     "type": "boolean",
                     "label": "Display as button",
