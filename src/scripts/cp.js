@@ -6,7 +6,7 @@ import KeywordsMenu from './keyword-menu';
 import { jQuery as $ } from './globals';
 import { flattenArray, addClickAndKeyboardListeners, isFunction, kebabCase, stripHTML, keyCode } from './utils';
 import Slide from './slide.js';
-
+import {spin,pop,bounce,jiggle,pulse,glow} from './animations'
 /**
  * @const {string}
  */
@@ -893,12 +893,38 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     (buttonSizeClass.length ? ' ' + buttonSizeClass : '');
   var $elementContainer = H5P.jQuery('<div>', {
     'class': classes,
+    'id': `${instance.subContentId}`,
   }).css({
     left: element.x + '%',
     top: element.y + '%',
     width: element.width + '%',
     height: element.height + '%'
-  }).appendTo($slide);
+  }).click(function (event) {
+      if (element.willDoAnimation == true) {
+        let currHeight = element.height;
+        let currWidth = element.width;
+        let imageTobeAnimated;
+        let id = instance.subContentId;
+        console.log(element.animationType);
+        $('.h5p-current').each(function () {
+              imageTobeAnimated=$(this).find('#' + id);
+            }); 
+        if (element.animationType == "spin") {
+          spin({imageTobeAnimated:imageTobeAnimated});
+        }else if(element.animationType == "bounce"){
+          bounce({imageTobeAnimated:imageTobeAnimated});
+        } else if(element.animationType == "jiggle"){
+          jiggle({imageTobeAnimated:imageTobeAnimated});
+        }  else if(element.animationType == "pulse"){
+          pulse({imageTobeAnimated:imageTobeAnimated});
+        }  else if(element.animationType == "glow"){
+          glow({imageTobeAnimated:imageTobeAnimated});
+        } 
+        else {
+          pop({imageTobeAnimated:imageTobeAnimated ,currHeight:currHeight,currWidth:currWidth});
+        }
+      }
+    }).appendTo($slide);
 
   const isTransparent = element.backgroundOpacity === undefined || element.backgroundOpacity === 0;
   $elementContainer.toggleClass('h5p-transparent', isTransparent);
