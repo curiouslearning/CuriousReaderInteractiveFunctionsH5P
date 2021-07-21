@@ -67,13 +67,28 @@ H5P.CRAudio = (function ($) {
       slideTextElement = slideTextElement + "<span id=" + i + ">" + this.splittedWord[i].text.trim() + ' </span>'
     }
 
-    var audioButton = $(slideTextElement, {
-    }).appendTo(self.$inner)
+    var $text = $.parseHTML(this.params.sentence.params.text);
+    $($text).attr('id', 'first-tag-text');
+    $($text).children().each(function(index, element) {
+      var firstElement = $(this);
+      if (($(this).children().length > 0)) {
+        $(this).find('span').each(function (index, element) { 
+          if ($(this).html() == (firstElement.text())) {
+            $(this).attr('id', 'sentence');
+            $(this)[0].innerHTML = slideTextElement
+          }
+        });
+      } else {
+        $(this).attr('id', 'sentence');
+      }
+    });
+
+    var audioButton = $($text).appendTo(self.$inner)
       .click(function (event) {
         if (!self.isEnabledToggleButton()) {
           return;
         }
-        if (self.audio.paused) {
+        if (event.target.id != "" && self.audio.paused) {
           self.playOnDemand = true;
           spanTagId = parseInt((event.target.id).charAt((event.target.id.length - 1)));
           var selectedFontSize = $('#'+spanTagId).css('font-size');
@@ -84,7 +99,7 @@ H5P.CRAudio = (function ($) {
           if (self.parent != undefined) {
             $('.h5p-current').each(function () {
               $(this).find('#' +spanTagId).css({
-                'font-size' : '50px',
+                'font-size' : '40px',
                 'color' : 'yellow',
               })
             })
@@ -98,7 +113,7 @@ H5P.CRAudio = (function ($) {
             }, 600)
           } else {
             $('#' +spanTagId).css({
-              'font-size' : '50px',
+              'font-size' : '40px',
               'color' : 'yellow',
             });
             setTimeout(function () {
