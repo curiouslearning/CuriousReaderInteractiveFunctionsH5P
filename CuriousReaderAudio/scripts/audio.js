@@ -162,7 +162,9 @@ H5P.CRAudio = (function ($) {
         if (self.audio.currentTime >= self.audioEndTime) {
           self.pause();
           self.audio.currentTime = 0;
-          self.playOnDemand = false;
+          setTimeout(function() {
+            self.playOnDemand = false;
+          }, 1000)
         }
       } else {
         if (self.splittedWord != undefined) {
