@@ -112,7 +112,7 @@ H5P.CRAudio = (function ($) {
           if (self.parent != undefined) {
             $('.h5p-current').each(function () {
               $(this).find('#' +spanTagId).css({
-                'font-size' : '40px',
+                'font-size' : '115%',
                 'color' : self.params.highlightingColor
               })
             })
@@ -126,7 +126,7 @@ H5P.CRAudio = (function ($) {
             }, 600)
           } else {
             $('#' +spanTagId).css({
-              'font-size' : '40px',
+              'font-size' : '115%',
               'color' : self.params.highlightingColor
             });
             setTimeout(function () {
