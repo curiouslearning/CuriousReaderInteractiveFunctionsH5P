@@ -6,7 +6,7 @@ import KeywordsMenu from './keyword-menu';
 import { jQuery as $ } from './globals';
 import { flattenArray, addClickAndKeyboardListeners, isFunction, kebabCase, stripHTML, keyCode } from './utils';
 import Slide from './slide.js';
-import {spin,pop,bounce,jiggle,pulse,glow} from './animations'
+import {spin,pop,bounce,jiggle,pulse,glow,backgroundFade,flip} from './animations'
 /**
  * @const {string}
  */
@@ -888,9 +888,9 @@ CuriousReader.prototype.attachElements = function ($slide, index) {
 CuriousReader.prototype.attachElement = function (element, instance, $slide, index) {
   const displayAsButton = (element.displayAsButton !== undefined && element.displayAsButton);
   var buttonSizeClass = (element.buttonSize !== undefined ? "h5p-element-button-" + element.buttonSize : "");
-  var classes = 'h5p-element' +
+  var classes = 'h5p-element' + ' element' +
     (displayAsButton ? ' h5p-element-button-wrapper' : '') +
-    (buttonSizeClass.length ? ' ' + buttonSizeClass : '');
+    (buttonSizeClass.length ? ' ' + buttonSizeClass : '') ;
   var $elementContainer = H5P.jQuery('<div>', {
     'class': classes,
     'id': `${instance.subContentId}`,
@@ -900,18 +900,25 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     width: element.width + '%',
     height: element.height + '%'
   }).click(function (event) {
+    // console.log(element);
+    // console.log($slide);
       if (element.willDoAnimation == true) {
         let currHeight = element.height;
         let currWidth = element.width;
         let imageTobeAnimated;
         let id = instance.subContentId;
+        // let currId = $slide[0].firstChild.id;
+        let parent;
+
         console.log(element.animationType);
         $('.h5p-current').each(function () {
-              imageTobeAnimated=$(this).find('#' + id);
-            }); 
+            imageTobeAnimated=$(this).find('#' + id);
         if (element.animationType == "spin") {
           spin({imageTobeAnimated:imageTobeAnimated});
-        }else if(element.animationType == "bounce"){
+        } else if(element.animationType == "flip"){
+          flip({imageTobeAnimated:imageTobeAnimated});
+        }
+        else if(element.animationType == "bounce"){
           bounce({imageTobeAnimated:imageTobeAnimated});
         } else if(element.animationType == "jiggle"){
           jiggle({imageTobeAnimated:imageTobeAnimated});
@@ -919,10 +926,15 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
           pulse({imageTobeAnimated:imageTobeAnimated});
         }  else if(element.animationType == "glow"){
           glow({imageTobeAnimated:imageTobeAnimated});
+        }else if(element.animationType == "backgroundFade"){
+           imageTobeAnimated.removeClass('element');
+           parent=$(this).find('.' + 'element');
+          backgroundFade({imageTobeAnimated:imageTobeAnimated ,parent:parent});
         } 
         else {
           pop({imageTobeAnimated:imageTobeAnimated ,currHeight:currHeight,currWidth:currWidth});
         }
+      });
       }
     }).appendTo($slide);
 
