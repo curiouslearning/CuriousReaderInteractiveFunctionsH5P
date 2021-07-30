@@ -1712,6 +1712,26 @@ H5PEditor.CuriousReader.prototype.addToDragNBar = function (element, elementPara
 
   var clipboardData = H5P.DragNBar.clipboardify(H5PEditor.CuriousReader.clipboardKey, elementParams, 'action');
   var dnbElement = self.dnb.add(element.$wrapper, clipboardData, options);
+
+  if (type === "H5P.Image") {
+    var text = '';
+    if (H5P.jQuery('#sentence-style').length > 0) {
+      var addedTextElement = H5P.jQuery('#sentence-style');
+      for (let i = 0; i < addedTextElement[0].children.length; i++) {
+        var splittedText = H5P.jQuery(addedTextElement[0].children[i])[0].innerHTML;
+        text = text + '<a href="#" id = '+i+'>'+splittedText+'</a>'
+      }
+    }
+    var linkEle = '<div class="h5p-dragnbar-context-menu-button dropdown dropbtn rem" role="button" tabindex="0" aria-label="Remove"><div class="dropdown-content">'+text+'</div></div>'
+    var link = dnbElement.contextMenu.$buttons.append(linkEle);
+    link[0].addEventListener('click', function (e) { 
+      console.log(H5P.jQuery('.focused'))
+      var textId=e.target.id
+      H5P.jQuery('.focused')[0].children[0].id=textId
+    // H5P.jQuery('.focused').find('img').attr('title',textId)
+      //H5P.jQuery('.focused').id=textId
+    });
+  }
   dnbElement.contextMenu.on('contextMenuEdit', function () {
     self.showElementForm(element, element.$wrapper, elementParams);
   });
