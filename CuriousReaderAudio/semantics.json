@@ -92,13 +92,6 @@
     "default": "Your browser does not support this audio"
   },
   {
-    "name": "sentence",
-    "type": "library",
-    "label": "Slide Sentence",
-    "description":"This is sentence of slide",
-    "options": ["H5P.AdvancedText 1.1"]
-  },
-  {
     "name": "highlightingColor",
     "type": "text",
     "label": "Color for word highlight",
