@@ -115,18 +115,17 @@ export const pulse =({imageTobeAnimated}) =>{
 export const glow =({imageTobeAnimated}) =>{ 
     imageTobeAnimated.css("box-shadow", "0 0 50px yellow");
     imageTobeAnimated.css("transition", "border 1s linear, box-shadow 1s linear");
-    
     setTimeout(function () {
         imageTobeAnimated.css("box-shadow", "0 0 50px transparent");
         imageTobeAnimated.css("transition", "border 1s linear, box-shadow 1s linear");
     }, 3000);
 }
 export const backgroundFade =({imageTobeAnimated,parent}) =>{ 
-    parent.css('opacity', '0.4');
+ parent.css('opacity', '0.4');
     parent.css("transition", "opacity 2s");
      setTimeout(function () {
         parent.css('opacity', '1');
         parent.css("transition", "opacity 2s");
         imageTobeAnimated.addClass(' element');
-    }, 3000);
+     },3000);
 }

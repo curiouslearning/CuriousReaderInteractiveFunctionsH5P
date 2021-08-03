@@ -103,6 +103,14 @@
                     "optional": true
                   },
                   {
+                    "name": "isEdit",
+                    "type": "boolean",
+                    "label": "Is Edit",
+                    "importance": "low",
+                    "default": false,
+                    "optional": true
+                  },
+                  {
                     "name": "willDoAnimation",
                     "type": "boolean",
                     "label": "Will Do Animation",
