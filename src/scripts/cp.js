@@ -242,7 +242,7 @@ CuriousReader.prototype.attach = function ($container) {
     }
   }).click(function (event) {
     var $target = H5P.jQuery(event.target);
-
+    
     /*
      * Add focus to the wrapper so that it may capture keyboard events unless
      * the target or one of its parents should handle focus themselves.
@@ -944,7 +944,8 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     }).appendTo($elementContainer);
 
     var $innerElementContainer = H5P.jQuery('<div>', {
-      'class': 'h5p-element-inner'
+      'class': 'h5p-element-inner',
+      'id' : element.id != "" ? element.id : ""
     }).appendTo($outerElementContainer);
 
     // H5P.Shape sets it's own size when line in selected
@@ -953,6 +954,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
         $elementContainer.get(0).style[property] = event.data[property];
       }
     });
+   
 
     instance.attach($innerElementContainer);
     if (element.action !== undefined && element.action.library.substr(0, 20) === 'H5P.InteractiveVideo') {
@@ -997,6 +999,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
 
   return $elementContainer;
 };
+
 
 /**
  * Disables tab indexes behind a popup container

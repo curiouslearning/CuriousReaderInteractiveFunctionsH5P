@@ -50,6 +50,14 @@
                     "optional": true
                   },
                   {
+                    "name": "id",
+                    "importance": "low",
+                    "type": "text",
+                    "widget": "none",
+                    "optional": true
+                  },
+
+                  {
                     "name": "action",
                     "type": "library",
                     "importance": "high",

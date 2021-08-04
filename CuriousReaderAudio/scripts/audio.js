@@ -24,7 +24,10 @@ H5P.CRAudio = (function ($) {
     this.highlightingColor = params.highlightingColor;
     this.toggleButtonEnabled = true;
     this.setAutoPlay = (this.params.cpAutoplay != undefined) ? this.params.cpAutoplay : false;
-
+    console.log(params)
+    console.log(id)
+    console.log(extras)
+  
     // Retrieve previous state
     if (extras && extras.previousState !== undefined) {
       this.oldTime = extras.previousState.currentTime;
@@ -41,16 +44,19 @@ H5P.CRAudio = (function ($) {
 
     this.on('resize', this.resize, this);
   }
-
+ 
   C.prototype = Object.create(H5P.EventDispatcher.prototype);
   C.prototype.constructor = C;
-
+ 
   /**
    * Adds a minimalistic audio player with only "play" and "pause" functionality.
    *
    * @param {jQuery} $container Container for the player.
    * @param {boolean} transparentMode true: the player is only visible when hovering over it; false: player's UI always visible
    */
+  C.prototype.dummy=function(){
+    console.log('Dummy function')
+  }
 
   C.prototype.addMinimalAudioPlayer = function ($container, transparentMode) {
     var INNER_CONTAINER = 'h5p-audio-inner';
@@ -66,14 +72,15 @@ H5P.CRAudio = (function ($) {
     self.$inner = $('<div/>', {
       'class': INNER_CONTAINER + (transparentMode ? ' h5p-audio-transparent' : '')
     }).appendTo($container);
-
+    
     if (this.splittedWord != undefined) {
       var slideTextElement = '';
       for (let i = 0; i < this.splittedWord.length; i++) {
-        slideTextElement = slideTextElement + "<span id=" + i + ">" + this.splittedWord[i].text.trim() + ' </span>'
+        console.log(self.subContentId)
+        slideTextElement = slideTextElement + "<div class='divText'><span id=" +self.subContentId+ i + ">" + this.splittedWord[i].text.trim() + ' </span></div>'
       }
     }
-
+  
     if (this.params.sentence.params.text != undefined) {
       var $elementText = $.parseHTML(this.params.sentence.params.text);
       var sentence = $($elementText)[0]
@@ -84,12 +91,12 @@ H5P.CRAudio = (function ($) {
           if(sentence.children.length == 0)
           {
             temp = $(sentence)
-            sentence.id = "sentence-style"
+            sentence.className = "sentence-style"
             sentence.innerHTML = slideTextElement;
             break;
           }
         } else {
-            sentence.id = "sentence-style"
+            sentence.className = "sentence-style"
             sentence.innerHTML = slideTextElement;
             break;
         }
@@ -98,39 +105,47 @@ H5P.CRAudio = (function ($) {
 
     var audioButton = $($elementText).appendTo(self.$inner)
       .click(function (event) {
+        console.log(self)
+        console.log(self.subContentId)
+        console.log(event.target.id)
         if (!self.isEnabledToggleButton()) {
           return;
         }
         if (event.target.id != "" && self.audio.paused) {
           self.playOnDemand = true;
           spanTagId = parseInt((event.target.id).charAt((event.target.id.length - 1)));
-          var selectedFontSize = self.parent == undefined ? $('#'+spanTagId).css('font-size'): $('.h5p-current').find('#'+spanTagId).css('font-size');
-          var selectedTextColor = self.parent == undefined ? $('#'+spanTagId).css('color'): $('.h5p-current').find('#'+spanTagId).css('color');
+          var selectedFontSize = self.parent == undefined ? $('#'+self.subContentId+spanTagId).css('font-size'): $('.h5p-current').find('#'+self.subContentId+spanTagId).css('font-size');
+          var selectedTextColor = self.parent == undefined ? $('#'+self.subContentId+spanTagId).css('color'): $('.h5p-current').find('#'+self.subContentId+spanTagId).css('color');
           self.audio.currentTime = self.splittedWord[spanTagId]['startDuration'];
           self.audioEndTime = self.splittedWord[spanTagId]['endDuration'] - 0.23;
           self.play();
           if (self.parent != undefined) {
             $('.h5p-current').each(function () {
-              $(this).find('#' +spanTagId).css({
-                'font-size' : '115%',
-                'color' : self.params.highlightingColor
+              $(this).find('#'+spanTagId).parent('div').css({
+                'transform' : 'scale(1.3)',
+                'z-index': '2',
+                // 'transform': 'scale(1)',
+                "color": self.highlightingColor,
+                // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
               })
             })
             setTimeout(function () {
               $('.h5p-current').each(function () {
-                $(this).find('#' +spanTagId).css({
-                  'font-size' : selectedFontSize,
-                  'color' : selectedTextColor
+                $(this).find('#' + spanTagId).parent('div').css({
+                  'transform' : 'scale(1)',
+                  'z-index': '1',
+                  "color": selectedTextColor,
+                  // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
                 })
               })
             }, 600)
           } else {
-            $('#' +spanTagId).css({
+            $('#'+self.subContentId +spanTagId).css({
               'font-size' : '115%',
               'color' : self.params.highlightingColor
             });
             setTimeout(function () {
-              $('#' +spanTagId).css({
+              $('#'+self.subContentId +spanTagId).css({
                 'font-size' : selectedFontSize,
                 'color' : selectedTextColor
               })
@@ -171,7 +186,7 @@ H5P.CRAudio = (function ($) {
           var time = self.audio.currentTime, j = 0, word;
           var originalFont;
           //originalFont = $('#' + 0).css('font-size')
-          self.originalFontColor = (($('#sentence-style')) != undefined) ? $('#sentence-style').css('color') : 'black'
+          self.originalFontColor = (($('.sentence-style')) != undefined) ? $('.sentence-style').css('color') : 'black'
   
           for (j = 0; j < self.splittedWord.length; j++) {
   
@@ -187,15 +202,26 @@ H5P.CRAudio = (function ($) {
                 if (self.parent != undefined) {
   
                   $('.h5p-current').each(function () {
-                    $(this).find('#' + j).css({
+                    $(this).find('#' + self.subContentId+j).parent('div').css({
+                      'transform' : 'scale(1.3)',
+                      'z-index': '2',
+                      'box-shadow':'0px 0px 20px yellow',
+                      // 'transform': 'scale(1)',
                       "color": self.highlightingColor,
                       // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
                     })
+              
+                    // self.pop($(this).find('#img' + j))
+                    
   
                   });
                 }
                 else {
                   $('#' + j).css({
+                    "color": self.highlightingColor,
+                    // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
+                  })
+                  $(this).find('#img' + j).css({
                     "color": self.highlightingColor,
                     // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
                   })
@@ -205,8 +231,16 @@ H5P.CRAudio = (function ($) {
             else if (word.highlighted) {
               if (self.parent != undefined) {
                 $('.h5p-current').each(function () {
-                  $(this).find('#' + j).css({
+                  $(this).find('#'+self.subContentId + j).parent('div').css({
+                    'transform' : 'scale(1)',
+                    'z-index': '1',
                     "color": self.originalFontColor,
+                    'box-shadow':'0px 0px 20px transparent',
+                    // 'transform': 'scale(0)',
+                    // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
+                  })
+                  $(this).find('#img' + j).css({
+                    "color": self.highlightingColor,
                     // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
                   })
   
@@ -215,6 +249,10 @@ H5P.CRAudio = (function ($) {
               else {
                 $('#' + j).css({
                   "color": self.originalFontColor,
+                  // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
+                })
+                $(this).find('#img' + j).css({
+                  "color": self.highlightingColor,
                   // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
                 })
               }
@@ -229,7 +267,7 @@ H5P.CRAudio = (function ($) {
     //Scale icon to container
     self.resize();
   };
-
+ 
   /**
    * Resizes the audio player icon when the wrapper is resized.
    */
@@ -456,8 +494,50 @@ H5P.CRAudio.prototype.enableToggleButton = function () {
  * Check if button is enabled.
  * @return {boolean} True, if button is enabled. Else false.
  */
+ H5P.CRAudio.prototype.dummy=function(){
+  console.log('Dummy function')
+}
 H5P.CRAudio.prototype.isEnabledToggleButton = function () {
+  
   return this.toggleButtonEnabled;
 };
 /** @constant {string} */
 H5P.CRAudio.BUTTON_DISABLED = 'h5p-audio-disabled';
+
+H5P.CRAudio.prototype.pop=function(imageTobeAnimated){
+  var interval=100;
+  console.log('i am pulsing');
+     setTimeout(() => {   
+        imageTobeAnimated.css('transform', 'scale(1, 1)');
+    }, interval * 0);
+    setTimeout(() => {
+        imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
+    }, interval * 1);
+    setTimeout(() => {
+        imageTobeAnimated.css('transform', 'scale(1, 1)');
+    }, interval * 2);
+    setTimeout(() => {
+        imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
+    }, interval * 3);
+    setTimeout(() => {
+        imageTobeAnimated.css('transform', 'scale(1, 1)');
+    }, interval * 4);
+    setTimeout(() => {
+        imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
+    }, interval * 5);
+    setTimeout(() => {
+        imageTobeAnimated.css('transform', 'scale(1, 1)');
+    }, interval * 6);
+    setTimeout(() => {
+        imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
+    }, interval * 7);
+    setTimeout(() => {
+        imageTobeAnimated.css('transform', 'scale(1, 1)');
+    }, interval * 8);
+    setTimeout(() => {
+        imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
+    }, interval * 9);
+    setTimeout(() => {
+        imageTobeAnimated.css('transform', 'scale(1, 1)');
+    }, interval * 10);
+}

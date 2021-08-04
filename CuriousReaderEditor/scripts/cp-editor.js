@@ -246,7 +246,7 @@ H5PEditor.CuriousReader.prototype.appendTo = function ($wrapper) {
   if (presentationParams && presentationParams.override && presentationParams.override.activeSurface === true) {
     this.slideRatio = H5PEditor.CuriousReader.RATIO_SURFACE;
   }
-  this.cp = new H5P.CuriousReader(presentationParams, H5PEditor.contentId, {cpEditor: this});
+  this.cp = new H5P.CuriousReader(presentationParams, H5PEditor.contentId, { cpEditor: this });
   this.cp.attach(this.$editor);
   if (this.cp.$wrapper.is(':visible')) {
     this.cp.trigger('resize');
@@ -271,8 +271,8 @@ H5PEditor.CuriousReader.prototype.appendTo = function ($wrapper) {
     $add: H5PEditor.$('<a href="#" aria-label="' + H5PEditor.t('H5PEditor.CuriousReader', 'newSlide') + '" class="h5p-slidecontrols-button h5p-slidecontrols-button-add"></a>'),
     $clone: H5PEditor.$('<a href="#" aria-label="' + H5PEditor.t('H5PEditor.CuriousReader', 'cloneSlide') + '" class="h5p-clone-slide h5p-slidecontrols-button h5p-slidecontrols-button-clone"></a>'),
     $background: H5PEditor.$('<a href="#" aria-label="' + H5PEditor.t('H5PEditor.CuriousReader', 'backgroundSlide') + '" class="h5p-slidecontrols-button h5p-slidecontrols-button-background"></a>'),
-    $sortLeft: H5PEditor.$('<a href="#" aria-label="' + H5PEditor.t('H5PEditor.CuriousReader', 'sortSlide', {':dir': 'left'}) + '" class="h5p-slidecontrols-button h5p-slidecontrols-button-sort-left"></a>'),
-    $sortRight: H5PEditor.$('<a href="#" aria-label="' + H5PEditor.t('H5PEditor.CuriousReader', 'sortSlide', {':dir': 'right'}) + '" class="h5p-slidecontrols-button h5p-slidecontrols-button-sort-right"></a>'),
+    $sortLeft: H5PEditor.$('<a href="#" aria-label="' + H5PEditor.t('H5PEditor.CuriousReader', 'sortSlide', { ':dir': 'left' }) + '" class="h5p-slidecontrols-button h5p-slidecontrols-button-sort-left"></a>'),
+    $sortRight: H5PEditor.$('<a href="#" aria-label="' + H5PEditor.t('H5PEditor.CuriousReader', 'sortSlide', { ':dir': 'right' }) + '" class="h5p-slidecontrols-button h5p-slidecontrols-button-sort-right"></a>'),
     $delete: H5PEditor.$('<a href="#" aria-label="' + H5PEditor.t('H5PEditor.CuriousReader', 'removeSlide') + '" class="h5p-slidecontrols-button h5p-slidecontrols-button-delete"></a>')
   };
   this.slideControls = slideControls;
@@ -514,8 +514,8 @@ H5PEditor.CuriousReader.prototype.initializeDNB = function () {
         }
       });
     }
-
-    that.dnb = new H5P.DragNBar(buttons, that.cp.$current, that.$editor, {$blurHandlers: that.cp.$boxWrapper, libraries: libraries});
+    console.log(buttons)
+    that.dnb = new H5P.DragNBar(buttons, that.cp.$current, that.$editor, { $blurHandlers: that.cp.$boxWrapper, libraries: libraries });
 
     that.$dnbContainer = that.cp.$current;
     that.dnb.dnr.snap = 10;
@@ -690,7 +690,7 @@ H5PEditor.CuriousReader.prototype.initializeDNB = function () {
 H5PEditor.CuriousReader.prototype.canPaste = function (clipboard) {
   if (clipboard) {
     if (clipboard.from === H5PEditor.CuriousReader.clipboardKey &&
-        (!clipboard.generic || this.supported(clipboard.generic.library))) {
+      (!clipboard.generic || this.supported(clipboard.generic.library))) {
       // Content comes from the same version of CP
       // Non generic part = must be content like gotoslide or similar
       return true;
@@ -781,23 +781,23 @@ H5PEditor.CuriousReader.prototype.initKeywordInteractions = function () {
   // Add our own menu to the drag and drop menu bar.
   that.$keywordsDNB = H5PEditor.$(
     '<ul class="h5p-dragnbar-ul h5p-dragnbar-left">' +
-      '<li class="h5p-slides-menu">' +
-        '<div title="' + H5PEditor.t('H5PEditor.CuriousReader', 'slides') + '" class="h5p-dragnbar-keywords" role="button" tabindex="0">' +
-          '<span>' + H5PEditor.t('H5PEditor.CuriousReader', 'slides') + '</span>' +
-        '</div>' +
-        '<div class="h5p-keywords-dropdown">' +
-          '<label class="h5p-keywords-enable">' +
-            '<input type="checkbox"/>' +
-            H5PEditor.t('H5PEditor.CuriousReader', 'showTitles') +
-          '</label>' +
-          '<label class="h5p-keywords-always"><input type="checkbox"/>' + H5PEditor.t('H5PEditor.CuriousReader', 'alwaysShow') + '</label>' +
-          '<label class="h5p-keywords-hide"><input type="checkbox"/>' + H5PEditor.t('H5PEditor.CuriousReader', 'autoHide') + '</label>' +
-          '<label class="h5p-keywords-opacity"><input type="text"/> % ' + H5PEditor.t('H5PEditor.CuriousReader', 'opacity') + '</label>' +
-          '<div class="h5peditor-button h5peditor-button-textual importance-low" role="button" tabindex="0" aria-disabled="false">' +
-            H5PEditor.t('H5PEditor.CuriousReader', 'ok') +
-          '</div>' +
-        '</div>' +
-      '</li>' +
+    '<li class="h5p-slides-menu">' +
+    '<div title="' + H5PEditor.t('H5PEditor.CuriousReader', 'slides') + '" class="h5p-dragnbar-keywords" role="button" tabindex="0">' +
+    '<span>' + H5PEditor.t('H5PEditor.CuriousReader', 'slides') + '</span>' +
+    '</div>' +
+    '<div class="h5p-keywords-dropdown">' +
+    '<label class="h5p-keywords-enable">' +
+    '<input type="checkbox"/>' +
+    H5PEditor.t('H5PEditor.CuriousReader', 'showTitles') +
+    '</label>' +
+    '<label class="h5p-keywords-always"><input type="checkbox"/>' + H5PEditor.t('H5PEditor.CuriousReader', 'alwaysShow') + '</label>' +
+    '<label class="h5p-keywords-hide"><input type="checkbox"/>' + H5PEditor.t('H5PEditor.CuriousReader', 'autoHide') + '</label>' +
+    '<label class="h5p-keywords-opacity"><input type="text"/> % ' + H5PEditor.t('H5PEditor.CuriousReader', 'opacity') + '</label>' +
+    '<div class="h5peditor-button h5peditor-button-textual importance-low" role="button" tabindex="0" aria-disabled="false">' +
+    H5PEditor.t('H5PEditor.CuriousReader', 'ok') +
+    '</div>' +
+    '</div>' +
+    '</li>' +
     '</ul>').prependTo(this.$bar);
 
   that.initKeywordMenu();
@@ -1126,8 +1126,8 @@ H5PEditor.CuriousReader.prototype.updateSlidesSidebar = function () {
 
     var $editIcon = H5PEditor.$(
       '<a href="#" class="joubel-icon-edit h5p-hidden" title="' + H5PEditor.t('H5PEditor.CuriousReader', 'edit') + '" tabindex="0">' +
-        '<span class="h5p-icon-circle"></span>' +
-        '<span class="h5p-icon-pencil"></span>' +
+      '<span class="h5p-icon-circle"></span>' +
+      '<span class="h5p-icon-pencil"></span>' +
       '</a>'
     ).click(function () {
       // If clicked is not already active, do a double click
@@ -1140,7 +1140,7 @@ H5PEditor.CuriousReader.prototype.updateSlidesSidebar = function () {
       $editIcon.siblings('textarea').select();
       return false;
     }).keydown(function (event) {
-      if ([13,32].indexOf(event.which) !== -1) {
+      if ([13, 32].indexOf(event.which) !== -1) {
         H5PEditor.$(this).click();
         return false;
       }
@@ -1211,7 +1211,7 @@ H5PEditor.CuriousReader.prototype.sortSlide = function ($element, direction) {
   this.cp.jumpToSlide(newIndex);
 
   // Need to inform exportable text area about the change:
-  H5P.ExportableTextArea.CPInterface.changeSlideIndex(direction > 0 ? index : index-1, direction > 0 ? index+1 : index);
+  H5P.ExportableTextArea.CPInterface.changeSlideIndex(direction > 0 ? index : index - 1, direction > 0 ? index + 1 : index);
 
   // Update params.
   this.swapCollectionIndex(this.params.slides, index, newIndex);
@@ -1278,8 +1278,8 @@ H5PEditor.CuriousReader.prototype.editKeyword = function ($span) {
 
   var $delete = H5PEditor.$(
     '<a href="#" class="joubel-icon-cancel" title="' + H5PEditor.t('H5PEditor.CuriousReader', 'cancel') + '">' +
-      '<span class="h5p-icon-circle"></span>' +
-      '<span class="h5p-icon-cross"></span>' +
+    '<span class="h5p-icon-circle"></span>' +
+    '<span class="h5p-icon-cross"></span>' +
     '</a>');
 
   var $textarea = H5PEditor.$('<textarea></textarea>')
@@ -1304,7 +1304,7 @@ H5PEditor.CuriousReader.prototype.editKeyword = function ($span) {
 
         // Remove textarea
         $li.removeClass('h5p-editing');
-        $span.css({'display': 'inline-block'});
+        $span.css({ 'display': 'inline-block' });
         $textarea.add($delete).remove();
       }
     }).focus();
@@ -1316,7 +1316,7 @@ H5PEditor.CuriousReader.prototype.editKeyword = function ($span) {
     $textarea.val(oldTitle).blur();
     H5PEditor.$('[role="menuitem"].h5p-current').focus();
   }).keydown(function (e) {
-    if ([32,13].indexOf(e.which) !== -1) {
+    if ([32, 13].indexOf(e.which) !== -1) {
       H5PEditor.$(this).click();
       return false;
     }
@@ -1418,7 +1418,6 @@ H5PEditor.CuriousReader.prototype.generateForm = function (elementParams, type) 
   var element = {
     '$form': H5P.jQuery('<div/>')
   };
-
   // Render element fields
   H5PEditor.processSemanticsChunk(elementFields, elementParams, element.$form, self);
   element.children = self.children;
@@ -1502,8 +1501,8 @@ H5PEditor.CuriousReader.prototype.setImageSize = function (element, elementParam
 
   // Avoid to small images
   var minSize = parseInt(element.$wrapper.css('font-size')) +
-                element.$wrapper.outerHeight() -
-                element.$wrapper.innerHeight();
+    element.$wrapper.outerHeight() -
+    element.$wrapper.innerHeight();
 
   // Use minSize
   if (fileParams.width < minSize) {
@@ -1531,7 +1530,7 @@ H5PEditor.CuriousReader.prototype.setImageSize = function (element, elementParam
  * @param {object} fileParams
  */
 H5PEditor.CuriousReader.prototype.setVideoSize = function (elementParams, fileParams) {
-  if( fileParams === undefined){
+  if (fileParams === undefined) {
     return;
   }
   if (fileParams.hasOwnProperty('aspectRatio') !== true) {
@@ -1712,26 +1711,55 @@ H5PEditor.CuriousReader.prototype.addToDragNBar = function (element, elementPara
 
   var clipboardData = H5P.DragNBar.clipboardify(H5PEditor.CuriousReader.clipboardKey, elementParams, 'action');
   var dnbElement = self.dnb.add(element.$wrapper, clipboardData, options);
+  if(type=='H5P.CRAudio')
+  {
+    console.log(H5P.jQuery('.dropdown-content').children)
+    console.log(H5P.jQuery('.dropdown-content').children.length)
+      var text = '';
+      if (H5P.jQuery('.h5p-current').find('.sentence-style').length > 0) {
+        console.log("Inside inner  if")
+        var addedTextElement = H5P.jQuery('.h5p-current').find('.sentence-style');
+        for (let i = 0; i < addedTextElement[0].children.length; i++) {
+          var splittedText = H5P.jQuery(addedTextElement[0].children[i])[0].innerHTML;
+          text = text + '<a href="#" id = img'+i+'>'+splittedText+'</a>'
+        }
+        console.log(text)
+      H5P.jQuery('.dropdown-content').append(text)
+      console.log( H5P.jQuery('.dropdown-content'))
 
+    }
+
+  }
   if (type === "H5P.Image") {
     var text = '';
-    if (H5P.jQuery('#sentence-style').length > 0) {
-      var addedTextElement = H5P.jQuery('#sentence-style');
-      for (let i = 0; i < addedTextElement[0].children.length; i++) {
-        var splittedText = H5P.jQuery(addedTextElement[0].children[i])[0].innerHTML;
-        text = text + '<a href="#" id = '+i+'>'+splittedText+'</a>'
-      }
+    if ( H5P.jQuery('.h5p-current').find('.sentence-style').length > 0) {
+      H5P.jQuery('.h5p-current').find('.sentence-style').each(function() {
+        var addedTextElement = H5P.jQuery(this);
+        var parentElementId = addedTextElement.parents('.h5p-element')[0].id
+        for (let i = 0; i < addedTextElement[0].children.length; i++) {
+          var splittedText = H5P.jQuery(addedTextElement[0].children[i])[0].innerHTML;
+          text = text + '<a href="#" id = img' + parentElementId + i + '>' + H5P.jQuery(splittedText).html() + '</a>'
+        }
+      })
     }
-    var linkEle = '<div class="h5p-dragnbar-context-menu-button dropdown dropbtn rem" role="button" tabindex="0" aria-label="Remove"><div class="dropdown-content">'+text+'</div></div>'
+    var linkEle = '<div class="h5p-dragnbar-context-menu-button dropdown dropbtn linkText" role="button" tabindex="0" aria-label="LinkText"><div class="dropdown-content">'+text+'</div></div>'
     var link = dnbElement.contextMenu.$buttons.append(linkEle);
-    link[0].addEventListener('click', function (e) { 
-      console.log(H5P.jQuery('.focused'))
-      var textId=e.target.id
-      H5P.jQuery('.focused')[0].children[0].id=textId
-    // H5P.jQuery('.focused').find('img').attr('title',textId)
-      //H5P.jQuery('.focused').id=textId
+    link[0].children[5].addEventListener('click', function (e) { 
+      var textId = e.target.id
+      elementParams.id = textId;
+      H5P.jQuery(this).find('.dropdown-content').css({ 'display': 'none' })
+    });
+    H5P.jQuery(link[0].children[5]).mouseenter(function () {
+      H5P.jQuery(this).find('.dropdown-content').css({ 'display': 'block' })
+      H5P.jQuery(this).find('#'+elementParams.id).css({
+        'background-color' : 'yellow'
+      });
+      H5P.jQuery(this).find(":not(#"+elementParams.id+")").css("background-color", "white");
+    }).mouseleave(function () { 
+      H5P.jQuery(this).find('.dropdown-content').css({ 'display': 'none' })
     });
   }
+
   dnbElement.contextMenu.on('contextMenuEdit', function () {
     self.showElementForm(element, element.$wrapper, elementParams);
   });
@@ -1968,17 +1996,17 @@ H5PEditor.CuriousReader.prototype.showElementForm = function (element, $wrapper,
     // h5p-dialog-box is IVs video choose dialog
     H5P.jQuery('.ckeditor, .h5peditor-text', libraryField.$myField)
       .not('.h5p-editor-dialog .ckeditor, ' +
-      '.h5p-editor-dialog .h5peditor-text, ' +
-      '.h5p-dialog-box .ckeditor, ' +
-      '.h5p-dialog-box .h5peditor-text', libraryField.$myField)
+        '.h5p-editor-dialog .h5peditor-text, ' +
+        '.h5p-dialog-box .ckeditor, ' +
+        '.h5p-dialog-box .h5peditor-text', libraryField.$myField)
       .eq(0)
       .focus();
 
     // GotoSlide is not library therefore require separate focus
     if (libraryField.$myField === undefined) {
       H5P.jQuery('.h5p-curiousreader-editor .form-manager-slidein .h5peditor-text')
-      .eq(0)
-      .focus();
+        .eq(0)
+        .focus();
     }
   };
 
@@ -2033,7 +2061,7 @@ H5PEditor.CuriousReader.prototype.redrawElement = function ($wrapper, element, e
   repeat = (typeof repeat === 'undefined') ? elements.length - 1 - elementIndex : repeat;
 
   if (elementParams.action && elementParams.action.library.split(' ')[0] === 'H5P.Chart' &&
-      elementParams.action.params.graphMode === 'pieChart') {
+    elementParams.action.params.graphMode === 'pieChart') {
     elementParams.width = elementParams.height / this.slideRatio;
   }
 
