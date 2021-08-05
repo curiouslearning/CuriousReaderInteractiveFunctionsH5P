@@ -18,8 +18,7 @@ H5P.CRAudio = (function ($) {
     this.contentId = id;
     this.params = params;
     this.extras = extras;
-    this.splittedWord = params.timeStampForEachText;
-    this.hightlightingColor = params.hightlightingColor;
+    this.splittedWord = (params.timeStampForEachText != undefined) ? params.timeStampForEachText : '';
     this.sentenceStyles = (params.sentence != undefined) ? params.sentence.params.text : '';
     this.highlightingColor = params.highlightingColor;
     this.toggleButtonEnabled = true;
@@ -27,7 +26,7 @@ H5P.CRAudio = (function ($) {
     console.log(params)
     console.log(id)
     console.log(extras)
-  
+
     // Retrieve previous state
     if (extras && extras.previousState !== undefined) {
       this.oldTime = extras.previousState.currentTime;
@@ -44,17 +43,17 @@ H5P.CRAudio = (function ($) {
 
     this.on('resize', this.resize, this);
   }
- 
+
   C.prototype = Object.create(H5P.EventDispatcher.prototype);
   C.prototype.constructor = C;
- 
+
   /**
    * Adds a minimalistic audio player with only "play" and "pause" functionality.
    *
    * @param {jQuery} $container Container for the player.
    * @param {boolean} transparentMode true: the player is only visible when hovering over it; false: player's UI always visible
    */
-  C.prototype.dummy=function(){
+  C.prototype.dummy = function () {
     console.log('Dummy function')
   }
 
@@ -64,23 +63,22 @@ H5P.CRAudio = (function ($) {
     var PLAY_BUTTON = 'h5p-audio-minimal-play';
     var PLAY_BUTTON_PAUSED = 'h5p-audio-minimal-play-paused';
     var PAUSE_BUTTON = 'h5p-audio-minimal-pause';
-
-    var self = this;
+    var self =this
     this.$container = $container;
-    this.playOnDemand = false;
-
+    this.clickByPlayOnDemand = false;
+    
     self.$inner = $('<div/>', {
       'class': INNER_CONTAINER + (transparentMode ? ' h5p-audio-transparent' : '')
     }).appendTo($container);
-    
+
     if (this.splittedWord != undefined) {
       var slideTextElement = '';
       for (let i = 0; i < this.splittedWord.length; i++) {
         console.log(self.subContentId)
-        slideTextElement = slideTextElement + "<div class='divText'><span id=" +self.subContentId+ i + ">" + this.splittedWord[i].text.trim() + ' </span></div>'
+        slideTextElement = slideTextElement + "<div class='divText'><span id=" + self.subContentId + i + ">" + this.splittedWord[i].text.trim() + ' </span></div>'
       }
     }
-  
+    var $elementText
     if (this.params.sentence.params.text != undefined) {
       var $elementText = $.parseHTML(this.params.sentence.params.text);
       var sentence = $($elementText)[0]
@@ -88,142 +86,91 @@ H5P.CRAudio = (function ($) {
         var temp;
         if (sentence.children.length != 0) {
           sentence = sentence.children[0];
-          if(sentence.children.length == 0)
-          {
+          if (sentence.children.length == 0) {
             temp = $(sentence)
             sentence.className = "sentence-style"
             sentence.innerHTML = slideTextElement;
             break;
           }
         } else {
-            sentence.className = "sentence-style"
-            sentence.innerHTML = slideTextElement;
-            break;
+          sentence.className = "sentence-style"
+          sentence.innerHTML = slideTextElement;
+          break;
         }
       } while (sentence.children.length != 0)
     }
-
+    else{
+     $elementText=$.parseHTML('<span class=sentence-style></span>');
+    
+     console.log($elementText)
+     $elementText[0].innerHTML=slideTextElement
+     //$elementText[0].append(slideTextElement)
+    }
+    console.log($elementText)
     var audioButton = $($elementText).appendTo(self.$inner)
       .click(function (event) {
+
         console.log(self)
         console.log(self.subContentId)
         console.log(event.target.id)
         if (!self.isEnabledToggleButton()) {
           return;
         }
-        if (event.target.id != "" && self.audio.paused) {
-          self.playOnDemand = true;
-          spanTagId = parseInt((event.target.id).charAt((event.target.id.length - 1)));
-          var selectedFontSize = self.parent == undefined ? $('#'+self.subContentId+spanTagId).css('font-size'): $('.h5p-current').find('#'+self.subContentId+spanTagId).css('font-size');
-          var selectedTextColor = self.parent == undefined ? $('#'+self.subContentId+spanTagId).css('color'): $('.h5p-current').find('#'+self.subContentId+spanTagId).css('color');
-          self.audio.currentTime = self.splittedWord[spanTagId]['startDuration'];
-          self.audioEndTime = self.splittedWord[spanTagId]['endDuration'] - 0.23;
-          self.play();
-          if (self.parent != undefined) {
-            $('.h5p-current').each(function () {
-              $(this).find('#'+spanTagId).parent('div').css({
-                'transform' : 'scale(1.3)',
-                'z-index': '2',
-                // 'transform': 'scale(1)',
-                "color": self.highlightingColor,
-                // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
-              })
-            })
-            setTimeout(function () {
-              $('.h5p-current').each(function () {
-                $(this).find('#' + spanTagId).parent('div').css({
-                  'transform' : 'scale(1)',
-                  'z-index': '1',
-                  "color": selectedTextColor,
-                  // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
-                })
-              })
-            }, 600)
-          } else {
-            $('#'+self.subContentId +spanTagId).css({
-              'font-size' : '115%',
-              'color' : self.params.highlightingColor
-            });
-            setTimeout(function () {
-              $('#'+self.subContentId +spanTagId).css({
-                'font-size' : selectedFontSize,
-                'color' : selectedTextColor
-              })
-            }, 600)
-          }
-        }
+        self.playOnDemand(event.target.id)
       });
-
-    if (this.params.fitToWrapper) {
-      audioButton.css({
-        //   'width': '100%',
-        //   'height': '100%'
-      });
-    }
 
     //Event listeners that change the look of the player depending on events.
     self.audio.addEventListener('ended', function () {
-      self.playOnDemand = false;
+      self.clickByPlayOnDemand = false;
     });
 
-    self.audio.addEventListener('pause', function () {
-      $('.h5p-element-inner').css({
-        'color': 'black'
-      })
-    });
+    // self.audio.addEventListener('pause', function () {
+    //   $('.h5p-element-inner').css({
+    //     'color': 'black'
+    //   })
+    // });
 
     self.audio.addEventListener('timeupdate', function () {
-      if (self.playOnDemand) {
+      if (self.clickByPlayOnDemand) {
         if (self.audio.currentTime >= self.audioEndTime) {
           self.pause();
           self.audio.currentTime = 0;
-          setTimeout(function() {
-            self.playOnDemand = false;
+          setTimeout(function () {
+            self.clickByPlayOnDemand = false;
           }, 1000)
         }
-      } else {
+      } 
+      else {
         if (self.splittedWord != undefined) {
           var time = self.audio.currentTime, j = 0, word;
-          var originalFont;
-          //originalFont = $('#' + 0).css('font-size')
           self.originalFontColor = (($('.sentence-style')) != undefined) ? $('.sentence-style').css('color') : 'black'
-  
           for (j = 0; j < self.splittedWord.length; j++) {
-  
+            console.log("Inside for loop")
+            console.log(time)
             word = self.splittedWord[j]
-  
             if (word.highlighted == undefined) {
               word.highlighted = false
             }
             if (time > word['startDuration'] && time < word['endDuration']) {
               if (!word.highlighted) {
-  
+                console.log('Inside highlight')
                 word.highlighted = true;
                 if (self.parent != undefined) {
-  
                   $('.h5p-current').each(function () {
-                    $(this).find('#' + self.subContentId+j).parent('div').css({
-                      'transform' : 'scale(1.3)',
+                    $(this).find('#' + self.subContentId + j).parent('div').css({
+                      "transform": 'scale(1.5)',
                       'z-index': '2',
-                      'box-shadow':'0px 0px 20px yellow',
-                      // 'transform': 'scale(1)',
-                      "color": self.highlightingColor,
-                      // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
-                    })
-              
-                    // self.pop($(this).find('#img' + j))
-                    
-  
+                      'text-shadow' : '0px 0px 20px yellow',
+                      'color' : self.highlightingColor
+                    });
+                    self.glow($('#img' + self.subContentId + j).parent('div').parent('div'));
+                    //this.parent.prototype.spin('#img' + self.subContentId + j)
+                    //$(this).find('#img' + self.subContentId + j)
                   });
                 }
                 else {
-                  $('#' + j).css({
+                  $('#' + self.subContentId + j).css({
                     "color": self.highlightingColor,
-                    // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
-                  })
-                  $(this).find('#img' + j).css({
-                    "color": self.highlightingColor,
-                    // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
                   })
                 }
               }
@@ -231,29 +178,17 @@ H5P.CRAudio = (function ($) {
             else if (word.highlighted) {
               if (self.parent != undefined) {
                 $('.h5p-current').each(function () {
-                  $(this).find('#'+self.subContentId + j).parent('div').css({
-                    'transform' : 'scale(1)',
+                  $(this).find('#' + self.subContentId + j).parent('div').css({
+                    "transform": 'scale(1)',
                     'z-index': '1',
-                    "color": self.originalFontColor,
-                    'box-shadow':'0px 0px 20px transparent',
-                    // 'transform': 'scale(0)',
-                    // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
-                  })
-                  $(this).find('#img' + j).css({
-                    "color": self.highlightingColor,
-                    // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
-                  })
-  
+                    'text-shadow' : '0px 0px 20px transparent',
+                    'color' :  self.originalFontColor
+                  });
                 });
               }
               else {
                 $('#' + j).css({
                   "color": self.originalFontColor,
-                  // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
-                })
-                $(this).find('#img' + j).css({
-                  "color": self.highlightingColor,
-                  // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
                 })
               }
               word.highlighted = false;
@@ -267,7 +202,7 @@ H5P.CRAudio = (function ($) {
     //Scale icon to container
     self.resize();
   };
- 
+
   /**
    * Resizes the audio player icon when the wrapper is resized.
    */
@@ -286,9 +221,67 @@ H5P.CRAudio = (function ($) {
     }
   };
 
-  return C;
+  C.prototype.playOnDemand = function (id) {
+    console.log(id)
+    var that=this
+    if (id != ""  && !this.clickByPlayOnDemand) {
+      this.clickByPlayOnDemand = true;
+      const spanTagId = id;
+      //const clickedIndex = spanTagId.replace(this.subContentId, "")
+      const clickedIndex = spanTagId[spanTagId.length-1]
+      const selectedTextColor = this.parent == undefined ? $('#' + spanTagId).css('color') : $('.h5p-current').find('#' + spanTagId).css('color');
+      console.log(this)
+      console.log(this.splittedWord)
+      this.audio.currentTime = this.splittedWord[clickedIndex]['startDuration'];
+      this.audioEndTime = this.splittedWord[clickedIndex]['endDuration'] - 0.23;
+      this.play();
+      if (this.parent != undefined) {
+        $('.h5p-current').each(function () {
+          $(this).find('#' + spanTagId).parent('div').css({
+            "transform": 'scale(1.5)',
+            'z-index': '2',
+            'color': that.highlightingColor,
+            'text-shadow': '0px 0px 5px yellow',
+          });
+          console.log($('#img' + spanTagId))
+          console.log(that.glow($('#img' + spanTagId).closest('h5p-element')))
+          // that.pop($('#img' + spanTagId))
+           that.glow($('#img' + spanTagId).parent('div').parent('div'));
+        })
+        setTimeout(function () {
+          $('.h5p-current').each(function () {
+            $(this).find('#' + spanTagId).parent('div').css({
+              "transform": 'scale(1)',
+              'z-index': '1',
+              'color': selectedTextColor,
+              'text-shadow': '0px 0px 5px transparent'
+            });
+          })
+        }, 1000)
+      } else {
+        $('#' + spanTagId).css({
+          'font-size': '115%',
+          'color': that.params.highlightingColor
+        });
+        setTimeout(function () {
+          $('#' + spanTagId).css({
+            'font-size': selectedFontSize,
+            'color': selectedTextColor
+          })
+        }, 600)
+      }
+    }
+
+  }
+
   
+
+
+  return C;
+
 })(H5P.jQuery);
+
+
 /**
  * Wipe out the content of the wrapper and put our HTML in it.
  *
@@ -494,50 +487,76 @@ H5P.CRAudio.prototype.enableToggleButton = function () {
  * Check if button is enabled.
  * @return {boolean} True, if button is enabled. Else false.
  */
- H5P.CRAudio.prototype.dummy=function(){
+H5P.CRAudio.prototype.dummy = function () {
   console.log('Dummy function')
 }
 H5P.CRAudio.prototype.isEnabledToggleButton = function () {
-  
+
   return this.toggleButtonEnabled;
 };
 /** @constant {string} */
 H5P.CRAudio.BUTTON_DISABLED = 'h5p-audio-disabled';
 
-H5P.CRAudio.prototype.pop=function(imageTobeAnimated){
-  var interval=100;
+H5P.CRAudio.prototype.glow=function(imageTobeAnimated){ 
+  console.log('glowing');
+  console.log(imageTobeAnimated)
+  imageTobeAnimated.css({
+    "transform": 'scale(1.5)',
+    'z-index': '2',
+    'transition':'0.5s',
+    "box-shadow": "0 0 50px yellow"
+  });
+  // imageTobeAnimated.css("box-shadow", "0 0 50px yellow");
+  // imageTobeAnimated.css("transition", "border 1s linear, box-shadow 1s linear");
+  // imageTobeAnimated.css("z-index", "2");
+ 
+  
+  setTimeout(function () {
+    imageTobeAnimated.css({
+      "transform": 'scale(1)',
+      'z-index': '1',
+      "box-shadow": "0 0 50px transparent"
+    });
+  //     imageTobeAnimated.css("box-shadow", "0 0 50px transparent");
+  //     imageTobeAnimated.css("transition", "border 1s linear, box-shadow 1s linear");
+  //     imageTobeAnimated.css("z-index", "1");
+   }, 
+  500);
+}
+H5P.CRAudio.prototype.pop = function (imageTobeAnimated) {
+  var interval = 100;
   console.log('i am pulsing');
-     setTimeout(() => {   
-        imageTobeAnimated.css('transform', 'scale(1, 1)');
-    }, interval * 0);
-    setTimeout(() => {
-        imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
-    }, interval * 1);
-    setTimeout(() => {
-        imageTobeAnimated.css('transform', 'scale(1, 1)');
-    }, interval * 2);
-    setTimeout(() => {
-        imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
-    }, interval * 3);
-    setTimeout(() => {
-        imageTobeAnimated.css('transform', 'scale(1, 1)');
-    }, interval * 4);
-    setTimeout(() => {
-        imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
-    }, interval * 5);
-    setTimeout(() => {
-        imageTobeAnimated.css('transform', 'scale(1, 1)');
-    }, interval * 6);
-    setTimeout(() => {
-        imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
-    }, interval * 7);
-    setTimeout(() => {
-        imageTobeAnimated.css('transform', 'scale(1, 1)');
-    }, interval * 8);
-    setTimeout(() => {
-        imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
-    }, interval * 9);
-    setTimeout(() => {
-        imageTobeAnimated.css('transform', 'scale(1, 1)');
-    }, interval * 10);
+  setTimeout(() => {
+    imageTobeAnimated.css('transform', 'scale(1, 1)');
+  }, interval * 0);
+  setTimeout(() => {
+    imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
+  }, interval * 1);
+  setTimeout(() => {
+    imageTobeAnimated.css('transform', 'scale(1, 1)');
+  }, interval * 2);
+  setTimeout(() => {
+    imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
+  }, interval * 3);
+  setTimeout(() => {
+    imageTobeAnimated.css('transform', 'scale(1, 1)');
+  }, interval * 4);
+  setTimeout(() => {
+    imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
+  }, interval * 5);
+  setTimeout(() => {
+    imageTobeAnimated.css('transform', 'scale(1, 1)');
+  }, interval * 6);
+  setTimeout(() => {
+    imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
+  }, interval * 7);
+  setTimeout(() => {
+    imageTobeAnimated.css('transform', 'scale(1, 1)');
+  }, interval * 8);
+  setTimeout(() => {
+    imageTobeAnimated.css('transform', 'scale(1.1, 1.1)');
+  }, interval * 9);
+  setTimeout(() => {
+    imageTobeAnimated.css('transform', 'scale(1, 1)');
+  }, interval * 10);
 }

@@ -1746,6 +1746,7 @@ H5PEditor.CuriousReader.prototype.addToDragNBar = function (element, elementPara
     var link = dnbElement.contextMenu.$buttons.append(linkEle);
     link[0].children[5].addEventListener('click', function (e) { 
       var textId = e.target.id
+      elementParams.class=textId
       elementParams.id = textId;
       H5P.jQuery(this).find('.dropdown-content').css({ 'display': 'none' })
     });

@@ -56,6 +56,13 @@
                     "widget": "none",
                     "optional": true
                   },
+                  {
+                    "name": "class",
+                    "importance": "low",
+                    "type": "text",
+                    "widget": "none",
+                    "optional": true
+                  },
 
                   {
                     "name": "action",

@@ -891,6 +891,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   var classes = 'h5p-element' +
     (displayAsButton ? ' h5p-element-button-wrapper' : '') +
     (buttonSizeClass.length ? ' ' + buttonSizeClass : '');
+  var instances=this.elementInstances;
   var $elementContainer = H5P.jQuery('<div>', {
     'class': classes,
     'id': `${instance.subContentId}`,
@@ -900,12 +901,25 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     width: element.width + '%',
     height: element.height + '%'
   }).click(function (event) {
+    if (self.editor === undefined) {
+      var audio;
+      const id = H5P.jQuery('#'+instance.subContentId)[0].children[0].children[0].id
+      for(let i = 0; i < instances[index].length; i++) {
+        if(instances[index][i].libraryInfo.machineName == 'H5P.CRAudio') {
+          if (instances[index][i].subContentId == id.substr(3, 36)) {
+            audio = instances[index][i];
+            audio.playOnDemand(id.substr(3, id.length));
+            break;
+          }
+        }
+      }
+    }
+
       if (element.willDoAnimation == true) {
         let currHeight = element.height;
         let currWidth = element.width;
         let imageTobeAnimated;
         let id = instance.subContentId;
-        console.log(element.animationType);
         $('.h5p-current').each(function () {
               imageTobeAnimated=$(this).find('#' + id);
             }); 
@@ -928,7 +942,6 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
 
   const isTransparent = element.backgroundOpacity === undefined || element.backgroundOpacity === 0;
   $elementContainer.toggleClass('h5p-transparent', isTransparent);
-
   if (displayAsButton) {
     const $button = this.createInteractionButton(element, instance);
     $button.appendTo($elementContainer);
@@ -942,9 +955,8 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     }).css({
       background: 'rgba(255,255,255,' + (element.backgroundOpacity === undefined ? 0 : element.backgroundOpacity / 100) + ')'
     }).appendTo($elementContainer);
-
     var $innerElementContainer = H5P.jQuery('<div>', {
-      'class': 'h5p-element-inner',
+      'class': 'h5p-element-inner'+(element.class != "")?' '+element.class:'',
       'id' : element.id != "" ? element.id : ""
     }).appendTo($outerElementContainer);
 
@@ -1001,6 +1013,14 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
 };
 
 
+CuriousReader.prototype.spin =({imageTobeAnimated}) =>{     
+  imageTobeAnimated.css("transform", "rotate(360deg)");
+  imageTobeAnimated.css("transition", "transform 2s");
+  setTimeout(function () {
+      imageTobeAnimated.css("transform", "rotate(0deg)");
+      imageTobeAnimated.css("transition", "transform 2s");
+  }, 3000);
+}
 /**
  * Disables tab indexes behind a popup container
  */
