@@ -1,6 +1,5 @@
 /*global H5P,ns*/
 var H5PEditor = H5PEditor || {};
-
 /**
  * Create a field for the form.
  *
@@ -153,7 +152,9 @@ H5PEditor.CuriousReader.prototype.addElement = function (library, options) {
         library: library,
         params: {}
       });
-      elementParams.action.subContentId = H5P.createUUID();
+      // if(elementParams.action.subContentId === undefined || elementParams.action.subContentId===''){
+      // }
+        elementParams.action.subContentId = H5P.createUUID();
 
       var libraryName = library.split(' ')[0];
       switch (libraryName) {
@@ -1885,7 +1886,7 @@ H5PEditor.CuriousReader.prototype.showElementForm = function (element, $wrapper,
    * The user is done editing, save and update the display.
    * @private
    */
-  const handleFormdone = function () {
+  const handleFormdone = function (event) {
     // Validate / save children
     for (var i = 0; i < element.children.length; i++) {
       element.children[i].validate();
@@ -1907,6 +1908,14 @@ H5PEditor.CuriousReader.prototype.showElementForm = function (element, $wrapper,
       that.redrawElement($wrapper, element, elementParams);
     }
 
+    if(elementParams.willDoAnimation==true && elementParams.animationType=='glow'
+    &&  elementParams.isEdit == false){  
+      elementParams.isEdit = true; 
+      let param={};
+      Object.assign(param, elementParams);
+      param.willDoAnimation =false;
+      this.addElement(param,{});
+    }
     that.dnb.preventPaste = false;
   }
   that.on('formdone', handleFormdone);
