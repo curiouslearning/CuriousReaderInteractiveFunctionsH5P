@@ -901,6 +901,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     width: element.width + '%',
     height: element.height + '%'
   }).click(function (event) {
+    console.log(element)
     if (self.editor === undefined) {
       var audio;
       const id = H5P.jQuery('#'+instance.subContentId)[0].children[0].children[0].id
@@ -914,30 +915,17 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
         }
       }
     }
-
-      if (element.willDoAnimation == true) {
-        let currHeight = element.height;
-        let currWidth = element.width;
-        let imageTobeAnimated;
-        let id = instance.subContentId;
-        $('.h5p-current').each(function () {
-              imageTobeAnimated=$(this).find('#' + id);
-            }); 
-        if (element.animationType == "spin") {
-          spin({imageTobeAnimated:imageTobeAnimated});
-        }else if(element.animationType == "bounce"){
-          bounce({imageTobeAnimated:imageTobeAnimated});
-        } else if(element.animationType == "jiggle"){
-          jiggle({imageTobeAnimated:imageTobeAnimated});
-        }  else if(element.animationType == "pulse"){
-          pulse({imageTobeAnimated:imageTobeAnimated});
-        }  else if(element.animationType == "glow"){
-          glow({imageTobeAnimated:imageTobeAnimated});
-        } 
-        else {
-          pop({imageTobeAnimated:imageTobeAnimated ,currHeight:currHeight,currWidth:currWidth});
-        }
-      }
+    if (element.willDoAnimation == true) {
+      let currHeight = element.height;
+      let currWidth = element.width;
+      let imageTobeAnimated;
+      let id = instance.subContentId;
+      console.log(element.animationType);
+      $('.h5p-current').each(function () {
+        imageTobeAnimated=$(this).find('#' + id);
+        self.animation(imageTobeAnimated)
+      }); 
+    }
     }).appendTo($slide);
 
   const isTransparent = element.backgroundOpacity === undefined || element.backgroundOpacity === 0;
@@ -1012,6 +1000,26 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   return $elementContainer;
 };
 
+CuriousReader.prototype.animation = function (element) {
+  element.data('animationType',element.animationType)
+  console.log("Callded")
+  console.log(element.animationType)
+  console.log(element.data('animationType'))
+  if (element.animationType == "spin") {
+    spin({imageTobeAnimated:imageTobeAnimated});
+  }else if(element.animationType == "bounce"){
+    bounce({imageTobeAnimated:imageTobeAnimated});
+  } else if(element.animationType == "jiggle"){
+    jiggle({imageTobeAnimated:imageTobeAnimated});
+  }  else if(element.animationType == "pulse"){
+    pulse({imageTobeAnimated:imageTobeAnimated});
+  }  else if(element.animationType == "glow"){
+    glow({imageTobeAnimated:imageTobeAnimated});
+  } 
+  // else {
+  //   pop({imageTobeAnimated:imageTobeAnimated ,currHeight:currHeight,currWidth:currWidth});
+  // }
+}
 
 CuriousReader.prototype.spin =({imageTobeAnimated}) =>{     
   imageTobeAnimated.css("transform", "rotate(360deg)");

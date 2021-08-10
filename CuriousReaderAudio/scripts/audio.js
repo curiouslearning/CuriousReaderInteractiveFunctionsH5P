@@ -156,17 +156,39 @@ H5P.CRAudio = (function ($) {
                 console.log('Inside highlight')
                 word.highlighted = true;
                 if (self.parent != undefined) {
-                  $('.h5p-current').each(function () {
-                    $(this).find('#' + self.subContentId + j).parent('div').css({
+                  $('.h5p-current >div').each(function (index,element) {
+                    var h5pCurrentInnerDiv=(element.children[0].children[0]!=undefined)?element.children[0].children[0]:element
+                     $(this).find('#' + self.subContentId + j).parent('div').css({
                       "transform": 'scale(1.5)',
                       'z-index': '2',
-                      'text-shadow' : '0px 0px 20px yellow',
-                      'color' : self.highlightingColor
+                      'color': self.highlightingColor,
+                      'text-shadow': '0px 0px 5px yellow',
                     });
-                    self.glow($('#img' + self.subContentId + j).parent('div').parent('div'));
-                    //this.parent.prototype.spin('#img' + self.subContentId + j)
-                    //$(this).find('#img' + self.subContentId + j)
-                  });
+                     if(h5pCurrentInnerDiv.id.substr(0,3)=='img' && h5pCurrentInnerDiv.id!=undefined)
+                     {
+                       if('img'+self.subContentId + j==h5pCurrentInnerDiv.id)
+                       {
+                        //self.glow($(this).find('#img' + self.subContentId + j).parent('div').parent('div'));
+                        self.parent.animation($(this).find('#img' + self.subContentId + j).parent('div').parent('div'))
+          
+                       }
+                     }
+                   
+                    // console.log($(this).find('#img' + spanTagId))
+                    // $(this).find('#img' + spanTagId).parent('div').parent('div')
+                    // that.pop($('#img' + spanTagId))
+                  })
+                  // $('.h5p-current').each(function () {
+                  //   $(this).find('#' + self.subContentId + j).parent('div').css({
+                  //     "transform": 'scale(1.5)',
+                  //     'z-index': '2',
+                  //     'text-shadow' : '0px 0px 20px yellow',
+                  //     'color' : self.highlightingColor
+                  //   });
+                  //   self.glow($(this).find('#img' + self.subContentId + j).parent('div').parent('div'));
+                  //   //this.parent.prototype.spin('#img' + self.subContentId + j)
+                  //   //$(this).find('#img' + self.subContentId + j)
+                  // });
                 }
                 else {
                   $('#' + self.subContentId + j).css({
@@ -227,6 +249,7 @@ H5P.CRAudio = (function ($) {
     if (id != ""  && !this.clickByPlayOnDemand) {
       this.clickByPlayOnDemand = true;
       const spanTagId = id;
+      console.log(spanTagId)
       //const clickedIndex = spanTagId.replace(this.subContentId, "")
       const clickedIndex = spanTagId[spanTagId.length-1]
       const selectedTextColor = this.parent == undefined ? $('#' + spanTagId).css('color') : $('.h5p-current').find('#' + spanTagId).css('color');
@@ -236,18 +259,49 @@ H5P.CRAudio = (function ($) {
       this.audioEndTime = this.splittedWord[clickedIndex]['endDuration'] - 0.23;
       this.play();
       if (this.parent != undefined) {
-        $('.h5p-current').each(function () {
-          $(this).find('#' + spanTagId).parent('div').css({
+        // var i=0;
+        console.log( $('.h5p-current')[0].children.length)
+        console.log( $('.h5p-current')[0].children)
+
+        $('.h5p-current >div').each(function (index,element) {
+          var h5pCurrentInnerDiv=(element.children[0].children[0]!=undefined)?element.children[0].children[0]:element
+          console.log(element)
+          console.log((element.children[0].children[0].id.substr(0,3)=='img')?element.children[0].children[0].id:'')
+           console.log($(element))
+           console.log(spanTagId)
+           $(this).find('#' + spanTagId).parent('div').css({
             "transform": 'scale(1.5)',
             'z-index': '2',
             'color': that.highlightingColor,
             'text-shadow': '0px 0px 5px yellow',
           });
-          console.log($('#img' + spanTagId))
-          console.log(that.glow($('#img' + spanTagId).closest('h5p-element')))
+           if(h5pCurrentInnerDiv.id.substr(0,3)=='img' && h5pCurrentInnerDiv.id!=undefined)
+           {
+             if('img'+spanTagId==h5pCurrentInnerDiv.id)
+             {
+              //that.glow($(this).find('#img' + spanTagId).parent('div').parent('div'));
+              that.parent.animation($(this).find('#img' +spanTagId).parent('div'))
+
+             }
+           }
+         
+          // console.log($(this).find('#img' + spanTagId))
+          // $(this).find('#img' + spanTagId).parent('div').parent('div')
           // that.pop($('#img' + spanTagId))
-           that.glow($('#img' + spanTagId).parent('div').parent('div'));
         })
+       
+        // $('.h5p-current').each(function () {
+        //   console.log(i++)
+        //   $(this).find('#' + spanTagId).parent('div').css({
+        //     "transform": 'scale(1.5)',
+        //     'z-index': '2',
+        //     'color': that.highlightingColor,
+        //     'text-shadow': '0px 0px 5px yellow',
+        //   });
+        //   console.log($(this).find('#img' + spanTagId))
+        //   $(this).find('#img' + spanTagId).parent('div').parent('div')
+        //   // that.pop($('#img' + spanTagId))
+        // })
         setTimeout(function () {
           $('.h5p-current').each(function () {
             $(this).find('#' + spanTagId).parent('div').css({
