@@ -168,8 +168,8 @@ H5P.CRAudio = (function ($) {
                      {
                        if('img'+self.subContentId + j==h5pCurrentInnerDiv.id)
                        {
-                        //self.glow($(this).find('#img' + self.subContentId + j).parent('div').parent('div'));
-                        self.parent.animation($(this).find('#img' + self.subContentId + j).parent('div').parent('div'))
+                        self.glow($(this).find('#img' + self.subContentId + j).parent('div').parent('div'));
+                        //self.parent.animation($(this).find('#img' + self.subContentId + j).parent('div').parent('div'))
           
                        }
                      }
@@ -279,8 +279,8 @@ H5P.CRAudio = (function ($) {
            {
              if('img'+spanTagId==h5pCurrentInnerDiv.id)
              {
-              //that.glow($(this).find('#img' + spanTagId).parent('div').parent('div'));
-              that.parent.animation($(this).find('#img' +spanTagId).parent('div'))
+              that.glow($(this).find('#img' + spanTagId).parent('div').parent('div'));
+              //that.parent.animation($(this).find('#img' +spanTagId).parent('div'))
 
              }
            }
