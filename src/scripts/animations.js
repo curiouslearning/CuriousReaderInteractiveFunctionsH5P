@@ -92,14 +92,12 @@ export const flip =({imageTobeAnimated}) =>{
         imageTobeAnimated.css("transition", "transform 2s");
     }, 3000);
 }
-export const pop =({imageTobeAnimated,currHeight,currWidth}) =>{ 
-    imageTobeAnimated.css("height", `${currHeight + 7}%`);
-    imageTobeAnimated.css("width", `${currWidth + 7}%`);
-    imageTobeAnimated.css("transition", "width 2s,height 2s");
+export const pop =({imageTobeAnimated}) =>{ 
+    imageTobeAnimated.css("transform", "scale(1.3)");
+    imageTobeAnimated.css("transition", "transform 2s");
     setTimeout(function () {
-        imageTobeAnimated.css("height", `${currHeight}%`);
-        imageTobeAnimated.css("width", `${currWidth}%`);
-        imageTobeAnimated.css("transition", "width 2s,height 2s");
+        imageTobeAnimated.css("transform", "scale(1)");
+        imageTobeAnimated.css("transition", "transform 2s");
     }, 3000);
 }
 

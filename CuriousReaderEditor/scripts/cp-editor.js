@@ -1908,14 +1908,14 @@ H5PEditor.CuriousReader.prototype.showElementForm = function (element, $wrapper,
       that.redrawElement($wrapper, element, elementParams);
     }
 
-    if(elementParams.willDoAnimation==true && elementParams.animationType=='glow'
-    &&  elementParams.isEdit == false){  
-      elementParams.isEdit = true; 
-      let param={};
-      Object.assign(param, elementParams);
-      param.willDoAnimation =false;
-      this.addElement(param,{});
-    }
+    // if(elementParams.willDoAnimation==true && elementParams.animationType=='glow'
+    // &&  elementParams.isEdit == false){  
+    //   elementParams.isEdit = true; 
+    //   let param={};
+    //   Object.assign(param, elementParams);
+    //   param.willDoAnimation =false;
+    //   this.addElement(param,{});
+    // }
     that.dnb.preventPaste = false;
   }
   that.on('formdone', handleFormdone);

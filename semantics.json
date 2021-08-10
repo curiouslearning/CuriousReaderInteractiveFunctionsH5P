@@ -117,14 +117,22 @@
                     "importance": "medium",
                     "default": false,
                     "optional": true
-                  },
-                  {
+                  },{
                     "name": "animationType",
                     "type": "select",
                     "label": "Animation Type",
                     "importance": "low",
                     "optional": false,
                     "default": "pop",
+                    "widget": "showWhen",
+                    "showWhen": {
+                      "rules": [
+                        {
+                          "field": "willDoAnimation",
+                          "equals": true
+                        }
+                      ]
+                    },
                     "options": [
                       {
                         "value": "spin",
