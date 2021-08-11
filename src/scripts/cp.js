@@ -887,7 +887,7 @@ CuriousReader.prototype.attachElements = function ($slide, index) {
  */
 CuriousReader.prototype.attachElement = function (element, instance, $slide, index) { 
   let ele ='';
-  if (element.willDoAnimation==false && element.animationType ==='glow'){
+  if (element.willDoAnimation==true && element.animationType ==='glow'){
     ele = '-oval-animated';
   } 
   const displayAsButton = (element.displayAsButton !== undefined && element.displayAsButton);
@@ -907,8 +907,6 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     borderStyle: (this.editor !== undefined)&& (ele==='-oval-animated')?'dotted':'none'
   }).click(function (event) {
       if (element.willDoAnimation == true) {
-        let currHeight = element.height;
-        let currWidth = element.width;
         let imageTobeAnimated;
         let id = instance.subContentId;
         if(element.animationType ==='glow'){
@@ -936,7 +934,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
           backgroundFade({imageTobeAnimated:imageTobeAnimated ,parent:parent});
         } 
         else {
-          pop({imageTobeAnimated:imageTobeAnimated ,currHeight:currHeight,currWidth:currWidth});
+          pop({imageTobeAnimated:imageTobeAnimated});
         }
       });
       }
