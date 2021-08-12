@@ -84,14 +84,20 @@ export const spin =({imageTobeAnimated}) =>{
         imageTobeAnimated.css("transition", "transform 2s");
     }, 3000);
 }
-export const pop =({imageTobeAnimated,currHeight,currWidth}) =>{ 
-    imageTobeAnimated.css("height", `${currHeight + 7}%`);
-    imageTobeAnimated.css("width", `${currWidth + 7}%`);
-    imageTobeAnimated.css("transition", "width 2s,height 2s");
+export const flip =({imageTobeAnimated}) =>{     
+    imageTobeAnimated.css("transform", "rotateY(360deg)");
+    imageTobeAnimated.css("transition", "transform 2s");
     setTimeout(function () {
-        imageTobeAnimated.css("height", `${currHeight}%`);
-        imageTobeAnimated.css("width", `${currWidth}%`);
-        imageTobeAnimated.css("transition", "width 2s,height 2s");
+        imageTobeAnimated.css("transform", "rotateY(0deg)");
+        imageTobeAnimated.css("transition", "transform 2s");
+    }, 3000);
+}
+export const pop =({imageTobeAnimated}) =>{ 
+    imageTobeAnimated.css("transform", "scale(1.3)");
+    imageTobeAnimated.css("transition", "transform 2s");
+    setTimeout(function () {
+        imageTobeAnimated.css("transform", "scale(1)");
+        imageTobeAnimated.css("transition", "transform 2s");
     }, 3000);
 }
 
@@ -105,12 +111,19 @@ export const pulse =({imageTobeAnimated}) =>{
    doPulsing(imageTobeAnimated);
 }
 export const glow =({imageTobeAnimated}) =>{ 
-    console.log('glowing');
     imageTobeAnimated.css("box-shadow", "0 0 50px yellow");
     imageTobeAnimated.css("transition", "border 1s linear, box-shadow 1s linear");
-    
     setTimeout(function () {
         imageTobeAnimated.css("box-shadow", "0 0 50px transparent");
         imageTobeAnimated.css("transition", "border 1s linear, box-shadow 1s linear");
     }, 3000);
+}
+export const backgroundFade =({imageTobeAnimated,parent}) =>{ 
+ parent.css('opacity', '0.4');
+    parent.css("transition", "opacity 2s");
+     setTimeout(function () {
+        parent.css('opacity', '1');
+        parent.css("transition", "opacity 2s");
+        imageTobeAnimated.addClass(' element');
+     },3000);
 }

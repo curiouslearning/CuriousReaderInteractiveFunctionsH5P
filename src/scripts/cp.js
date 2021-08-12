@@ -6,7 +6,7 @@ import KeywordsMenu from './keyword-menu';
 import { jQuery as $ } from './globals';
 import { flattenArray, addClickAndKeyboardListeners, isFunction, kebabCase, stripHTML, keyCode } from './utils';
 import Slide from './slide.js';
-import {spin,pop,bounce,jiggle,pulse,glow} from './animations'
+import {spin,pop,bounce,jiggle,pulse,glow,backgroundFade,flip} from './animations';
 /**
  * @const {string}
  */
@@ -885,21 +885,29 @@ CuriousReader.prototype.attachElements = function ($slide, index) {
  * @param {Number} index
  * @returns {jQuery}
  */
-CuriousReader.prototype.attachElement = function (element, instance, $slide, index) {
+CuriousReader.prototype.attachElement = function (element, instance, $slide, index) { 
+  let ele ='';
+  if (element.willDoAnimation==true && element.animationType ==='glow'){
+    ele = '-oval-animated';
+  } 
   const displayAsButton = (element.displayAsButton !== undefined && element.displayAsButton);
   var buttonSizeClass = (element.buttonSize !== undefined ? "h5p-element-button-" + element.buttonSize : "");
-  var classes = 'h5p-element' +
+  var classes = 'h5p-element' + ' element' +
     (displayAsButton ? ' h5p-element-button-wrapper' : '') +
+
     (buttonSizeClass.length ? ' ' + buttonSizeClass : '');
   var instances=this.elementInstances;
+
   var $elementContainer = H5P.jQuery('<div>', {
     'class': classes,
-    'id': `${instance.subContentId}`,
+    'id':`${element.action.subContentId + ele}` ,
   }).css({
     left: element.x + '%',
     top: element.y + '%',
     width: element.width + '%',
-    height: element.height + '%'
+    height: element.height + '%',
+    borderRadius: ele==''?'0%':'50%',
+    borderStyle: (this.editor !== undefined)&& (ele==='-oval-animated')?'dotted':'none'
   }).click(function (event) {
     if (self.editor === undefined) {
       var audio;
@@ -916,16 +924,21 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     }
 
       if (element.willDoAnimation == true) {
-        let currHeight = element.height;
-        let currWidth = element.width;
         let imageTobeAnimated;
         let id = instance.subContentId;
+        if(element.animationType ==='glow'){
+          id = id +'-oval-animated';
+        }
+        let parent;
+
         $('.h5p-current').each(function () {
-              imageTobeAnimated=$(this).find('#' + id);
-            }); 
+            imageTobeAnimated=$(this).find('#' + id);
         if (element.animationType == "spin") {
           spin({imageTobeAnimated:imageTobeAnimated});
-        }else if(element.animationType == "bounce"){
+        } else if(element.animationType == "flip"){
+          flip({imageTobeAnimated:imageTobeAnimated});
+        }
+        else if(element.animationType == "bounce"){
           bounce({imageTobeAnimated:imageTobeAnimated});
         } else if(element.animationType == "jiggle"){
           jiggle({imageTobeAnimated:imageTobeAnimated});
@@ -933,10 +946,15 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
           pulse({imageTobeAnimated:imageTobeAnimated});
         }  else if(element.animationType == "glow"){
           glow({imageTobeAnimated:imageTobeAnimated});
+        }else if(element.animationType == "backgroundFade"){
+           imageTobeAnimated.removeClass('element');
+           parent=$(this).find('.' + 'element');
+          backgroundFade({imageTobeAnimated:imageTobeAnimated ,parent:parent});
         } 
         else {
-          pop({imageTobeAnimated:imageTobeAnimated ,currHeight:currHeight,currWidth:currWidth});
+          pop({imageTobeAnimated:imageTobeAnimated});
         }
+      });
       }
     }).appendTo($slide);
 
@@ -956,8 +974,13 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
       background: 'rgba(255,255,255,' + (element.backgroundOpacity === undefined ? 0 : element.backgroundOpacity / 100) + ')'
     }).appendTo($elementContainer);
     var $innerElementContainer = H5P.jQuery('<div>', {
+
       'class': 'h5p-element-inner'+(element.class != "")?' '+element.class:'',
       'id' : element.id != "" ? element.id : ""
+
+    }).css({
+     opacity:(ele==='-oval-animated')?0:1
+
     }).appendTo($outerElementContainer);
 
     // H5P.Shape sets it's own size when line in selected
@@ -1008,7 +1031,6 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
      * so that we can display the export answers button on the last slide */
     this.hasAnswerElements = this.hasAnswerElements || instance.exportAnswers !== undefined;
   }
-
   return $elementContainer;
 };
 
