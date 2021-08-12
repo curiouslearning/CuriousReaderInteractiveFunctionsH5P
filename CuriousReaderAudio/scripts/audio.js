@@ -23,9 +23,6 @@ H5P.CRAudio = (function ($) {
     this.highlightingColor = params.highlightingColor;
     this.toggleButtonEnabled = true;
     this.setAutoPlay = (this.params.cpAutoplay != undefined) ? this.params.cpAutoplay : false;
-    console.log(params)
-    console.log(id)
-    console.log(extras)
 
     // Retrieve previous state
     if (extras && extras.previousState !== undefined) {
@@ -53,10 +50,6 @@ H5P.CRAudio = (function ($) {
    * @param {jQuery} $container Container for the player.
    * @param {boolean} transparentMode true: the player is only visible when hovering over it; false: player's UI always visible
    */
-  C.prototype.dummy = function () {
-    console.log('Dummy function')
-  }
-
   C.prototype.addMinimalAudioPlayer = function ($container, transparentMode) {
     var INNER_CONTAINER = 'h5p-audio-inner';
     var AUDIO_BUTTON = 'h5p-audio-minimal-button';
@@ -74,7 +67,6 @@ H5P.CRAudio = (function ($) {
     if (this.splittedWord != undefined) {
       var slideTextElement = '';
       for (let i = 0; i < this.splittedWord.length; i++) {
-        console.log(self.subContentId)
         slideTextElement = slideTextElement + "<div class='divText'><span id=" + self.subContentId + i + ">" + this.splittedWord[i].text.trim() + ' </span></div>'
       }
     }
@@ -102,17 +94,11 @@ H5P.CRAudio = (function ($) {
     else{
      $elementText=$.parseHTML('<span class=sentence-style></span>');
     
-     console.log($elementText)
      $elementText[0].innerHTML=slideTextElement
      //$elementText[0].append(slideTextElement)
     }
-    console.log($elementText)
     var audioButton = $($elementText).appendTo(self.$inner)
       .click(function (event) {
-
-        console.log(self)
-        console.log(self.subContentId)
-        console.log(event.target.id)
         if (!self.isEnabledToggleButton()) {
           return;
         }
@@ -123,12 +109,6 @@ H5P.CRAudio = (function ($) {
     self.audio.addEventListener('ended', function () {
       self.clickByPlayOnDemand = false;
     });
-
-    // self.audio.addEventListener('pause', function () {
-    //   $('.h5p-element-inner').css({
-    //     'color': 'black'
-    //   })
-    // });
 
     self.audio.addEventListener('timeupdate', function () {
       if (self.clickByPlayOnDemand) {
@@ -145,15 +125,12 @@ H5P.CRAudio = (function ($) {
           var time = self.audio.currentTime, j = 0, word;
           self.originalFontColor = (($('.sentence-style')) != undefined) ? $('.sentence-style').css('color') : 'black'
           for (j = 0; j < self.splittedWord.length; j++) {
-            console.log("Inside for loop")
-            console.log(time)
             word = self.splittedWord[j]
             if (word.highlighted == undefined) {
               word.highlighted = false
             }
             if (time > word['startDuration'] && time < word['endDuration']) {
               if (!word.highlighted) {
-                console.log('Inside highlight')
                 word.highlighted = true;
                 if (self.parent != undefined) {
                   $('.h5p-current >div').each(function (index,element) {
@@ -174,21 +151,8 @@ H5P.CRAudio = (function ($) {
                        }
                      }
                    
-                    // console.log($(this).find('#img' + spanTagId))
-                    // $(this).find('#img' + spanTagId).parent('div').parent('div')
-                    // that.pop($('#img' + spanTagId))
                   })
-                  // $('.h5p-current').each(function () {
-                  //   $(this).find('#' + self.subContentId + j).parent('div').css({
-                  //     "transform": 'scale(1.5)',
-                  //     'z-index': '2',
-                  //     'text-shadow' : '0px 0px 20px yellow',
-                  //     'color' : self.highlightingColor
-                  //   });
-                  //   self.glow($(this).find('#img' + self.subContentId + j).parent('div').parent('div'));
-                  //   //this.parent.prototype.spin('#img' + self.subContentId + j)
-                  //   //$(this).find('#img' + self.subContentId + j)
-                  // });
+                 
                 }
                 else {
                   $('#' + self.subContentId + j).css({
@@ -244,24 +208,18 @@ H5P.CRAudio = (function ($) {
   };
 
   C.prototype.playOnDemand = function (id) {
-    console.log(id)
     var that=this
     if (id != ""  && !this.clickByPlayOnDemand) {
       this.clickByPlayOnDemand = true;
       const spanTagId = id;
-      console.log(spanTagId)
       //const clickedIndex = spanTagId.replace(this.subContentId, "")
       const clickedIndex = spanTagId[spanTagId.length-1]
       const selectedTextColor = this.parent == undefined ? $('#' + spanTagId).css('color') : $('.h5p-current').find('#' + spanTagId).css('color');
-      console.log(this)
-      console.log(this.splittedWord)
       this.audio.currentTime = this.splittedWord[clickedIndex]['startDuration'];
       this.audioEndTime = this.splittedWord[clickedIndex]['endDuration'] - 0.23;
       this.play();
       if (this.parent != undefined) {
         // var i=0;
-        console.log( $('.h5p-current')[0].children.length)
-        console.log( $('.h5p-current')[0].children)
 
         $('.h5p-current >div').each(function (index,element) {
           var h5pCurrentInnerDiv=(element.children[0]!=undefined)?element.children[0].children[0]:element
@@ -281,23 +239,8 @@ H5P.CRAudio = (function ($) {
              }
            }
          
-          // console.log($(this).find('#img' + spanTagId))
-          // $(this).find('#img' + spanTagId).parent('div').parent('div')
-          // that.pop($('#img' + spanTagId))
         })
        
-        // $('.h5p-current').each(function () {
-        //   console.log(i++)
-        //   $(this).find('#' + spanTagId).parent('div').css({
-        //     "transform": 'scale(1.5)',
-        //     'z-index': '2',
-        //     'color': that.highlightingColor,
-        //     'text-shadow': '0px 0px 5px yellow',
-        //   });
-        //   console.log($(this).find('#img' + spanTagId))
-        //   $(this).find('#img' + spanTagId).parent('div').parent('div')
-        //   // that.pop($('#img' + spanTagId))
-        // })
         setTimeout(function () {
           $('.h5p-current').each(function () {
             $(this).find('#' + spanTagId).parent('div').css({
@@ -537,9 +480,7 @@ H5P.CRAudio.prototype.enableToggleButton = function () {
  * Check if button is enabled.
  * @return {boolean} True, if button is enabled. Else false.
  */
-H5P.CRAudio.prototype.dummy = function () {
-  console.log('Dummy function')
-}
+
 H5P.CRAudio.prototype.isEnabledToggleButton = function () {
 
   return this.toggleButtonEnabled;
@@ -548,8 +489,6 @@ H5P.CRAudio.prototype.isEnabledToggleButton = function () {
 H5P.CRAudio.BUTTON_DISABLED = 'h5p-audio-disabled';
 
 H5P.CRAudio.prototype.glow=function(imageTobeAnimated){ 
-  console.log('glowing');
-  console.log(imageTobeAnimated)
   imageTobeAnimated.css({
     "transform": 'scale(1.5)',
     'z-index': '2',
@@ -575,7 +514,6 @@ H5P.CRAudio.prototype.glow=function(imageTobeAnimated){
 }
 H5P.CRAudio.prototype.pop = function (imageTobeAnimated) {
   var interval = 100;
-  console.log('i am pulsing');
   setTimeout(() => {
     imageTobeAnimated.css('transform', 'scale(1, 1)');
   }, interval * 0);

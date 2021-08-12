@@ -514,7 +514,6 @@ H5PEditor.CuriousReader.prototype.initializeDNB = function () {
         }
       });
     }
-    console.log(buttons)
     that.dnb = new H5P.DragNBar(buttons, that.cp.$current, that.$editor, { $blurHandlers: that.cp.$boxWrapper, libraries: libraries });
 
     that.$dnbContainer = that.cp.$current;
@@ -1713,19 +1712,15 @@ H5PEditor.CuriousReader.prototype.addToDragNBar = function (element, elementPara
   var dnbElement = self.dnb.add(element.$wrapper, clipboardData, options);
   if(type=='H5P.CRAudio')
   {
-    console.log(H5P.jQuery('.dropdown-content').children)
-    console.log(H5P.jQuery('.dropdown-content').children.length)
+    
       var text = '';
       if (H5P.jQuery('.h5p-current').find('.sentence-style').length > 0) {
-        console.log("Inside inner  if")
         var addedTextElement = H5P.jQuery('.h5p-current').find('.sentence-style');
         for (let i = 0; i < addedTextElement[0].children.length; i++) {
           var splittedText = H5P.jQuery(addedTextElement[0].children[i])[0].innerHTML;
           text = text + '<a href="#" id = img'+i+'>'+splittedText+'</a>'
         }
-        console.log(text)
       H5P.jQuery('.dropdown-content').append(text)
-      console.log( H5P.jQuery('.dropdown-content'))
 
     }
 
