@@ -63,36 +63,7 @@ H5P.CRAudio = (function ($) {
       'class': INNER_CONTAINER + (transparentMode ? ' h5p-audio-transparent' : '')
     }).appendTo($container);
 
-    if (this.splittedWord != undefined) {
-      var slideTextElement = '';
-      for (let i = 0; i < this.splittedWord.length; i++) {
-        slideTextElement = slideTextElement + "<div class='divText'><span id=" + self.subContentId + i + ">" + this.splittedWord[i].text.trim() + ' </span></div>'
-      }
-    }
-    if ($('.h5p-current').find('.h5p-advanced-text').length > 0) {
-      var $elementText = $('.h5p-current').find('.h5p-advanced-text')[0].children;
-      if ($('.h5p-current').find('#sentence-style').length > 0) {
-        $('.h5p-current').find('#sentence-style')[0].innerHTML=""
-      }
-      var sentence = $($elementText)[0]
-      do {
-        var temp;
-        if (sentence.children.length != 0) {
-          sentence = sentence.children[0];
-          if(sentence.children.length == 0)
-          {
-            temp = $(sentence)
-            sentence.id = "sentence-style"
-            sentence.innerHTML = slideTextElement;
-            break;
-          }
-        } else {
-            sentence.id = "sentence-style"            
-            sentence.innerHTML = slideTextElement;
-            break;
-        }
-      } while (sentence.children.length != 0)
-    }
+    
 
     var audioButton = $('<button/>', {
       'class': AUDIO_BUTTON + " " + PLAY_BUTTON,
