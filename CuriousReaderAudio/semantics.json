@@ -124,6 +124,13 @@
           "type": "text",
           "optional": false,
           "label": "End time for word"
+        },
+        {
+          "name": "wordfile",
+          "type": "audio",
+          "importance": "low",
+          "label": "Word Audio File",
+          "disableCopyright": true
         }
       ]
     }

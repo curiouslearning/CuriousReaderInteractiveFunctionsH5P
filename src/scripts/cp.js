@@ -889,22 +889,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   let ele ='';
   var self=this
   var instances=this.elementInstances
-  // if(instance.libraryInfo.machineName=='H5P.CRAudio')
-  // {
-  //   var splittedWord=element.action.timeStampForEachText
-  //   if (splittedWord != undefined) {
-  //     var slideTextElement = '';
-  //     for (let i = 0; i < splittedWord.length; i++) {
-  //       slideTextElement = slideTextElement + "<div class='divText'><span id=" + element.action.subContentId + i + ">" + splittedWord[i].text.trim() + ' </span></div>'
-  //     }
-  //     for(let i = 0; i < instances[index].length; i++) {
-  //       if(elementInstances[index][i].libraryInfo.machineName == 'H5P.AdvancedText') {
-  //          elementInstances[index][i].action.params.text=slideTextElement
-  //         console.log(elementInstances[index][i].action.params.text)
-  //       }
-  //     }
-  //   }
-  // }
+
   if (element.willDoAnimation==true && element.animationType ==='glow'){
     ele = '-oval-animated';
   } 
@@ -925,39 +910,49 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     borderStyle: (this.editor !== undefined)&& (ele==='-oval-animated')?'dotted':'none'
   }).click(function (event) {
 
-    // var audio;
-    // if (self.editor === undefined) {     
-    //   const id = H5P.jQuery('#'+instance.subContentId)[0].children[0].children[0].id
-    //   for(let i = 0; i < instances[index].length; i++) {
-    //     if(instances[index][i].libraryInfo.machineName == 'H5P.CRAudio') {
-    //       if (instances[index][i].subContentId == id.substr(3, 36)) {
-    //         audio = instances[index][i];
-    //         audio.playOnDemand(id.substr(3, id.length));
-    //         break;
-    //       }
-    //     }
-    //   }
-    // }
-      if (element.willDoAnimation == true) {
-        let imageTobeAnimated;
-        let id = instance.subContentId;
-        if(element.animationType ==='glow'){
-          id = id +'-oval-animated';
+    let id = event.target.id.substr(0, event.target.id.length - 1);
+    var audio;
+    if (self.editor === undefined) {
+      if (instance.libraryInfo.machineName == "H5P.Image" || instance.libraryInfo.machineName == "H5P.AdvancedText") {
+        for(let i = 0; i < instances[index].length; i++) {
+          if(instances[index][i].libraryInfo.machineName == 'H5P.CRAudio') {
+            audio = instances[index][i];
+            break;           
+          }
         }
-        let parent;
-        $('.h5p-current').each(function () {
-          imageTobeAnimated=$(this).find('#' + id);
-        });
-        self.animation(imageTobeAnimated)
-      // });
-      }
-    }).appendTo($slide);
-    if(instance.libraryInfo.machineName=='H5P.Image')
-    {
-      if(element.willDoAnimation){
-        $elementContainer.attr('animation',element.animationType)
       }
     }
+
+    if (audio != undefined && id == audio.subContentId) {
+      audio.playOnDemand(event.target.id)
+    }
+
+    var imgId = $(event.target).parent()[0].id
+    if (audio != undefined &&  imgId != "" && instance.libraryInfo.machineName == "H5P.Image") {
+      audio.playOnDemand($(event.target).parent()[0].id.substr(3, $(event.target).parent()[0].id.length))
+    }
+    
+
+    if (element.willDoAnimation == true) {
+      let imageTobeAnimated;
+      let id = instance.subContentId;
+      if(element.animationType ==='glow'){
+        id = id +'-oval-animated';
+      }
+
+      $('.h5p-current').each(function () {
+        imageTobeAnimated=$(this).find('#' + id);
+      });
+      self.animation(imageTobeAnimated)
+    }
+  }).appendTo($slide);
+
+  if(instance.libraryInfo.machineName == 'H5P.Image')
+  {
+    if(element.willDoAnimation){
+      $elementContainer.attr('animation', element.animationType)
+    }
+  }
   const isTransparent = element.backgroundOpacity === undefined || element.backgroundOpacity === 0;
   $elementContainer.toggleClass('h5p-transparent', isTransparent);
 
@@ -1067,6 +1062,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   }
   return $elementContainer;
 };
+
 CuriousReader.prototype.animation = function (element) {
   var animationType=element.attr('animation')
   if (animationType == "spin") {
@@ -1091,6 +1087,7 @@ CuriousReader.prototype.animation = function (element) {
     pop({imageTobeAnimated:element});
   }
 }
+
 /**
  * Disables tab indexes behind a popup container
  */
