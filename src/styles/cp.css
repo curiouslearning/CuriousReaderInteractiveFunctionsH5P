@@ -618,7 +618,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 .h5p-course-presentation .h5p-element .h5p-element-outer.h5p-advancedtext-outer-element,
@@ -636,9 +636,9 @@
 }
 
 .h5p-course-presentation .h5p-element .h5p-element-inner:not(.h5p-interactive-video) {
-  background: transparent;
   overflow: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
+  background: transparent;
 }
 
 .h5p-course-presentation .h5p-element .h5p-element-inner.curious-reader-audio-wrapper,
@@ -832,7 +832,6 @@
   transition: 0.5s;
   display: inline-flex;
 }
-
 .divText > span {
   margin: 5px 0px 0px 5px;
   line-height: 120%;
