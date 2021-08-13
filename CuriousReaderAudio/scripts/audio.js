@@ -17,9 +17,12 @@ H5P.CRAudio = (function ($) {
     this.contentId = id;
     this.params = params;
     this.extras = extras;
-
+    this.splittedWord = params.timeStampForEachText;
+    this.clickByPlayOnDemand = false;
     this.toggleButtonEnabled = true;
-
+    // console.log(params)
+    // console.log(extras)
+    // console.log($(this).parent())
     // Retrieve previous state
     if (extras && extras.previousState !== undefined) {
       this.oldTime = extras.previousState.currentTime;
@@ -56,10 +59,40 @@ H5P.CRAudio = (function ($) {
 
     var self = this;
     this.$container = $container;
-
     self.$inner = $('<div/>', {
       'class': INNER_CONTAINER + (transparentMode ? ' h5p-audio-transparent' : '')
     }).appendTo($container);
+
+    if (this.splittedWord != undefined) {
+      var slideTextElement = '';
+      for (let i = 0; i < this.splittedWord.length; i++) {
+        slideTextElement = slideTextElement + "<div class='divText'><span id=" + self.subContentId + i + ">" + this.splittedWord[i].text.trim() + ' </span></div>'
+      }
+    }
+    if ($('.h5p-current').find('.h5p-advanced-text').length > 0) {
+      var $elementText = $('.h5p-current').find('.h5p-advanced-text')[0].children;
+      if ($('.h5p-current').find('#sentence-style').length > 0) {
+        $('.h5p-current').find('#sentence-style')[0].innerHTML=""
+      }
+      var sentence = $($elementText)[0]
+      do {
+        var temp;
+        if (sentence.children.length != 0) {
+          sentence = sentence.children[0];
+          if(sentence.children.length == 0)
+          {
+            temp = $(sentence)
+            sentence.id = "sentence-style"
+            sentence.innerHTML = slideTextElement;
+            break;
+          }
+        } else {
+            sentence.id = "sentence-style"            
+            sentence.innerHTML = slideTextElement;
+            break;
+        }
+      } while (sentence.children.length != 0)
+    }
 
     var audioButton = $('<button/>', {
       'class': AUDIO_BUTTON + " " + PLAY_BUTTON,
@@ -124,6 +157,61 @@ H5P.CRAudio = (function ($) {
         .addClass(PLAY_BUTTON_PAUSED);
     });
 
+    self.audio.addEventListener('timeupdate', function () {
+      if(self.clickByPlayOnDemand){
+      }
+      else{
+      if (self.splittedWord != undefined) {
+        var time = self.audio.currentTime, j = 0, word;
+        for (j = 0; j < self.splittedWord.length; j++) {
+          word = self.splittedWord[j]
+          if (word.highlighted == undefined) {
+            word.highlighted = false
+          }
+          if (time > word['startDuration'] && time < word['endDuration']) {
+            if (!word.highlighted) {
+              word.highlighted = true;
+              if (self.parent != undefined) {
+                $('.h5p-current').each(function () {
+                  $(this).find('#' + self.subContentId + j).parent('div').css({
+                    "transform": 'scale(1.5)',
+                    'z-index': '2',
+                    'text-shadow': '0px 0px 5px yellow',
+                  });
+                  self.parent.animation($('#img' + self.subContentId + j).parent('div').parent('div'))
+                });
+
+              }
+              else {
+                $('#' + j).css({
+                  "color": 'red',
+                })
+              }
+            }
+          }
+          else if (word.highlighted) {
+            if (self.parent != undefined) {
+              $('.h5p-current').each(function () {
+                $(this).find('#' + self.subContentId + j).parent('div').css({
+                  "transform": 'scale(1)',
+                  'z-index': '1',
+                  'text-shadow': '0px 0px 5px yellow',
+                });
+              });
+            }
+            else {
+              $('#' + j).css({
+                "color": 'red',
+              })
+            }
+            word.highlighted = false;
+          }
+        }
+      }
+    }
+    });
+
+
     this.$audioButton = audioButton;
     //Scale icon to container
     self.resize();
@@ -145,6 +233,80 @@ H5P.CRAudio = (function ($) {
       }
     }
   };
+
+  C.prototype.playOnDemand = function (id) {
+    var that=this
+    if (id != ""  && !this.clickByPlayOnDemand) {
+      this.clickByPlayOnDemand = true;
+      const spanTagId = id;
+      //const clickedIndex = spanTagId.replace(this.subContentId, "")
+      const clickedIndex = spanTagId[spanTagId.length-1]
+      const selectedTextColor = this.parent == undefined ? $('#' + spanTagId).css('color') : $('.h5p-current').find('#' + spanTagId).css('color');
+      this.audio.currentTime = this.splittedWord[clickedIndex]['startDuration'];
+      this.audioEndTime = this.splittedWord[clickedIndex]['endDuration'] - 0.23;
+      this.play();
+      if (this.parent != undefined) {
+        // var i=0;
+        $('.h5p-current >div').each(function (index,element) {
+          var h5pCurrentInnerDiv=(element.children[0].children[0]!=undefined)?element.children[0].children[0]:element
+           $(this).find('#' + spanTagId).parent('div').css({
+            "transform": 'scale(1.5)',
+            'z-index': '2',
+            'color': that.highlightingColor,
+            'text-shadow': '0px 0px 5px yellow',
+          });
+           if(h5pCurrentInnerDiv.id.substr(0,3)=='img' && h5pCurrentInnerDiv.id!=undefined)
+           {
+             if('img'+spanTagId==h5pCurrentInnerDiv.id)
+             {
+              //that.glow($(this).find('#img' + spanTagId).parent('div').parent('div'));
+              that.parent.animation($(this).find('#img' +spanTagId).parent('div'))
+
+             }
+           }
+         
+          // console.log($(this).find('#img' + spanTagId))
+          // $(this).find('#img' + spanTagId).parent('div').parent('div')
+          // that.pop($('#img' + spanTagId))
+        })
+       
+        // $('.h5p-current').each(function () {
+        //   console.log(i++)
+        //   $(this).find('#' + spanTagId).parent('div').css({
+        //     "transform": 'scale(1.5)',
+        //     'z-index': '2',
+        //     'color': that.highlightingColor,
+        //     'text-shadow': '0px 0px 5px yellow',
+        //   });
+        //   console.log($(this).find('#img' + spanTagId))
+        //   $(this).find('#img' + spanTagId).parent('div').parent('div')
+        //   // that.pop($('#img' + spanTagId))
+        // })
+        setTimeout(function () {
+          $('.h5p-current').each(function () {
+            $(this).find('#' + spanTagId).parent('div').css({
+              "transform": 'scale(1)',
+              'z-index': '1',
+              'color': selectedTextColor,
+              'text-shadow': '0px 0px 5px transparent'
+            });
+          })
+        }, 1000)
+      } else {
+        $('#' + spanTagId).css({
+          'font-size': '115%',
+          'color': that.params.highlightingColor
+        });
+        setTimeout(function () {
+          $('#' + spanTagId).css({
+            'font-size': selectedFontSize,
+            'color': selectedTextColor
+          })
+        }, 600)
+      }
+    }
+
+  }
 
 
   return C;

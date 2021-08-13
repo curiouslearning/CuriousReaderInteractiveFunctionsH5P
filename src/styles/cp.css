@@ -651,6 +651,7 @@
 .h5p-course-presentation .h5p-element .h5p-element-inner.h5p-advanced-text {
   outline: none;
   padding: 0.375em 0.5em;
+  overflow: hidden;
 }
 .h5p-course-presentation .h5p-element .h5p-element-inner.h5p-link {
   padding: 0.375em 0.5em;
@@ -823,4 +824,16 @@
   margin-right: 0.5em;
   margin-left: 0.1em;
   vertical-align: middle;
+}
+
+.divText {
+  margin: 5px 10px;
+  border-radius: 50%;
+  transition: 0.5s;
+  display: inline-flex;
+}
+
+.divText > span {
+  margin: 5px 0px 0px 5px;
+  line-height: 120%;
 }
