@@ -887,6 +887,24 @@ CuriousReader.prototype.attachElements = function ($slide, index) {
  */
 CuriousReader.prototype.attachElement = function (element, instance, $slide, index) { 
   let ele ='';
+  var self=this
+  var instances=this.elementInstances
+  // if(instance.libraryInfo.machineName=='H5P.CRAudio')
+  // {
+  //   var splittedWord=element.action.timeStampForEachText
+  //   if (splittedWord != undefined) {
+  //     var slideTextElement = '';
+  //     for (let i = 0; i < splittedWord.length; i++) {
+  //       slideTextElement = slideTextElement + "<div class='divText'><span id=" + element.action.subContentId + i + ">" + splittedWord[i].text.trim() + ' </span></div>'
+  //     }
+  //     for(let i = 0; i < instances[index].length; i++) {
+  //       if(elementInstances[index][i].libraryInfo.machineName == 'H5P.AdvancedText') {
+  //          elementInstances[index][i].action.params.text=slideTextElement
+  //         console.log(elementInstances[index][i].action.params.text)
+  //       }
+  //     }
+  //   }
+  // }
   if (element.willDoAnimation==true && element.animationType ==='glow'){
     ele = '-oval-animated';
   } 
@@ -906,6 +924,20 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     borderRadius: ele==''?'0%':'50%',
     borderStyle: (this.editor !== undefined)&& (ele==='-oval-animated')?'dotted':'none'
   }).click(function (event) {
+
+    // var audio;
+    // if (self.editor === undefined) {     
+    //   const id = H5P.jQuery('#'+instance.subContentId)[0].children[0].children[0].id
+    //   for(let i = 0; i < instances[index].length; i++) {
+    //     if(instances[index][i].libraryInfo.machineName == 'H5P.CRAudio') {
+    //       if (instances[index][i].subContentId == id.substr(3, 36)) {
+    //         audio = instances[index][i];
+    //         audio.playOnDemand(id.substr(3, id.length));
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
       if (element.willDoAnimation == true) {
         let imageTobeAnimated;
         let id = instance.subContentId;
@@ -914,32 +946,18 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
         }
         let parent;
         $('.h5p-current').each(function () {
-            imageTobeAnimated=$(this).find('#' + id);
-        if (element.animationType == "spin") {
-          spin({imageTobeAnimated:imageTobeAnimated});
-        } else if(element.animationType == "flip"){
-          flip({imageTobeAnimated:imageTobeAnimated});
-        }
-        else if(element.animationType == "bounce"){
-          bounce({imageTobeAnimated:imageTobeAnimated});
-        } else if(element.animationType == "jiggle"){
-          jiggle({imageTobeAnimated:imageTobeAnimated});
-        }  else if(element.animationType == "pulse"){
-          pulse({imageTobeAnimated:imageTobeAnimated});
-        }  else if(element.animationType == "glow"){
-          glow({imageTobeAnimated:imageTobeAnimated});
-        }else if(element.animationType == "backgroundFade"){
-           imageTobeAnimated.removeClass('element');
-           parent=$(this).find('.' + 'element');
-          backgroundFade({imageTobeAnimated:imageTobeAnimated ,parent:parent});
-        } 
-        else {
-          pop({imageTobeAnimated:imageTobeAnimated});
-        }
-      });
+          imageTobeAnimated=$(this).find('#' + id);
+        });
+        self.animation(imageTobeAnimated)
+      // });
       }
     }).appendTo($slide);
-
+    if(instance.libraryInfo.machineName=='H5P.Image')
+    {
+      if(element.willDoAnimation){
+        $elementContainer.attr('animation',element.animationType)
+      }
+    }
   const isTransparent = element.backgroundOpacity === undefined || element.backgroundOpacity === 0;
   $elementContainer.toggleClass('h5p-transparent', isTransparent);
 
@@ -958,7 +976,8 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     }).appendTo($elementContainer);
 
     var $innerElementContainer = H5P.jQuery('<div>', {
-      'class': 'h5p-element-inner'
+      'class': 'h5p-element-inner',
+      'id' : element.id != "" ? element.id : ""
     }).css({
      opacity:(ele==='-oval-animated')?0:1
     }).appendTo($outerElementContainer);
@@ -970,6 +989,42 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
       }
     });
 
+    var slideTextElement = '';
+    for(let i = 0; i < instances[index].length; i++) {
+      if(instances[index][i].libraryInfo.machineName == 'H5P.CRAudio') {
+        if (instances[index][i].splittedWord != undefined) {
+          for (let j = 0; j < instances[index][i].splittedWord.length; j++) {
+            slideTextElement = slideTextElement + "<div class='divText'><span id=" + instances[index][i].subContentId + j + ">" + instances[index][i].splittedWord[j].text.trim() + ' </span></div>'
+          }
+        }
+      }
+    }
+    var domSlide = $('.h5p-slides-wrapper')[0].children;
+    if ($(domSlide[index]).find('.h5p-advanced-text').length > 0) {
+      var $elementText = $(domSlide[index]).find('.h5p-advanced-text')[0].children;
+      if ($(domSlide[index]).find('#sentence-style').length > 0) {
+        $(domSlide[index]).find('#sentence-style')[0].innerHTML = "";
+      }
+      var sentence = $($elementText)[0]
+      do {
+        var temp;
+        if (sentence.children.length != 0) {
+          sentence = sentence.children[0];
+          if(sentence.children.length == 0)
+          {
+            temp = sentence
+            sentence.id = "sentence-style"
+            console.log(sentence.innerHTML)
+            sentence.innerHTML = slideTextElement;
+            break;
+          }
+        } else {
+            sentence.id = "sentence-style"
+            sentence.innerHTML = slideTextElement;
+            break;
+        }
+      } while (sentence.children.length != 0)
+    }
     instance.attach($innerElementContainer);
     if (element.action !== undefined && element.action.library.substr(0, 20) === 'H5P.InteractiveVideo') {
       var handleIV = function () {
@@ -1012,7 +1067,30 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   }
   return $elementContainer;
 };
-
+CuriousReader.prototype.animation = function (element) {
+  var animationType=element.attr('animation')
+  if (animationType == "spin") {
+    spin({imageTobeAnimated:element});
+  } else if(animationType == "flip"){
+    flip({imageTobeAnimated:element});
+  }
+  else if(animationType == "bounce"){
+    bounce({imageTobeAnimated:element});
+  } else if(animationType == "jiggle"){
+    jiggle({imageTobeAnimated:element});
+  }  else if(animationType == "pulse"){
+    pulse({imageTobeAnimated:element});
+  }  else if(animationType == "glow"){
+    glow({imageTobeAnimated:element});
+  }else if(animationType == "backgroundFade"){
+    element.removeClass('element');
+     parent=$(this).find('.' + 'element');
+    backgroundFade({imageTobeAnimated:element ,parent:parent});
+  } 
+  else {
+    pop({imageTobeAnimated:element});
+  }
+}
 /**
  * Disables tab indexes behind a popup container
  */

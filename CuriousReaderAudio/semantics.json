@@ -124,13 +124,6 @@
           "type": "text",
           "optional": false,
           "label": "End time for word"
-        },
-        {
-          "label": "Image for particular Text",
-          "name": "Text Image",
-          "type": "image",
-          "optional": true,
-          "description": "Image for particular Text"
         }
       ]
     }

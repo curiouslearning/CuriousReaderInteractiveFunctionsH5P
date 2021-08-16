@@ -1,34 +1,33 @@
 var H5P = H5P || {};
+
 /**
  * H5P audio module
  *
  * @external {jQuery} $ H5P.jQuery
  */
 H5P.CRAudio = (function ($) {
-
   /**
   * @param {Object} params Options for this library.
   * @param {Number} id Content identifier.
   * @param {Object} extras Extras.
   * @returns {undefined}
   */
-
   function C(params, id, extras) {
     H5P.EventDispatcher.call(this);
     this.contentId = id;
     this.params = params;
     this.extras = extras;
     this.splittedWord = params.timeStampForEachText;
-    this.hightlightingColor = params.hightlightingColor;
-    this.sentenceStyles = (params.sentence != undefined) ? params.sentence.params.text : '';
-    this.highlightingColor = params.highlightingColor;
+    this.clickByPlayOnDemand = false;
     this.toggleButtonEnabled = true;
-    this.setAutoPlay = (this.params.cpAutoplay != undefined) ? this.params.cpAutoplay : false;
-
+    // console.log(params)
+    // console.log(extras)
+    // console.log($(this).parent())
     // Retrieve previous state
     if (extras && extras.previousState !== undefined) {
       this.oldTime = extras.previousState.currentTime;
     }
+
     this.params = $.extend({}, {
       playerMode: 'minimalistic',
       fitToWrapper: false,
@@ -36,7 +35,7 @@ H5P.CRAudio = (function ($) {
       autoplay: false,
       audioNotSupported: "Your browser does not support this audio",
       playAudio: "Play audio",
-      pauseAudio: "Pause audio",
+      pauseAudio: "Pause audio"
     }, params);
 
     this.on('resize', this.resize, this);
@@ -51,7 +50,6 @@ H5P.CRAudio = (function ($) {
    * @param {jQuery} $container Container for the player.
    * @param {boolean} transparentMode true: the player is only visible when hovering over it; false: player's UI always visible
    */
-
   C.prototype.addMinimalAudioPlayer = function ($container, transparentMode) {
     var INNER_CONTAINER = 'h5p-audio-inner';
     var AUDIO_BUTTON = 'h5p-audio-minimal-button';
@@ -61,169 +59,129 @@ H5P.CRAudio = (function ($) {
 
     var self = this;
     this.$container = $container;
-    this.playOnDemand = false;
-
     self.$inner = $('<div/>', {
       'class': INNER_CONTAINER + (transparentMode ? ' h5p-audio-transparent' : '')
     }).appendTo($container);
 
-    if (this.splittedWord != undefined) {
-      var slideTextElement = '';
-      for (let i = 0; i < this.splittedWord.length; i++) {
-        slideTextElement = slideTextElement + "<span id=" + i + ">" + this.splittedWord[i].text.trim() + ' </span>'
-      }
-    }
+    
 
-    if (this.params.sentence.params.text != undefined) {
-      var $elementText = $.parseHTML(this.params.sentence.params.text);
-      var sentence = $($elementText)[0]
-      do {
-        var temp;
-        if (sentence.children.length != 0) {
-          sentence = sentence.children[0];
-          if(sentence.children.length == 0)
-          {
-            temp = $(sentence)
-            sentence.id = "sentence-style"
-            sentence.innerHTML = slideTextElement;
-            break;
-          }
-        } else {
-            sentence.id = "sentence-style"
-            sentence.innerHTML = slideTextElement;
-            break;
-        }
-      } while (sentence.children.length != 0)
-    }
-
-    var audioButton = $($elementText).appendTo(self.$inner)
-      .click(function (event) {
+    var audioButton = $('<button/>', {
+      'class': AUDIO_BUTTON + " " + PLAY_BUTTON,
+      'aria-label': this.params.playAudio
+    }).appendTo(self.$inner)
+      .click( function () {
         if (!self.isEnabledToggleButton()) {
           return;
         }
-        if (event.target.id != "" && self.audio.paused) {
-          self.playOnDemand = true;
-          spanTagId = parseInt((event.target.id).charAt((event.target.id.length - 1)));
-          var selectedFontSize = self.parent == undefined ? $('#'+spanTagId).css('font-size'): $('.h5p-current').find('#'+spanTagId).css('font-size');
-          var selectedTextColor = self.parent == undefined ? $('#'+spanTagId).css('color'): $('.h5p-current').find('#'+spanTagId).css('color');
-          self.audio.currentTime = self.splittedWord[spanTagId]['startDuration'];
-          self.audioEndTime = self.splittedWord[spanTagId]['endDuration'] - 0.23;
+
+        // Prevent ARIA from playing over audio on click
+        this.setAttribute('aria-hidden', 'true');
+
+        if (self.audio.paused) {
           self.play();
-          if (self.parent != undefined) {
-            $('.h5p-current').each(function () {
-              $(this).find('#' +spanTagId).css({
-                'font-size' : '115%',
-                'color' : self.params.highlightingColor
-              })
-            })
-            setTimeout(function () {
-              $('.h5p-current').each(function () {
-                $(this).find('#' +spanTagId).css({
-                  'font-size' : selectedFontSize,
-                  'color' : selectedTextColor
-                })
-              })
-            }, 600)
-          } else {
-            $('#' +spanTagId).css({
-              'font-size' : '115%',
-              'color' : self.params.highlightingColor
-            });
-            setTimeout(function () {
-              $('#' +spanTagId).css({
-                'font-size' : selectedFontSize,
-                'color' : selectedTextColor
-              })
-            }, 600)
-          }
         }
+        else {
+          self.pause();
+        }
+      })
+      .on('focusout', function () {
+        // Restore ARIA, required when playing longer audio and tabbing out and back in
+        this.setAttribute('aria-hidden', 'false');
       });
 
+    //Fit to wrapper
     if (this.params.fitToWrapper) {
       audioButton.css({
-        //   'width': '100%',
-        //   'height': '100%'
+        'width': '100%',
+        'height': '100%'
       });
+    }
+
+    // cpAutoplay is passed from coursepresentation
+    if (this.params.autoplay) {
+      self.play();
     }
 
     //Event listeners that change the look of the player depending on events.
     self.audio.addEventListener('ended', function () {
-      self.playOnDemand = false;
+      audioButton
+        .attr('aria-hidden', false)
+        .attr('aria-label', self.params.playAudio)
+        .removeClass(PAUSE_BUTTON)
+        .removeClass(PLAY_BUTTON_PAUSED)
+        .addClass(PLAY_BUTTON);
+    });
+
+    self.audio.addEventListener('play', function () {
+      audioButton
+        .attr('aria-label', self.params.pauseAudio)
+        .removeClass(PLAY_BUTTON)
+        .removeClass(PLAY_BUTTON_PAUSED)
+        .addClass(PAUSE_BUTTON);
     });
 
     self.audio.addEventListener('pause', function () {
-      $('.h5p-element-inner').css({
-        'color': 'black'
-      })
+      audioButton
+        .attr('aria-hidden', false)
+        .attr('aria-label', self.params.playAudio)
+        .removeClass(PAUSE_BUTTON)
+        .addClass(PLAY_BUTTON_PAUSED);
     });
 
     self.audio.addEventListener('timeupdate', function () {
-      if (self.playOnDemand) {
-        if (self.audio.currentTime >= self.audioEndTime) {
-          self.pause();
-          self.audio.currentTime = 0;
-          setTimeout(function() {
-            self.playOnDemand = false;
-          }, 1000)
-        }
-      } else {
-        if (self.splittedWord != undefined) {
-          var time = self.audio.currentTime, j = 0, word;
-          var originalFont;
-          //originalFont = $('#' + 0).css('font-size')
-          self.originalFontColor = (($('#sentence-style')) != undefined) ? $('#sentence-style').css('color') : 'black'
-  
-          for (j = 0; j < self.splittedWord.length; j++) {
-  
-            word = self.splittedWord[j]
-  
-            if (word.highlighted == undefined) {
-              word.highlighted = false
-            }
-            if (time > word['startDuration'] && time < word['endDuration']) {
-              if (!word.highlighted) {
-  
-                word.highlighted = true;
-                if (self.parent != undefined) {
-  
-                  $('.h5p-current').each(function () {
-                    $(this).find('#' + j).css({
-                      "color": self.highlightingColor,
-                      // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
-                    })
-  
-                  });
-                }
-                else {
-                  $('#' + j).css({
-                    "color": self.highlightingColor,
-                    // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
-                  })
-                }
-              }
-            }
-            else if (word.highlighted) {
+      if(self.clickByPlayOnDemand){
+      }
+      else{
+      if (self.splittedWord != undefined) {
+        var time = self.audio.currentTime, j = 0, word;
+        for (j = 0; j < self.splittedWord.length; j++) {
+          word = self.splittedWord[j]
+          if (word.highlighted == undefined) {
+            word.highlighted = false
+          }
+          if (time > word['startDuration'] && time < word['endDuration']) {
+            if (!word.highlighted) {
+              word.highlighted = true;
               if (self.parent != undefined) {
                 $('.h5p-current').each(function () {
-                  $(this).find('#' + j).css({
-                    "color": self.originalFontColor,
-                    // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
-                  })
-  
+                  $(this).find('#' + self.subContentId + j).parent('div').css({
+                    "transform": 'scale(1.5)',
+                    'z-index': '2',
+                    'text-shadow': '0px 0px 5px yellow',
+                  });
+                  self.parent.animation($('#img' + self.subContentId + j).parent('div').parent('div'))
                 });
+
               }
               else {
                 $('#' + j).css({
-                  "color": self.originalFontColor,
-                  // "font-size": ((Number(originalFont.slice(0, originalFont.length - 2)) +3).toString() + 'px'),
+                  "color": 'red',
                 })
               }
-              word.highlighted = false;
             }
+          }
+          else if (word.highlighted) {
+            if (self.parent != undefined) {
+              $('.h5p-current').each(function () {
+                $(this).find('#' + self.subContentId + j).parent('div').css({
+                  "transform": 'scale(1)',
+                  'z-index': '1',
+                  'text-shadow': '0px 0px 5px yellow',
+                });
+              });
+            }
+            else {
+              $('#' + j).css({
+                "color": 'red',
+              })
+            }
+            word.highlighted = false;
           }
         }
       }
+    }
     });
+
 
     this.$audioButton = audioButton;
     //Scale icon to container
@@ -233,24 +191,98 @@ H5P.CRAudio = (function ($) {
   /**
    * Resizes the audio player icon when the wrapper is resized.
    */
-
   C.prototype.resize = function () {
     // Find the smallest value of height and width, and use it to choose the font size.
     if (this.params.fitToWrapper && this.$container && this.$container.width()) {
       var w = this.$container.width();
       var h = this.$container.height();
       if (w < h) {
-        this.$audioButton.css({ 'font-size': w / 2 + 'px' });
+        this.$audioButton.css({'font-size': w / 2 + 'px'});
       }
       else {
-        this.$audioButton.css({ 'font-size': h / 2 + 'px' });
+        this.$audioButton.css({'font-size': h / 2 + 'px'});
       }
     }
   };
 
+  C.prototype.playOnDemand = function (id) {
+    var that=this
+    if (id != ""  && !this.clickByPlayOnDemand) {
+      this.clickByPlayOnDemand = true;
+      const spanTagId = id;
+      //const clickedIndex = spanTagId.replace(this.subContentId, "")
+      const clickedIndex = spanTagId[spanTagId.length-1]
+      const selectedTextColor = this.parent == undefined ? $('#' + spanTagId).css('color') : $('.h5p-current').find('#' + spanTagId).css('color');
+      this.audio.currentTime = this.splittedWord[clickedIndex]['startDuration'];
+      this.audioEndTime = this.splittedWord[clickedIndex]['endDuration'] - 0.23;
+      this.play();
+      if (this.parent != undefined) {
+        // var i=0;
+        $('.h5p-current >div').each(function (index,element) {
+          var h5pCurrentInnerDiv=(element.children[0].children[0]!=undefined)?element.children[0].children[0]:element
+           $(this).find('#' + spanTagId).parent('div').css({
+            "transform": 'scale(1.5)',
+            'z-index': '2',
+            'color': that.highlightingColor,
+            'text-shadow': '0px 0px 5px yellow',
+          });
+           if(h5pCurrentInnerDiv.id.substr(0,3)=='img' && h5pCurrentInnerDiv.id!=undefined)
+           {
+             if('img'+spanTagId==h5pCurrentInnerDiv.id)
+             {
+              //that.glow($(this).find('#img' + spanTagId).parent('div').parent('div'));
+              that.parent.animation($(this).find('#img' +spanTagId).parent('div'))
+
+             }
+           }
+         
+          // console.log($(this).find('#img' + spanTagId))
+          // $(this).find('#img' + spanTagId).parent('div').parent('div')
+          // that.pop($('#img' + spanTagId))
+        })
+       
+        // $('.h5p-current').each(function () {
+        //   console.log(i++)
+        //   $(this).find('#' + spanTagId).parent('div').css({
+        //     "transform": 'scale(1.5)',
+        //     'z-index': '2',
+        //     'color': that.highlightingColor,
+        //     'text-shadow': '0px 0px 5px yellow',
+        //   });
+        //   console.log($(this).find('#img' + spanTagId))
+        //   $(this).find('#img' + spanTagId).parent('div').parent('div')
+        //   // that.pop($('#img' + spanTagId))
+        // })
+        setTimeout(function () {
+          $('.h5p-current').each(function () {
+            $(this).find('#' + spanTagId).parent('div').css({
+              "transform": 'scale(1)',
+              'z-index': '1',
+              'color': selectedTextColor,
+              'text-shadow': '0px 0px 5px transparent'
+            });
+          })
+        }, 1000)
+      } else {
+        $('#' + spanTagId).css({
+          'font-size': '115%',
+          'color': that.params.highlightingColor
+        });
+        setTimeout(function () {
+          $('#' + spanTagId).css({
+            'font-size': selectedFontSize,
+            'color': selectedTextColor
+          })
+        }, 600)
+      }
+    }
+
+  }
+
+
   return C;
-  
 })(H5P.jQuery);
+
 /**
  * Wipe out the content of the wrapper and put our HTML in it.
  *
@@ -258,6 +290,7 @@ H5P.CRAudio = (function ($) {
  */
 H5P.CRAudio.prototype.attach = function ($wrapper) {
   $wrapper.addClass('h5p-audio-wrapper');
+
   // Check if browser supports audio.
   var audio = document.createElement('audio');
   if (audio.canPlayType === undefined) {
@@ -265,10 +298,12 @@ H5P.CRAudio.prototype.attach = function ($wrapper) {
     this.attachFlash($wrapper);
     return;
   }
+
   // Add supported source files.
   if (this.params.files !== undefined && this.params.files instanceof Object) {
     for (var i = 0; i < this.params.files.length; i++) {
       var file = this.params.files[i];
+
       if (audio.canPlayType(file.mime)) {
         var source = document.createElement('source');
         source.src = H5P.getPath(file.path, this.contentId);
@@ -277,18 +312,22 @@ H5P.CRAudio.prototype.attach = function ($wrapper) {
       }
     }
   }
+
   if (!audio.children.length) {
     // Try flash
     this.attachFlash($wrapper);
     return;
   }
+
   if (this.endedCallback !== undefined) {
     audio.addEventListener('ended', this.endedCallback, false);
   }
+
   audio.className = 'h5p-audio';
   audio.controls = this.params.controls === undefined ? true : this.params.controls;
   audio.preload = 'auto';
   audio.style.display = 'block';
+
   if (this.params.fitToWrapper === undefined || this.params.fitToWrapper) {
     audio.style.width = '100%';
     if (!this.isRoot()) {
@@ -296,7 +335,9 @@ H5P.CRAudio.prototype.attach = function ($wrapper) {
       audio.style.height = '100%';
     }
   }
+
   this.audio = audio;
+
   if (this.params.playerMode === 'minimalistic') {
     audio.controls = false;
     this.addMinimalAudioPlayer($wrapper, false);
@@ -309,6 +350,7 @@ H5P.CRAudio.prototype.attach = function ($wrapper) {
     audio.autoplay = this.params.autoplay === undefined ? false : this.params.autoplay;
     $wrapper.html(audio);
   }
+
   // Set time to saved time from previous run
   if (this.oldTime) {
     this.seekTo(this.oldTime);
@@ -330,19 +372,22 @@ H5P.CRAudio.prototype.attachFlash = function ($wrapper) {
       }
     }
   }
+
   if (audioSource === undefined) {
     $wrapper.addClass('h5p-audio-not-supported');
     $wrapper.html(
       '<div class="h5p-audio-inner">' +
-      '<div class="h5p-audio-not-supported-icon"><span/></div>' +
-      '<span>' + this.params.audioNotSupported + '</span>' +
+        '<div class="h5p-audio-not-supported-icon"><span/></div>' +
+        '<span>' + this.params.audioNotSupported + '</span>' +
       '</div>'
     );
+
     if (this.endedCallback !== undefined) {
       this.endedCallback();
     }
     return;
   }
+
   var options = {
     buffering: true,
     clip: {
@@ -354,21 +399,25 @@ H5P.CRAudio.prototype.attachFlash = function ($wrapper) {
       controls: null
     }
   };
+
   if (this.params.controls === undefined || this.params.controls) {
     options.plugins.controls = {
       fullscreen: false,
       autoHide: false
     };
   }
+
   if (this.endedCallback !== undefined) {
     options.clip.onFinish = this.endedCallback;
     options.clip.onError = this.endedCallback;
   }
+
   this.flowplayer = flowplayer($wrapper[0], {
     src: "http://releases.flowplayer.org/swf/flowplayer-3.2.16.swf",
     wmode: "opaque"
   }, options);
 };
+
 /**
  * Stop the audio. TODO: Rename to pause?
  *
@@ -382,6 +431,7 @@ H5P.CRAudio.prototype.stop = function () {
     this.audio.pause();
   }
 };
+
 /**
  * Play
  */
@@ -393,6 +443,7 @@ H5P.CRAudio.prototype.play = function () {
     this.audio.play();
   }
 };
+
 /**
  * @public
  * Pauses the audio.
@@ -400,9 +451,9 @@ H5P.CRAudio.prototype.play = function () {
 H5P.CRAudio.prototype.pause = function () {
   if (this.audio !== undefined) {
     this.audio.pause();
-    this.audio.currentTime = 0;
   }
 };
+
 /**
  * @public
  * Seek to audio position.
@@ -414,6 +465,7 @@ H5P.CRAudio.prototype.seekTo = function (seekTo) {
     this.audio.currentTime = seekTo;
   }
 };
+
 /**
  * @public
  * Get current state for resetting it later.
@@ -428,6 +480,7 @@ H5P.CRAudio.prototype.getCurrentState = function () {
     };
   }
 };
+
 /**
  * @public
  * Disable button.
@@ -441,6 +494,7 @@ H5P.CRAudio.prototype.disableToggleButton = function () {
     this.$audioButton.addClass(Audio.BUTTON_DISABLED);
   }
 };
+
 /**
  * @public
  * Enable button.
@@ -451,6 +505,7 @@ H5P.CRAudio.prototype.enableToggleButton = function () {
     this.$audioButton.removeClass(Audio.BUTTON_DISABLED);
   }
 };
+
 /**
  * @public
  * Check if button is enabled.
@@ -459,5 +514,6 @@ H5P.CRAudio.prototype.enableToggleButton = function () {
 H5P.CRAudio.prototype.isEnabledToggleButton = function () {
   return this.toggleButtonEnabled;
 };
+
 /** @constant {string} */
 H5P.CRAudio.BUTTON_DISABLED = 'h5p-audio-disabled';
