@@ -42,6 +42,11 @@
       "machineName": "H5PEditor.ColorSelector",
       "majorVersion": 1,
       "minorVersion": 0
+    },
+	{
+      "machineName": "H5PEditor.WaveformInit",
+      "majorVersion": 1,
+      "minorVersion": 1
     }
   ] 
 }

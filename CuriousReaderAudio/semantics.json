@@ -75,13 +75,14 @@
     "common": true,
     "default": "Audio"
   },
-  
   {
     "name": "sentence",
     "type": "library",
     "label": "Slide Sentence",
-    "description":"This is sentence of slide",
-    "options": ["H5P.AdvancedText 1.1"]
+    "description": "This is sentence of slide",
+    "options": [
+      "H5P.AdvancedText 1.1"
+    ]
   },
   {
     "name": "highlightingColor",
@@ -95,8 +96,10 @@
     "name": "sentence",
     "type": "library",
     "label": "Slide Sentence",
-    "description":"This is sentence of slide",
-    "options": ["H5P.AdvancedText 1.1"]
+    "description": "This is sentence of slide",
+    "options": [
+      "H5P.AdvancedText 1.1"
+    ]
   },
   {
     "name": "highlightingColor",
@@ -121,6 +124,11 @@
       "label": "Word duration",
       "expanded": false,
       "fields": [
+        {
+          "name": "waveform",
+          "type": "text",
+          "widget": "waveformInit"
+        },
         {
           "name": "text",
           "type": "text",
