@@ -15,6 +15,11 @@
       "path": "dist/main.js"
     }
   ],
+  "preloadedCss": [
+    {
+      "path": "dist/main.css"
+    }
+  ],
   "preloadedDependencies": [
     {
       "machineName": "H5P.Audio",

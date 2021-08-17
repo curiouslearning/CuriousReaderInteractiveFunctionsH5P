@@ -1,3 +1,4 @@
+import './styles/waveform.css'
 import WaveformInit from "./scripts/WaveformInit";
 
 // Load library
