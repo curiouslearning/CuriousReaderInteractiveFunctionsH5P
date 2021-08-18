@@ -90,8 +90,6 @@ let WaveformInit = function (parent, field, params, setValue) {
           console.log('UL content changed!!!');
           // update URL for rendering
           wavesurfer.load(file);
-        } else {
-          wavesurfer.empty()
         }
       });
   });
