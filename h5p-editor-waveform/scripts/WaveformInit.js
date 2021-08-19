@@ -13,6 +13,7 @@ let WaveformInit = function (parent, field, params, setValue) {
 
   this.id = null;
   this.changes = [];
+  this.crAudioIndex = 0;
 
   $(document).ready(() => {
     console.log("ready!");
@@ -51,7 +52,8 @@ let WaveformInit = function (parent, field, params, setValue) {
       ]
     });
 
-    let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[0].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[0].params.files[0].path : undefined;
+    self.crAudioIndex = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields.length;
+    let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
     let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[0].parent.params.subContentId;
        
     if (path != undefined && id != undefined ) {
@@ -81,8 +83,8 @@ let WaveformInit = function (parent, field, params, setValue) {
 
     $(document).find(".h5p-add-file").parent().find('ul').on('DOMSubtreeModified',
       function () {
-        let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[0].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[0].params.files[0].path : undefined;
-        let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[0].parent.params.subContentId;
+        let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
+        let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].parent.params.subContentId;
        
         if (path != undefined && id != undefined ) {
           console.log('get')
