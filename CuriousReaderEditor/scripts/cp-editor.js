@@ -161,7 +161,7 @@ H5PEditor.CuriousReader.prototype.addElement = function (library, options) {
         case 'H5P.CRAudio':
           elementParams.width = 40;
           elementParams.height = 40;
-          elementParams.action.params.fitToWrapper = false;
+          elementParams.action.params.fitToWrapper = true;
           break;
 
         case 'H5P.DragQuestion':
@@ -1722,7 +1722,7 @@ H5PEditor.CuriousReader.prototype.addToDragNBar = function (element, elementPara
       H5P.jQuery('.h5p-current').find('#sentence-style').each(function() {
        
         var addedTextElement = H5P.jQuery(this);
-        var audioElementId=H5P.jQuery(addedTextElement[0].children[0])[0].children[0].id
+        var audioElementId=(addedTextElement[0].children[0]!=undefined)?H5P.jQuery(addedTextElement[0].children[0])[0].children[0].id:'';
         var parentElementId = audioElementId.substr(0,audioElementId.length-1)
         for (let i = 0; i < addedTextElement[0].children.length; i++) {
           var splittedText = H5P.jQuery(addedTextElement[0].children[i])[0].innerHTML;
