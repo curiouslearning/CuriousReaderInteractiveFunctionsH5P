@@ -146,7 +146,6 @@ H5P.CRAudio = (function ($) {
                    $(this).find('#' + self.subContentId + j).parent('div').css({
                     "transform": 'scale(1.5)',
                     'z-index': '2',
-                    'color': self.highlightingColor,
                     'text-shadow': '0px 0px 5px yellow',
                   });
                    if(h5pCurrentInnerDiv.id.substr(0,3)=='img' && h5pCurrentInnerDiv.id!=undefined)
@@ -173,7 +172,7 @@ H5P.CRAudio = (function ($) {
                 $(this).find('#' + self.subContentId + j).parent('div').css({
                   "transform": 'scale(1)',
                   'z-index': '1',
-                  'text-shadow': '0px 0px 5px yellow',
+                  'text-shadow': '0px 0px 5px transparent',
                 });
               });
             }
@@ -240,7 +239,7 @@ H5P.CRAudio = (function ($) {
               $(this).find('#' + clickedTextId).parent('div').css({
                 "transform": 'scale(1)',
                 'z-index': '1',
-                'text-shadow': '0px 0px 5px yellow',
+                'text-shadow': '0px 0px 5px transparent',
               })
               self.clickedByPlayOnDemand = false;
             })
@@ -253,7 +252,9 @@ H5P.CRAudio = (function ($) {
             self.parent.animation(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'))
 
           })
+        
         })
+       
       } else {
         $('#' + clickedTextId).parent('div').css({
           "transform": 'scale(1.5)',
@@ -270,7 +271,7 @@ H5P.CRAudio = (function ($) {
       }
     }
   }
-
+  
 
   return C;
 })(H5P.jQuery);

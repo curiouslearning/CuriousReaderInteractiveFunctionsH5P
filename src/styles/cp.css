@@ -652,6 +652,7 @@
   outline: none;
   padding: 0.375em 0.5em;
   overflow: hidden;
+  height:inherit
 }
 .h5p-course-presentation .h5p-element .h5p-element-inner.h5p-link {
   padding: 0.375em 0.5em;
