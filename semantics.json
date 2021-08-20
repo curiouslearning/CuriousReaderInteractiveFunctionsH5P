@@ -50,6 +50,13 @@
                     "optional": true
                   },
                   {
+                    "name": "id",
+                    "importance": "low",
+                    "type": "text",
+                    "widget": "none",
+                    "optional": true
+                  },
+                  {
                     "name": "action",
                     "type": "library",
                     "importance": "high",
@@ -103,20 +110,36 @@
                     "optional": true
                   },
                   {
+                    "name": "isEdit",
+                    "type": "boolean",
+                    "label": "Is Edit",
+                    "importance": "low",
+                    "default": false,
+                    "optional": true
+                  },
+                  {
                     "name": "willDoAnimation",
                     "type": "boolean",
                     "label": "Will Do Animation",
                     "importance": "medium",
                     "default": false,
                     "optional": true
-                  },
-                  {
+                  },{
                     "name": "animationType",
                     "type": "select",
                     "label": "Animation Type",
                     "importance": "low",
                     "optional": false,
                     "default": "pop",
+                    "widget": "showWhen",
+                    "showWhen": {
+                      "rules": [
+                        {
+                          "field": "willDoAnimation",
+                          "equals": true
+                        }
+                      ]
+                    },
                     "options": [
                       {
                         "value": "spin",
@@ -138,9 +161,17 @@
                         "value": "pulse",
                         "label": "Pulse"
                       },
+                      {
+                        "value": "flip",
+                        "label": "Flip"
+                      },
                        {
                         "value": "glow",
                         "label": "Glow"
+                      },
+                      {
+                        "value": "backgroundFade",
+                        "label": "Background Fade"
                       }
                     ]
                   },

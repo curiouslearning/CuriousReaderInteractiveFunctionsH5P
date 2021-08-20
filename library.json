@@ -50,6 +50,11 @@
   ],
   "editorDependencies": [
     {
+      "machineName": "H5PEditor.ShowWhen",
+      "majorVersion": 1,
+      "minorVersion": 0
+    },
+    {
       "machineName": "H5PEditor.CuriousReader",
       "majorVersion": 1,
       "minorVersion": 22
