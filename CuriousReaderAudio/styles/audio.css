@@ -66,8 +66,10 @@
   color: #0468CE;
   opacity: 0.25;
   content: "\f028";
+  width: 200px;
   font-family: 'H5PFontAwesome4';
-  font-size: 1.0em;
+  /* font-size: 1.0em; */
+  font-size: 100.0em;
   text-decoration: none;
   padding-left: 0.25em;
 }

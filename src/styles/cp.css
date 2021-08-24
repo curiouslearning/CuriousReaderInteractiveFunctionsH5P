@@ -652,6 +652,7 @@
   outline: none;
   padding: 0.375em 0.5em;
   overflow: hidden;
+  height:inherit
 }
 .h5p-course-presentation .h5p-element .h5p-element-inner.h5p-link {
   padding: 0.375em 0.5em;
@@ -827,12 +828,11 @@
 }
 
 .divText {
-  margin: 5px 10px;
-  border-radius: 50%;
+  margin: 0.625em 0.625em;
   transition: 0.5s;
   display: inline-flex;
 }
 .divText > span {
-  margin: 5px 0px 0px 5px;
+  margin: 0.3125em 0em 0em 0.3125em;
   line-height: 120%;
 }

@@ -138,21 +138,30 @@ H5P.CRAudio = (function ($) {
           }
           if (time > word['startDuration'] && time < word['endDuration']) {
             if (!word.highlighted) {
+              console.log('Inside highlight')
               word.highlighted = true;
               if (self.parent != undefined) {
-                $('.h5p-current').each(function () {
-                  $(this).find('#' + self.subContentId + j).parent('div').css({
+                $('.h5p-current >div').each(function (index,element) {
+                  var h5pCurrentInnerDiv=(element.children[0].children[0]!=undefined)?element.children[0].children[0]:element
+                   $(this).find('#' + self.subContentId + j).parent('div').css({
                     "transform": 'scale(1.5)',
                     'z-index': '2',
                     'text-shadow': '0px 0px 5px yellow',
                   });
-                  self.parent.animation($('#img' + self.subContentId + j).parent('div').parent('div'))
-                });
-
+                   if(h5pCurrentInnerDiv.id.substr(0,3)=='img' && h5pCurrentInnerDiv.id!=undefined)
+                   {
+                     if('img'+self.subContentId + j==h5pCurrentInnerDiv.id)
+                     {
+                      //self.glow($(this).find('#img' + self.subContentId + j).parent('div').parent('div'));
+                      self.parent.animation($(this).find('#img' + self.subContentId + j).parent('div').parent('div'))
+        
+                     }
+                   }
+                })
               }
               else {
-                $('#' + j).css({
-                  "color": 'red',
+                $('#' + self.subContentId + j).css({
+                  "color": self.highlightingColor,
                 })
               }
             }
@@ -163,7 +172,7 @@ H5P.CRAudio = (function ($) {
                 $(this).find('#' + self.subContentId + j).parent('div').css({
                   "transform": 'scale(1)',
                   'z-index': '1',
-                  'text-shadow': '0px 0px 5px yellow',
+                  'text-shadow': '0px 0px 5px transparent',
                 });
               });
             }
@@ -210,29 +219,42 @@ H5P.CRAudio = (function ($) {
       audioFile = this.splittedWord[index]
       var demandAudio = document.createElement('audio');
       var source = document.createElement('source');
-      source.src = H5P.getPath(audioFile.wordfile[0].path, this.contentId);
+      if(audioFile.wordfile!=undefined)
+      {source.src = H5P.getPath(audioFile.wordfile[0].path, this.contentId);
       source.type = audioFile.wordfile[0].mime;
       demandAudio.appendChild(source);
+      }
       demandAudio.play();
       if (self.parent != undefined) {
-        $('.h5p-current').each(function () {
-          $(this).find('#' + clickedTextId).parent('div').css({
+        $('.h5p-current').each(function (index,element) {
+          console.log(element)
+          $(element.children).find('#' + clickedTextId).parent('div').css({
             "transform": 'scale(1.5)',
             'z-index': '2',
             'text-shadow': '0px 0px 5px yellow',
           });
-          self.parent.animation($('#img' + clickedTextId).parent('div').parent('div'))
-        })
-        setTimeout(function () {
-          $('.h5p-current').each(function () {
-            $(this).find('#' + clickedTextId).parent('div').css({
-              "transform": 'scale(1)',
-              'z-index': '1',
-              'text-shadow': '0px 0px 5px yellow',
+         
+          setTimeout(function () {
+            $(element.children).each(function () {
+              $(this).find('#' + clickedTextId).parent('div').css({
+                "transform": 'scale(1)',
+                'z-index': '1',
+                'text-shadow': '0px 0px 5px transparent',
+              })
+              self.clickedByPlayOnDemand = false;
             })
-            self.clickedByPlayOnDemand = false;
+          }, 600)
+          $(element.children).each(function(index,element){
+            console.log(index)
+            console.log(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'))
+            console.log($('#img' + clickedTextId).parent('div').parent('div'))
+            //self.parent.animation($('#img' + clickedTextId).parent('div').parent('div'))
+            self.parent.animation(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'))
+
           })
-        }, 600)
+        
+        })
+       
       } else {
         $('#' + clickedTextId).parent('div').css({
           "transform": 'scale(1.5)',
@@ -249,7 +271,7 @@ H5P.CRAudio = (function ($) {
       }
     }
   }
-
+  
 
   return C;
 })(H5P.jQuery);
