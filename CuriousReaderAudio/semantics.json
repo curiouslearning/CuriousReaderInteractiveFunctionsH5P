@@ -87,8 +87,13 @@
       "name": "eachWordTimeStampInfo",
       "type": "group",
       "label": "Word duration",
-      "expanded": false,
+      "expanded": true,
       "fields": [
+        {
+          "name": "waveform",
+          "type": "text",
+          "widget": "waveformInit"
+        },
         {
           "name": "text",
           "type": "text",
