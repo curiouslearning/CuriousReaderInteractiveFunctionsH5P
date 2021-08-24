@@ -38,10 +38,10 @@
     }
   ],
   "editorDependencies": [
-    {
-      "machineName": "H5PEditor.ColorSelector",
+	  {
+      "machineName": "H5PEditor.WaveformInit",
       "majorVersion": 1,
-      "minorVersion": 0
+      "minorVersion": 1
     }
   ] 
 }

@@ -75,38 +75,6 @@
     "common": true,
     "default": "Audio"
   },
-  
-  {
-    "name": "sentence",
-    "type": "library",
-    "label": "Slide Sentence",
-    "description":"This is sentence of slide",
-    "options": ["H5P.AdvancedText 1.1"]
-  },
-  {
-    "name": "highlightingColor",
-    "type": "text",
-    "label": "Audio not supported message",
-    "importance": "low",
-    "common": true,
-    "default": "Your browser does not support this audio"
-  },
-  {
-    "name": "sentence",
-    "type": "library",
-    "label": "Slide Sentence",
-    "description":"This is sentence of slide",
-    "options": ["H5P.AdvancedText 1.1"]
-  },
-  {
-    "name": "highlightingColor",
-    "type": "text",
-    "label": "Color for word highlight",
-    "description": "Select the color for highlighting word",
-    "optional": false,
-    "default": "000000",
-    "widget": "colorSelector"
-  },
   {
     "name": "timeStampForEachText",
     "type": "list",
@@ -119,8 +87,13 @@
       "name": "eachWordTimeStampInfo",
       "type": "group",
       "label": "Word duration",
-      "expanded": false,
+      "expanded": true,
       "fields": [
+        {
+          "name": "waveform",
+          "type": "text",
+          "widget": "waveformInit"
+        },
         {
           "name": "text",
           "type": "text",
@@ -141,11 +114,11 @@
           "label": "End time for word"
         },
         {
-          "label": "Image for particular Text",
-          "name": "Text Image",
-          "type": "image",
-          "optional": true,
-          "description": "Image for particular Text"
+          "name": "wordfile",
+          "type": "audio",
+          "importance": "low",
+          "label": "Word Audio File",
+          "disableCopyright": true
         }
       ]
     }

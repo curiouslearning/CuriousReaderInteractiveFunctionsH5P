@@ -1,0 +1,1 @@
+Creates waveform of audio file on editor page.
