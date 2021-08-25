@@ -52,6 +52,7 @@ let WaveformInit = function (parent, field, params, setValue) {
       ]
     });
 
+    let region;
     self.crAudioIndex = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields.length;
     let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
     let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[0].parent.params.subContentId;
@@ -65,6 +66,10 @@ let WaveformInit = function (parent, field, params, setValue) {
         wavesurfer.load(file);
       }, 1000)
     }
+
+    wavesurfer.on('ready', function () {
+      region = Object.values(wavesurfer.regions.list)[0];
+    })
     
     wavesurfer.on('region-updated', (event) => {
       this.start = event.start;
@@ -73,13 +78,12 @@ let WaveformInit = function (parent, field, params, setValue) {
       this.$endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input')
       this.$startinput.val(this.start)//attr("value", this.start)
       this.$endinput.val(this.end)//.attr("value", this.end)
+      region = Object.values(wavesurfer.regions.list)[0];
     });
 
-    wavesurfer.on('region-click', function (event) {
-      let region = Object.values(wavesurfer.regions.list)[0];
-      region.wavesurfer.setCurrentTime(event.start)
-      region.play();
-    })
+    // wavesurfer.on('region-click', function (event) {
+      
+    // })
 
     $(document).find(".h5p-add-file").parent().find('ul').on('DOMSubtreeModified',
       function () {
@@ -94,6 +98,18 @@ let WaveformInit = function (parent, field, params, setValue) {
           wavesurfer.load(file);
         }
       });
+
+      if (this.id != null) {
+        let regionId = this.id + "playRegion"
+        let $playRegionButton = '<button id = '+ regionId +' class = "playRegion">Play</button>'
+        $('#'+this.id).parent('div').append($playRegionButton)
+        $('#' + regionId).on('click', function () {
+          if (region != undefined) {
+            region.play()
+          }
+        })
+      }
+
   });
 }
 
