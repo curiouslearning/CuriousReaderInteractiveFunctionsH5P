@@ -828,7 +828,7 @@
 }
 
 .divText {
-  margin: 0.625em 0.625em;
+  margin: 0.0em 0.2em;
   transition: 0.5s;
   display: inline-flex;
 }

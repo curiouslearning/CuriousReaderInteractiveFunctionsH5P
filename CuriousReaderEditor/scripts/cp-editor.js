@@ -41,6 +41,7 @@ H5PEditor.CuriousReader = function (parent, field, params, setValue) {
     that.passReadies = false;
 
     // Active surface mode
+
     var activeSurfaceCheckbox = H5PEditor.findField('override/activeSurface', parent);
     activeSurfaceCheckbox.on('checked', function () {
       // Make note of current height
@@ -104,7 +105,6 @@ H5PEditor.CuriousReader.prototype.updateElementSizes = function (heightRatio) {
   for (var i = 0; i < this.params.slides.length; i++) {
     var slide = this.params.slides[i];
     var $slideElements = $slides.eq(i).children();
-
     for (var j = 0; j < slide.elements.length; j++) {
       var element = slide.elements[j];
 
@@ -493,7 +493,7 @@ H5PEditor.CuriousReader.prototype.initializeDNB = function () {
     that.libraries = libraries;
     var buttons = [];
     for (var i = 0; i < libraries.length; i++) {
-      if (libraries[i].restricted !== true) {
+      if (libraries[i].restricted !== true && libraries[i].name!="H5P.Link") {
         // Insert button or buttongroup
         const libraryId = libraries[i].name.split('.')[1].toLowerCase();
         if (dropdownMenus[libraryId] === undefined) {

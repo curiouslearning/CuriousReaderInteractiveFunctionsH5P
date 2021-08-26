@@ -72,6 +72,7 @@
 
 .h5peditor-dragnbar .h5p-dragnbar-li .h5p-dragnbar-paste-button {
   border-top-right-radius: 0.5em;
+  display: none;
 }
 
 .h5p-dragnbar-button {
@@ -124,7 +125,7 @@
 .h5p-dragnbar-table-button:before,
 .h5p-dragnbar-link-button:before,
 .h5p-dragnbar-image-button:before,
-.h5p-dragnbar-audio-button:before,
+.h5p-dragnbar-craudio-button:before,
 .h5p-dragnbar-video-button:before,
 .h5p-dragnbar-more-button:before,
 .h5p-dragnbar-twitteruserfeed-button:before,
@@ -157,11 +158,12 @@
 }
 .h5p-dragnbar-link-button:before {
   content: "\f0c1";
+  display: none;
 }
 .h5p-dragnbar-image-button:before {
   content: "\f03e";
 }
-.h5p-dragnbar-audio-button:before {
+.h5p-dragnbar-craudio-button:before {
   content: "\f028";
 }
 .h5p-dragnbar-video-button:before {
