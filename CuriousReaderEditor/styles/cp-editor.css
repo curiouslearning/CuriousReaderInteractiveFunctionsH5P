@@ -537,10 +537,10 @@
   background-color: #3e8e41;
 }
 
-.title{
+.field-name-override{
   display: none;
 }
 
-.h5peditor-label{
+.collapsed .h5peditor-label{
   display: none;
 }
