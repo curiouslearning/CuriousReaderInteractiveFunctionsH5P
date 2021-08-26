@@ -3,3 +3,21 @@
     position: relative;
     width: 100%;
 }
+
+/* .playRegion {
+    position: relative;
+    left: 50%;
+    top: 45%;
+    width: 20%;
+    transform: translate(-50%, 45%);
+    border-radius: 4px;
+} */
+
+.playRegion {
+    position: absolute;
+    right: 0%;
+    transform: translate(-50%, 45%);
+    border-radius: 4px;
+    z-index: 2;
+    cursor: pointer;
+}
