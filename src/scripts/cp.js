@@ -1063,7 +1063,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   return $elementContainer;
 };
 
-CuriousReader.prototype.animation = function (element) {
+CuriousReader.prototype.animation = function (element,durationTime) {
   var animationType=element.attr('animation')
   if (animationType == "spin") {
     spin({imageTobeAnimated:element});
@@ -1077,7 +1077,7 @@ CuriousReader.prototype.animation = function (element) {
   }  else if(animationType == "pulse"){
     pulse({imageTobeAnimated:element});
   }  else if(animationType == "glow"){
-    glow({imageTobeAnimated:element});
+    glow({imageTobeAnimated:element,durationTime:durationTime});
   }else if(animationType == "backgroundFade"){
     element.removeClass('element');
      parent=$(this).find('.' + 'element');
