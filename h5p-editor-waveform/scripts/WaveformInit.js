@@ -14,26 +14,26 @@ let WaveformInit = function (parent, field, params, setValue) {
   this.id = null;
   this.changes = [];
   this.crAudioIndex = 0;
-
+  var self = this;
   $(document).ready(() => {
     console.log("ready!");
-
+    console.log($('#' + this.id)[0])
     var wavesurfer = WaveSurfer.create({
       // wavesurfer options ...
       container: '#' + this.id,
       waveColor: 'violet',
       progressColor: 'purple',
       plugins: [
-        CursorPlugin.create({
-          showTime: true,
-          opacity: 1,
-          customShowTimeStyle: {
-            'background-color': '#000',
-            color: '#fff',
-            padding: '23px',
-            'font-size': '10px',
-          }
-        }),
+        // CursorPlugin.create({
+        //   showTime: true,
+        //   opacity: 1,
+        //   customShowTimeStyle: {
+        //     'background-color': '#000',
+        //     color: '#fff',
+        //     padding: '23px',
+        //     'font-size': '10px',
+        //   }
+        // }),
         RegionsPlugin.create({
           regionsMinLength: 0.1,
           maxRegions: 1,
@@ -68,7 +68,18 @@ let WaveformInit = function (parent, field, params, setValue) {
     }
 
     wavesurfer.on('ready', function () {
+      console.log(self.id)
+      console.log('ererer')
       region = Object.values(wavesurfer.regions.list)[0];
+      let regionId = self.id + "playRegion"
+      let $playRegionButton = '<button id = '+ regionId +' class = "playRegion">Play</button>'
+      $('#'+self.id).find('.wavesurfer-region').append($playRegionButton)
+      $('#' + regionId).on('click', function (e) {
+        e.stopPropagation()
+        if (region != undefined) {
+          region.play()
+        }
+      })
     })
     
     wavesurfer.on('region-updated', (event) => {
@@ -100,16 +111,16 @@ let WaveformInit = function (parent, field, params, setValue) {
       });
 
       if (this.id != null) {
-        let regionId = this.id + "playRegion"
-        let $playRegionButton = '<button id = '+ regionId +' class = "playRegion">Play</button>'
-        $('#'+this.id).parent('div').append($playRegionButton)
-        $('#' + regionId).on('click', function () {
-          if (region != undefined) {
-            region.play()
-          }
-        })
+        
+        // let regionId = this.id + "playRegion"
+        // let $playRegionButton = '<button id = '+ regionId +' class = "playRegion">Play</button>'
+        // $('#'+this.id).parent('div').append($playRegionButton)
+        // $('#' + regionId).on('click', function () {
+        //   if (region != undefined) {
+        //     region.play()
+        //   }
+        // })
       }
-
   });
 }
 
@@ -123,15 +134,19 @@ WaveformInit.prototype.constructor = WaveformInit;
  */
 WaveformInit.prototype.appendTo = function ($wrapper) {
   var self = this;
+  console.log(self.parent.parent.parent.params.subContentId)
   const id = ns.getNextFieldId(this.field);
+  // console.log(this.field)
+  // console.log(ns)
+  // console.log(id);
+  // console.log($('#'+id))
   var html = H5PEditor.createFieldMarkup(this.field, '<div class="waveform" id="' + id + '" class="h5p-color-picker">', id);
+  console.log(html)
   // var html = H5PEditor.createFieldMarkup(this.field, '<input id="' + id + '" class="h5p-color-picker">', id);
   self.$item = H5PEditor.$(html);
   this.setId(id);
 
   $wrapper.append('<h1 class="test"> Waveform</h1>')
-  // $wrapper.append('<div class="waveform"></div>')
-
   self.$item.appendTo($wrapper);
 };
 
