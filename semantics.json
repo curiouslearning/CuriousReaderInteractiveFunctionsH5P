@@ -121,7 +121,7 @@
                     "name": "willDoAnimation",
                     "type": "boolean",
                     "label": "Will Do Animation",
-                    "importance": "medium",
+                    "importance": "low",
                     "default": false,
                     "optional": true
                   },{
