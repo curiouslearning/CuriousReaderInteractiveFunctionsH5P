@@ -250,6 +250,7 @@ H5P.CRAudio = (function ($) {
             console.log($('#img' + clickedTextId).parent('div').parent('div'))
             //self.parent.animation($('#img' + clickedTextId).parent('div').parent('div'))
             self.parent.animation(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'))
+            
           })
         
         })
