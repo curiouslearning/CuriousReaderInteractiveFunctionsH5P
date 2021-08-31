@@ -110,13 +110,13 @@ export const jiggle =({imageTobeAnimated}) =>{
 export const pulse =({imageTobeAnimated}) =>{ 
    doPulsing(imageTobeAnimated);
 }
-export const glow =({imageTobeAnimated,durationTime}) =>{ 
+export const glow =({imageTobeAnimated}) =>{ 
     imageTobeAnimated.css("box-shadow", "0 0 50px yellow");
     imageTobeAnimated.css("transition", "border 1s linear, box-shadow 1s linear");
     setTimeout(function () {
         imageTobeAnimated.css("box-shadow", "0 0 50px transparent");
         imageTobeAnimated.css("transition", "border 1s linear, box-shadow 1s linear");
-    }, durationTime*1000);
+    }, 3000);
 }
 export const backgroundFade =({imageTobeAnimated,parent}) =>{ 
  parent.css('opacity', '0.4');

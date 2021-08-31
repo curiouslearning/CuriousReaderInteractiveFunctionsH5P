@@ -1063,7 +1063,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   return $elementContainer;
 };
 
-CuriousReader.prototype.animation = function (element,durationTime) {
+CuriousReader.prototype.animation = function (element) {
   var animationType=element.attr('animation')
   if (animationType == "spin") {
     spin({imageTobeAnimated:element});
