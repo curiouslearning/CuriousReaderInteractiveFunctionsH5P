@@ -244,13 +244,24 @@ H5P.CRAudio = (function ($) {
               self.clickedByPlayOnDemand = false;
             })
           }, 600)
+          let canWe = false;
           $(element.children).each(function(index,element){
-            console.log(index)
-            console.log(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'))
-            console.log($('#img' + clickedTextId).parent('div').parent('div'))
-            //self.parent.animation($('#img' + clickedTextId).parent('div').parent('div'))
-            self.parent.animation(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'))
-            
+            $(demandAudio).on('canplaythrough', function (e) {
+              canWe =true;
+              // console.log(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'))
+              // console.log($('#img' + clickedTextId).parent('div').parent('div'))
+              //self.parent.animation($('#img' + clickedTextId).parent('div').parent('div'))
+              self.parent.animation(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'),
+              e.currentTarget.duration
+              )
+             });
+             if(canWe==false){
+              // console.log(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'))
+              // console.log($('#img' + clickedTextId).parent('div').parent('div'))
+              //self.parent.animation($('#img' + clickedTextId).parent('div').parent('div'))
+              self.parent.animation(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div')
+              )
+             }
           })
         
         })

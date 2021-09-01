@@ -180,7 +180,6 @@ H5PEditor.CuriousReader.prototype.addElement = function (library, options) {
           break;
       }
     }
-
     if (options.width && options.height && !options.displayAsButton) {
       // Use specified size
       elementParams.width = options.width;
@@ -506,16 +505,16 @@ H5PEditor.CuriousReader.prototype.initializeDNB = function () {
     }
 
     // Add go to slide button
-    var goToSlide = H5PEditor.CuriousReader.findField('goToSlide', elementFields);
-    if (goToSlide) {
-      buttons.splice(5, 0, {
-        id: 'gotoslide',
-        title: H5PEditor.t('H5PEditor.CuriousReader', 'goToSlide'),
-        createElement: function () {
-          return that.addElement('GoToSlide');
-        }
-      });
-    }
+    // var goToSlide = H5PEditor.CuriousReader.findField('goToSlide', elementFields);
+    // if (goToSlide) {
+    //   buttons.splice(5, 0, {
+    //     id: 'gotoslide',
+    //     title: H5PEditor.t('H5PEditor.CuriousReader', 'goToSlide'),
+    //     createElement: function () {
+    //       return that.addElement('GoToSlide');
+    //     }
+    //   });
+    // }
 
     that.dnb = new H5P.DragNBar(buttons, that.cp.$current, that.$editor, {$blurHandlers: that.cp.$boxWrapper, libraries: libraries});
 
@@ -1379,8 +1378,8 @@ H5PEditor.CuriousReader.prototype.updateKeyword = function (keyword, slideIndex,
  */
 H5PEditor.CuriousReader.prototype.generateForm = function (elementParams, type) {
   var self = this;
-
   if (type === 'H5P.ContinuousText' && self.ct) {
+    console.log('inside h5p.continuous Text');
     // Continuous Text shares a single form across all elements
     return {
       '$form': self.ct.element.$form,
@@ -1391,7 +1390,20 @@ H5PEditor.CuriousReader.prototype.generateForm = function (elementParams, type) 
   // Get semantics for the elements field
   var slides = H5PEditor.CuriousReader.findField('slides', this.field.fields);
   var elementFields = H5PEditor.$.extend(true, [], H5PEditor.CuriousReader.findField('elements', slides.field.fields).field.fields);
-
+  let fieldsToHide=[];
+  if(type==='H5P.AdvancedText'){
+    fieldsToHide = ['solution','alwaysDisplayComments','isEdit','displayAsButton','buttonSize'];
+    self.hideFields(elementFields, fieldsToHide);
+  }
+  if(type==='H5P.Image'){
+    fieldsToHide = ['solution','alwaysDisplayComments','displayAsButton','buttonSize'];
+    self.hideFields(elementFields, fieldsToHide);
+  }
+  if(type==='H5P.CRAudio'){
+    fieldsToHide = ['solution','alwaysDisplayComments','isEdit','displayAsButton','buttonSize','willDoAnimation','animationType','backgroundOpacity'];
+    self.hideFields(elementFields, fieldsToHide);
+  }
+  console.log('hello rahul singh End');
   // Manipulate semantics into only using a given set of fields
   if (type === 'goToSlide') {
     // Hide all others
@@ -1399,8 +1411,8 @@ H5PEditor.CuriousReader.prototype.generateForm = function (elementParams, type) 
   }
   else {
     var hideFields = ['title', 'goToSlide', 'goToSlideType', 'invisible'];
-
     if (type === 'H5P.ContinuousText' || type === 'H5P.Audio') {
+      console.log(' iam inside continuous text');
       // Continuous Text or Go To Slide cannot be displayed as a button
       hideFields.push('displayAsButton');
       hideFields.push('buttonSize');
