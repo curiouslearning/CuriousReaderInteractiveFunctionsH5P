@@ -153,8 +153,7 @@ H5P.CRAudio = (function ($) {
                      if('img'+self.subContentId + j==h5pCurrentInnerDiv.id)
                      {
                       //self.glow($(this).find('#img' + self.subContentId + j).parent('div').parent('div'));
-                      self.parent.animation($(this).find('#img' + self.subContentId + j).parent('div').parent('div'),
-                    word['endDuration'] - word['startDuration'])
+                      self.parent.animation($(this).find('#img' + self.subContentId + j).parent('div').parent('div'))
         
                      }
                    }
