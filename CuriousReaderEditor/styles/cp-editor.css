@@ -536,3 +536,11 @@
 .dropdown:hover .dropbtn {
   background-color: #3e8e41;
 }
+
+.field-name-override{
+  display: none;
+}
+
+.collapsed .h5peditor-label{
+  display: none;
+}
