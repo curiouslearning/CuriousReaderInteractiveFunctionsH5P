@@ -130,7 +130,7 @@
                     "label": "Animation Type",
                     "importance": "low",
                     "optional": false,
-                    "default": "pop",
+                    "default": "glow",
                     "widget": "showWhen",
                     "showWhen": {
                       "rules": [
