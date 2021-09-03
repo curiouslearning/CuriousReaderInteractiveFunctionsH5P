@@ -121,7 +121,7 @@
                     "name": "willDoAnimation",
                     "type": "boolean",
                     "label": "Will Do Animation",
-                    "importance": "medium",
+                    "importance": "low",
                     "default": false,
                     "optional": true
                   },{
@@ -130,7 +130,7 @@
                     "label": "Animation Type",
                     "importance": "low",
                     "optional": false,
-                    "default": "pop",
+                    "default": "glow",
                     "widget": "showWhen",
                     "showWhen": {
                       "rules": [
@@ -141,37 +141,10 @@
                       ]
                     },
                     "options": [
-                      {
-                        "value": "spin",
-                        "label": "Spin"
-                      },
-                      {
-                        "value": "pop",
-                        "label": "Popop"
-                      },
-                      {
-                        "value": "bounce",
-                        "label": "Bounce"
-                      },
-                       {
-                        "value": "jiggle",
-                        "label": "Jiggle"
-                      },
-                       {
-                        "value": "pulse",
-                        "label": "Pulse"
-                      },
-                      {
-                        "value": "flip",
-                        "label": "Flip"
-                      },
+                      
                        {
                         "value": "glow",
                         "label": "Glow"
-                      },
-                      {
-                        "value": "backgroundFade",
-                        "label": "Background Fade"
                       }
                     ]
                   },
