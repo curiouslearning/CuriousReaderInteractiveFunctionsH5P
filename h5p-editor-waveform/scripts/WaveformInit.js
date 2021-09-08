@@ -10,14 +10,14 @@ let WaveformInit = function (parent, field, params, setValue) {
   this.field = field;
   this.params = params;
   this.setValue = setValue;
-
+ 
+  
   this.id = null;
   this.changes = [];
   this.crAudioIndex = 0;
   var self = this;
+
   $(document).ready(() => {
-    console.log("ready!");
-    console.log($('#' + this.id)[0])
     var wavesurfer = WaveSurfer.create({
       // wavesurfer options ...
       container: '#' + this.id,
@@ -58,9 +58,7 @@ let WaveformInit = function (parent, field, params, setValue) {
     let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[0].parent.params.subContentId;
        
     if (path != undefined && id != undefined ) {
-      console.log('get')
       let file = H5P.getPath(path, id);
-      console.log('UL content changed!!!');
         // update URL for rendering
       setTimeout(function () {
         wavesurfer.load(file);
@@ -68,8 +66,6 @@ let WaveformInit = function (parent, field, params, setValue) {
     }
 
     wavesurfer.on('ready', function () {
-      console.log(self.id)
-      console.log('ererer')
       region = Object.values(wavesurfer.regions.list)[0];
       let regionId = self.id + "playRegion"
       let $playRegionButton = '<button id = '+ regionId +' class = "playRegion">Play</button>'
@@ -86,15 +82,20 @@ let WaveformInit = function (parent, field, params, setValue) {
       this.start = event.start;
       this.end = event.end;
       this.$startinput = $('#' + this.id).parent().parent().find('.field-name-startDuration').find('input');
+      
       this.$endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input')
       this.$startinput.val(this.start)//attr("value", this.start)
+      this.setValue(this.findField("startDuration", this.parent.field.fields), "" + this.start);
       this.$endinput.val(this.end)//.attr("value", this.end)
+      this.setValue(this.findField("endDuration", this.parent.field.fields), "" + this.end);
       region = Object.values(wavesurfer.regions.list)[0];
     });
 
+//This is the issue related to some of the members
     // wavesurfer.on('region-click', function (event) {
       
     // })
+   
 
     $(document).find(".h5p-add-file").parent().find('ul').on('DOMSubtreeModified',
       function () {
@@ -102,9 +103,7 @@ let WaveformInit = function (parent, field, params, setValue) {
         let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].parent.params.subContentId;
        
         if (path != undefined && id != undefined ) {
-          console.log('get')
           let file = H5P.getPath(path, id);
-          console.log('UL content changed!!!');
           // update URL for rendering
           wavesurfer.load(file);
         }
@@ -132,9 +131,10 @@ WaveformInit.prototype.constructor = WaveformInit;
  * @public
  * @param {H5P.jQuery} $wrapper
  */
+
+
 WaveformInit.prototype.appendTo = function ($wrapper) {
   var self = this;
-  console.log(self.parent.parent.parent.params.subContentId)
   const id = ns.getNextFieldId(this.field);
   // console.log(this.field)
   // console.log(ns)
@@ -145,11 +145,42 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
   // var html = H5PEditor.createFieldMarkup(this.field, '<input id="' + id + '" class="h5p-color-picker">', id);
   self.$item = H5PEditor.$(html);
   this.setId(id);
-
+  let wordText=''
   $wrapper.append('<h1 class="test"> Waveform</h1>')
+  // $wrapper.append('<label class="h5peditor-label"><input id="field-words-125" type="checkbox">Will Do Animation</label>')
+  let checkBoxElementForWord=$wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides,self.parent.parent.parent.parent.cp.currentSlideIndex))
   self.$item.appendTo($wrapper);
+  $(checkBoxElementForWord).on('change',function(event){
+
+    if($('#'+event.target.id).is(':checked'))
+    {
+      wordText=wordText+' '+event.target.value+' '
+      this.$word = $('#' +id).parent().parent().find('.field-name-text').find('input');
+       this.$word.val(wordText.replace(/  +/g, ' '))
+      self.setValue(self.findField("text",self.parent.field.fields),"" + wordText.replace(/  +/g, ' '));
+      //WaveformInit.self2.setValue(H5PEditor.CuriousReader.findField("text",self2.parent.field.fields),"Sam-ple data")
+      
+    }
+    else{
+      let tempWordText=wordText.replace(event.target.value,'')
+      wordText=tempWordText
+      this.$word = $('#' +id).parent().parent().find('.field-name-text').find('input');
+      self.setValue(self.findField("text",self.parent.field.fields),"" + wordText.replace(/  +/g, ' '));
+      this.$word.val(wordText.replace(/  +/g, ' '))
+    }
+  
+  })
+  
+  
 };
 
+WaveformInit.prototype.findField = function (name, fields) {
+  for (var i = 0; i < fields.length; i++) {
+    if (fields[i].name === name) {
+      return fields[i];
+    }
+  }
+};
 WaveformInit.prototype.setId = function (id) {
   this.id = id;
 } 
@@ -160,6 +191,25 @@ WaveformInit.prototype.validate = function () {
   // this.hide();
   // return (this.params !== undefined && this.params.length !== 0);
 };
+
+WaveformInit.prototype.getSentence=function(slides,slideIndex){
+  var sentenceWords=[];
+  for(let i=0;i<slides[slideIndex].elements.length;i++)
+  {
+    if(slides[slideIndex].elements[i].action.library.split(' ')[0]=="H5P.AdvancedText")
+    {
+      var checkBoxWord=''
+      sentenceWords=$(slides[slideIndex].elements[i].action.params.text)[0].innerText.split(' ')
+      for(let j=0;j<sentenceWords.length;j++)
+      {
+        if(sentenceWords[j].replace(/  +/g, ' ')!='')
+        checkBoxWord=checkBoxWord+'<label class="h5peditor-label id ='+this.id+j+'"><input id='+this.id+j+' type="checkbox" value="'+sentenceWords[j]+'">'+sentenceWords[j]+'</label>'
+      }
+     
+    }
+  }
+  return checkBoxWord;
+}
 
 WaveformInit.prototype.remove = function () { };
 
