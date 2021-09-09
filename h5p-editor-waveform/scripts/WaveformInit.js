@@ -156,7 +156,7 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
     {
       wordText=wordText+' '+event.target.value+' '
       this.$word = $('#' +id).parent().parent().find('.field-name-text').find('input');
-       this.$word.val(wordText.replace(/  +/g, ' '))
+       this.$word.val((wordText.trim()).replace(/  +/g, ' '))
       self.setValue(self.findField("text",self.parent.field.fields),"" + wordText.replace(/  +/g, ' '));
       //WaveformInit.self2.setValue(H5PEditor.CuriousReader.findField("text",self2.parent.field.fields),"Sam-ple data")
       
@@ -166,7 +166,7 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
       wordText=tempWordText
       this.$word = $('#' +id).parent().parent().find('.field-name-text').find('input');
       self.setValue(self.findField("text",self.parent.field.fields),"" + wordText.replace(/  +/g, ' '));
-      this.$word.val(wordText.replace(/  +/g, ' '))
+      this.$word.val((wordText.trim()).replace(/  +/g, ' '))
     }
   
   })

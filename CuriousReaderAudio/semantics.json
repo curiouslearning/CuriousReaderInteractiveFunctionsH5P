@@ -97,7 +97,6 @@
         {
           "name": "text",
           "type": "text",
-          "default": " ",
           "optional": false,
           "label": "Word"
         },
