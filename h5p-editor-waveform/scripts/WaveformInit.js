@@ -54,14 +54,14 @@ let WaveformInit = function (parent, field, params, setValue) {
 
     let region;
     self.crAudioIndex = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields.length;
-    let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
+    let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
     let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[0].parent.params.subContentId;
-       
-    if (path != undefined && id != undefined ) {
+
+    if (path != undefined && id != undefined) {
       console.log('get')
       let file = H5P.getPath(path, id);
       console.log('UL content changed!!!');
-        // update URL for rendering
+      // update URL for rendering
       setTimeout(function () {
         wavesurfer.load(file);
       }, 1000)
@@ -72,8 +72,8 @@ let WaveformInit = function (parent, field, params, setValue) {
       console.log('ererer')
       region = Object.values(wavesurfer.regions.list)[0];
       let regionId = self.id + "playRegion"
-      let $playRegionButton = '<button id = '+ regionId +' class = "playRegion">Play</button>'
-      $('#'+self.id).find('.wavesurfer-region').append($playRegionButton)
+      let $playRegionButton = '<button id = ' + regionId + ' class = "playRegion">Play</button>'
+      $('#' + self.id).find('.wavesurfer-region').append($playRegionButton)
       $('#' + regionId).on('click', function (e) {
         e.stopPropagation()
         if (region != undefined) {
@@ -81,27 +81,29 @@ let WaveformInit = function (parent, field, params, setValue) {
         }
       })
     })
-    
+
     wavesurfer.on('region-updated', (event) => {
       this.start = event.start;
       this.end = event.end;
       this.$startinput = $('#' + this.id).parent().parent().find('.field-name-startDuration').find('input');
       this.$endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input')
+      this.setValue(this.findField("startDuration", this.parent.field.fields), "" + this.start);
+      this.setValue(this.findField("endDuration", this.parent.field.fields), "" + this.end);
       this.$startinput.val(this.start)//attr("value", this.start)
       this.$endinput.val(this.end)//.attr("value", this.end)
       region = Object.values(wavesurfer.regions.list)[0];
     });
 
     // wavesurfer.on('region-click', function (event) {
-      
+
     // })
 
     $(document).find(".h5p-add-file").parent().find('ul').on('DOMSubtreeModified',
       function () {
-        let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
+        let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
         let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].parent.params.subContentId;
-       
-        if (path != undefined && id != undefined ) {
+
+        if (path != undefined && id != undefined) {
           console.log('get')
           let file = H5P.getPath(path, id);
           console.log('UL content changed!!!');
@@ -110,17 +112,17 @@ let WaveformInit = function (parent, field, params, setValue) {
         }
       });
 
-      if (this.id != null) {
-        
-        // let regionId = this.id + "playRegion"
-        // let $playRegionButton = '<button id = '+ regionId +' class = "playRegion">Play</button>'
-        // $('#'+this.id).parent('div').append($playRegionButton)
-        // $('#' + regionId).on('click', function () {
-        //   if (region != undefined) {
-        //     region.play()
-        //   }
-        // })
-      }
+    if (this.id != null) {
+
+      // let regionId = this.id + "playRegion"
+      // let $playRegionButton = '<button id = '+ regionId +' class = "playRegion">Play</button>'
+      // $('#'+this.id).parent('div').append($playRegionButton)
+      // $('#' + regionId).on('click', function () {
+      //   if (region != undefined) {
+      //     region.play()
+      //   }
+      // })
+    }
   });
 }
 
@@ -152,7 +154,17 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
 
 WaveformInit.prototype.setId = function (id) {
   this.id = id;
-} 
+}
+
+WaveformInit.prototype.findField = function (name, fields) {
+  for (var i = 0; i < fields.length; i++) {
+    if (fields[i].name === name) {
+      return fields[i];
+    }
+  }
+};
+
+
 /**
  * Validate the current values.
  */
