@@ -98,7 +98,7 @@
   text-decoration: none;
 }
 .h5p-dragnbar-left {
-  float: left;
+  float: right;
 }
 .h5p-dragnbar-left > .h5p-dragnbar-li:first-child {
   border-left: 0;
