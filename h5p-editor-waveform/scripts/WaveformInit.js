@@ -10,8 +10,8 @@ let WaveformInit = function (parent, field, params, setValue) {
   this.field = field;
   this.params = params;
   this.setValue = setValue;
-
-
+ 
+  
   this.id = null;
   this.crAudioIndex = 0;
   this.container;
@@ -133,6 +133,7 @@ let WaveformInit = function (parent, field, params, setValue) {
       this.start = event.start;
       this.end = event.end;
       this.$startinput = $('#' + this.id).parent().parent().find('.field-name-startDuration').find('input');
+      
       this.$endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input')
       this.$startinput.val(this.start);
       this.$endinput.val(this.end);
@@ -182,18 +183,51 @@ WaveformInit.prototype.constructor = WaveformInit;
  * @public
  * @param {H5P.jQuery} $wrapper
  */
+
+
 WaveformInit.prototype.appendTo = function ($wrapper) {
   var self = this;
   const id = ns.getNextFieldId(this.field);
   var html = H5PEditor.createFieldMarkup(this.field, '<div class="waveform" id="' + id + '" class="h5p-color-picker">', id);
   self.$item = H5PEditor.$(html);
   this.setId(id);
-
+  let wordText=''
   $wrapper.append('<h1 class="test"> Waveform</h1>')
+  // $wrapper.append('<label class="h5peditor-label"><input id="field-words-125" type="checkbox">Will Do Animation</label>')
+  let checkBoxElementForWord=$wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides,self.parent.parent.parent.parent.cp.currentSlideIndex))
   self.$item.appendTo($wrapper);
+  $(checkBoxElementForWord).on('change',function(event){
+
+    if($('#'+event.target.id).is(':checked'))
+    {
+      wordText=wordText+' '+event.target.value+' '
+      this.$word = $('#' +id).parent().parent().find('.field-name-text').find('input');
+       this.$word.val((wordText.trim()).replace(/  +/g, ' '))
+      self.setValue(self.findField("text",self.parent.field.fields),"" + wordText.replace(/  +/g, ' '));
+      //WaveformInit.self2.setValue(H5PEditor.CuriousReader.findField("text",self2.parent.field.fields),"Sam-ple data")
+      
+    }
+    else{
+      let tempWordText=wordText.replace(event.target.value,'')
+      wordText=tempWordText
+      this.$word = $('#' +id).parent().parent().find('.field-name-text').find('input');
+      self.setValue(self.findField("text",self.parent.field.fields),"" + wordText.replace(/  +/g, ' '));
+      this.$word.val((wordText.trim()).replace(/  +/g, ' '))
+    }
+  
+  })
+  
+  
   self.container = self.$item.find('#' + this.id);
 };
 
+WaveformInit.prototype.findField = function (name, fields) {
+  for (var i = 0; i < fields.length; i++) {
+    if (fields[i].name === name) {
+      return fields[i];
+    }
+  }
+};
 WaveformInit.prototype.setId = function (id) {
   this.id = id;
 } 
@@ -210,5 +244,26 @@ WaveformInit.prototype.validate = function () {
   // this.hide();
   // return (this.params !== undefined && this.params.length !== 0);
 };
+
+WaveformInit.prototype.getSentence=function(slides,slideIndex){
+  var sentenceWords=[];
+  for(let i=0;i<slides[slideIndex].elements.length;i++)
+  {
+    if(slides[slideIndex].elements[i].action.library.split(' ')[0]=="H5P.AdvancedText")
+    {
+      var checkBoxWord=''
+      sentenceWords=$(slides[slideIndex].elements[i].action.params.text)[0].innerText.split(' ')
+      for(let j=0;j<sentenceWords.length;j++)
+      {
+        if(sentenceWords[j].replace(/  +/g, ' ')!='')
+        checkBoxWord=checkBoxWord+'<label class="h5peditor-label id ='+this.id+j+'"><input id='+this.id+j+' type="checkbox" value="'+sentenceWords[j]+'">'+sentenceWords[j]+'</label>'
+      }
+     
+    }
+  }
+  return checkBoxWord;
+}
+
+WaveformInit.prototype.remove = function () { };
 
 export default WaveformInit;

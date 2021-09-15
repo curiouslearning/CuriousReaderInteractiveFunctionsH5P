@@ -164,7 +164,8 @@
   content: "\f03e";
 }
 .h5p-dragnbar-craudio-button:before {
-  content: "\f028";
+  content: "\1F5E3";
+  font-size: 1.5em;
 }
 .h5p-dragnbar-video-button:before {
   content: "\f008";
