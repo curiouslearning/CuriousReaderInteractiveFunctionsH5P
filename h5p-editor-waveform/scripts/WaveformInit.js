@@ -162,14 +162,19 @@ let WaveformInit = function (parent, field, params, setValue) {
             }, 1000)
           })
         }
-
-        let $startinput = $('#' + this.id).parent().parent().find('.field-name-startDuration').find('input');
-        let $endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input')
-        $startinput.val(0);
-        $endinput.val(0.2);
-        this.setValue(this.findField("startDuration", this.parent.field.fields), "" + 0);
-        this.setValue(this.findField("endDuration", this.parent.field.fields), "" + 0.2);
-
+        if (region != undefined) {
+          let $startinput = $('#' + this.id).parent().parent().find('.field-name-startDuration').find('input');
+          let $endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input')
+          $startinput.val(0);
+          $endinput.val(0.2);
+          this.setValue(this.findField("startDuration", this.parent.field.fields), "" + 0);
+          this.setValue(this.findField("endDuration", this.parent.field.fields), "" + 0.2);
+          params = {
+            start: 0,
+            end: 0.2
+          }
+          region.update(params)
+        }
       });
 
       if (this.id != null) {
