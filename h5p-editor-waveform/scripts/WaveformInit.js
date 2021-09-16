@@ -98,10 +98,9 @@ let WaveformInit = function (parent, field, params, setValue) {
     $(self.container).parent().parent().find('.field-name-startDuration').find('input').focusout(function (e) {
       if (region != undefined) {
         let value = e.target.value;
-        console.log(value)
         if (!isNaN(value)) {
           let inputStartTime = parseFloat(value);
-          let inputEndTime = self.end < parseFloat(value) ? parseFloat(value) + 1 : self.end;
+          let inputEndTime = region.end <= parseFloat(value) ? parseFloat(value) + 0.2 : region.end;
           params = {
             start: inputStartTime.toFixed(4),
             end: inputEndTime.toFixed(4)
@@ -116,10 +115,8 @@ let WaveformInit = function (parent, field, params, setValue) {
     $(self.container).parent().parent().find('.field-name-endDuration').find('input').focusout(function (e) {
       if (region != undefined) {
         let value = e.target.value;
-        console.log(value)
-        console.log(self.start)
         if (!isNaN(value)) {
-          let inputStartTime = value < region.start ? region.start + 0.3 : self.start
+          let inputStartTime = parseFloat(value) <= region.start ? 0 : region.start
           let inputEndTime = parseFloat(value);
           params = {
             start: inputStartTime.toFixed(4),
