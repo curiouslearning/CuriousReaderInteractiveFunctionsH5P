@@ -80,7 +80,7 @@ let WaveformInit = function (parent, field, params, setValue) {
 
     wavesurfer.on('ready', function () {
       region = Object.values(wavesurfer.regions.list)[0];
-      wavesurfer.params.minPxPerSec = self.parent.parent.parent.parent.cp.width/Math.floor(wavesurfer.getDuration());
+      wavesurfer.params.minPxPerSec = self.parent.parent.parent.parent.cp.width / wavesurfer.getDuration();
       wavesurfer.drawBuffer();
       // let regionId = self.id + "playRegion"
       // let $playRegionButton = '<button id = '+ regionId +' class = "playRegion">Play</button>'
