@@ -17,7 +17,7 @@ let WaveformInit = function (parent, field, params, setValue) {
   this.container;
   this.audioParams = this.parent.parent.parent.params.params;
   this.startTime = this.parent.params.startDuration != undefined ? this.parent.params.startDuration :  0;
-  this.endTime = this.parent.params.endDuration != undefined ? this.parent.params.endDuration :  1;
+  this.endTime = this.parent.params.endDuration != undefined ? this.parent.params.endDuration :  0.2;
   var self = this;
 
   $(document).ready(() => {
@@ -80,8 +80,10 @@ let WaveformInit = function (parent, field, params, setValue) {
 
     wavesurfer.on('ready', function () {
       region = Object.values(wavesurfer.regions.list)[0];
-      wavesurfer.params.minPxPerSec = self.parent.parent.parent.parent.cp.width / wavesurfer.getDuration();
+      let width = self.parent.parent.parent.parent.cp.width + (self.parent.parent.parent.parent.cp.width * 0.25);
+      wavesurfer.params.minPxPerSec = width / wavesurfer.getDuration();
       wavesurfer.drawBuffer();
+      
       // let regionId = self.id + "playRegion"
       // let $playRegionButton = '<button id = '+ regionId +' class = "playRegion">Play</button>'
       // $('#' + self.id).find('.wavesurfer-region').append($playRegionButton)
@@ -142,7 +144,7 @@ let WaveformInit = function (parent, field, params, setValue) {
     });
 
     $(self.container).parents('.h5p-craudio-editor').find(".h5p-add-file").parent().find('ul').on('DOMSubtreeModified',
-      function () {
+      () => {
         // let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
         let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].parent.params.subContentId;
         let path = self.audioParams.files ? self.audioParams.files[0].path : undefined;
@@ -160,6 +162,14 @@ let WaveformInit = function (parent, field, params, setValue) {
             }, 1000)
           })
         }
+
+        let $startinput = $('#' + this.id).parent().parent().find('.field-name-startDuration').find('input');
+        let $endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input')
+        $startinput.val(0);
+        $endinput.val(0.2);
+        this.setValue(this.findField("startDuration", this.parent.field.fields), "" + 0);
+        this.setValue(this.findField("endDuration", this.parent.field.fields), "" + 0.2);
+
       });
 
       if (this.id != null) {
