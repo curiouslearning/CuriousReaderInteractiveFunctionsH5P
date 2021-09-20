@@ -97,7 +97,7 @@
         {
           "name": "text",
           "type": "text",
-          "default": " ",
+          "default": "",
           "optional": false,
           "label": "Word"
         },
@@ -105,13 +105,17 @@
           "name": "startDuration",
           "type": "text",
           "optional": false,
-          "label": "Start time for word"
+          "default": "0",
+          "label": "Start time for word",
+          "description": "Add duration for particular text in sequence"
         },
         {
           "name": "endDuration",
           "type": "text",
           "optional": false,
-          "label": "End time for word"
+          "default": "0.02",
+          "label": "End time for word",
+          "description": "Add duration for particular text in sequence"
         },
         {
           "name": "wordfile",

@@ -859,7 +859,7 @@ CuriousReader.prototype.attachElements = function ($slide, index) {
   if (this.elementsAttached[index] !== undefined) {
     return; // Already attached
   }
-
+ 
   var slide = this.slides[index];
   var instances = this.elementInstances[index];
   if (slide.elements !== undefined) {
@@ -889,7 +889,6 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   let ele ='';
   var self=this
   var instances=this.elementInstances
-
   if (element.willDoAnimation==true && element.animationType ==='glow'){
     ele = '-oval-animated';
   } 
@@ -984,42 +983,55 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
       }
     });
 
+    
+    if(instance.libraryInfo.machineName=='H5P.CRAudio'|| instance.libraryInfo.machineName=='H5P.AdvancedText')
+    {
     var slideTextElement = '';
+    
     for(let i = 0; i < instances[index].length; i++) {
+      console.log(instances[index][i].splittedWord)
       if(instances[index][i].libraryInfo.machineName == 'H5P.CRAudio') {
-        if (instances[index][i].splittedWord != undefined) {
+        console.log(instances[index][i])
+        if (instances[index][i].splittedWord != undefined ) {
+            if((instances[index][i].splittedWord.length!=0 && instances[index][i].splittedWord[0].text!=''))
           for (let j = 0; j < instances[index][i].splittedWord.length; j++) {
             slideTextElement = slideTextElement + "<div class='divText'><span id=" + instances[index][i].subContentId + j + ">" + instances[index][i].splittedWord[j].text.trim() + ' </span></div>'
           }
         }
       }
     }
-    var domSlide = $('.h5p-slides-wrapper')[0].children;
-    if ($(domSlide[index]).find('.h5p-advanced-text').length > 0) {
-      var $elementText = $(domSlide[index]).find('.h5p-advanced-text')[0].children;
-      if ($(domSlide[index]).find('#sentence-style').length > 0) {
-        $(domSlide[index]).find('#sentence-style')[0].innerHTML = "";
-      }
-      var sentence = $($elementText)[0]
-      do {
-        var temp;
-        if (sentence.children.length != 0) {
-          sentence = sentence.children[0];
-          if(sentence.children.length == 0)
-          {
-            temp = sentence
-            sentence.id = "sentence-style"
-            console.log(sentence.innerHTML)
-            sentence.innerHTML = slideTextElement;
-            break;
-          }
-        } else {
-            sentence.id = "sentence-style"
-            sentence.innerHTML = slideTextElement;
-            break;
+      if(slideTextElement!='')
+      {
+      var domSlide = $('.h5p-slides-wrapper')[0].children;
+      if ($(domSlide[index]).find('.h5p-advanced-text').length > 0) {
+        var $elementText = $(domSlide[index]).find('.h5p-advanced-text')[0].children;
+        if ($(domSlide[index]).find('#sentence-style').length > 0) {
+          $(domSlide[index]).find('#sentence-style')[0].innerHTML = "";
         }
-      } while (sentence.children.length != 0)
+        var sentence = $($elementText)[0]
+        do {
+          var temp;
+          if (sentence.children.length != 0) {
+            sentence = sentence.children[0];
+            if(sentence.children.length == 0)
+            {
+              temp = sentence
+              sentence.id = "sentence-style"
+              console.log(sentence.innerHTML)
+              sentence.innerHTML = slideTextElement;
+              break;
+            }
+          } else {
+              sentence.id = "sentence-style"
+              sentence.innerHTML = slideTextElement;
+              break;
+          }
+        } while (sentence.children.length != 0)
+      }
+
     }
+  }
+   
     instance.attach($innerElementContainer);
     if (element.action !== undefined && element.action.library.substr(0, 20) === 'H5P.InteractiveVideo') {
       var handleIV = function () {
@@ -1503,7 +1515,6 @@ CuriousReader.prototype.showPopup = function (popupContent, $focusOnClose, paren
 
   return $popup;
 };
-
 /**
  * Checks if an element has a solution
  *
