@@ -1701,7 +1701,7 @@ H5PEditor.CuriousReader.prototype.processElement = function (elementParams, $wra
  * @returns {H5P.DragNBarElement}
  */
 H5PEditor.CuriousReader.prototype.addToDragNBar = function (element, elementParams) {
-  var self = this;
+   var self = this;
 
   var type = (elementParams.action ? elementParams.action.library.split(' ')[0] : null);
 
@@ -1739,23 +1739,48 @@ H5PEditor.CuriousReader.prototype.addToDragNBar = function (element, elementPara
         }
       })
     }
+   
+    console.log('Here11');
     var linkEle = '<div class="h5p-dragnbar-context-menu-button dropdown dropbtn linkText" role="button" tabindex="0" aria-label="LinkText"><div class="dropdown-content">'+text+'</div></div>'
     var link = dnbElement.contextMenu.$buttons.append(linkEle);
-    link[0].children[5].addEventListener('click', function (e) { 
+
+    var textIndex = -1;
+      for(var i=0 ; i<self.cp.$current[0].children.length;i++){
+        if(self.cp.$current[0].children[i].children[0].className.toString().includes('h5p-advancedtext')){
+          textIndex=i;
+        }
+      }
+    if(textIndex !=-1 && text !=''){ 
+      link[0].children[5].addEventListener('click', function (e) { 
       var textId = e.target.id
       elementParams.class=textId
       elementParams.id = textId;
       H5P.jQuery(this).find('.dropdown-content').css({ 'display': 'none' })
     });
     H5P.jQuery(link[0].children[5]).mouseenter(function () {
-      H5P.jQuery(this).find('.dropdown-content').css({ 'display': 'block' })
-      H5P.jQuery(this).find('#'+elementParams.id).css({
-        'background-color' : 'yellow'
-      });
-      H5P.jQuery(this).find(":not(#"+elementParams.id+")").css("background-color", "white");
+      textIndex = -1;
+      for(var i=0 ; i<self.cp.$current[0].children.length;i++){
+        if(self.cp.$current[0].children[i].children[0].className.toString().includes('h5p-advancedtext')){
+          textIndex=i;
+        }
+      }
+      console.log(textIndex);
+      console.log(link[0].children[5]);
+      if(textIndex == -1){
+         H5P.jQuery(link[0].children[5]).empty();
+         H5P.jQuery(link[0].children[5]).attr("aria-label", "A text object is needed to link text");      
+      }
+        H5P.jQuery(this).find('.dropdown-content').css({ 'display': 'block' })
+        H5P.jQuery(this).find('#'+elementParams.id).css({
+          'background-color' : 'yellow'
+        });
+        H5P.jQuery(this).find(":not(#"+elementParams.id+")").css("background-color", "white");
     }).mouseleave(function () { 
       H5P.jQuery(this).find('.dropdown-content').css({ 'display': 'none' })
     });
+    }else{
+      H5P.jQuery(link[0].children[5]).attr("aria-label", "A text object is needed to link text");
+    }
   }
   dnbElement.contextMenu.on('contextMenuEdit', function () {
     self.showElementForm(element, element.$wrapper, elementParams);
