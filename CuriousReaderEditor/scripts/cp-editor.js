@@ -1729,23 +1729,28 @@ H5PEditor.CuriousReader.prototype.addToDragNBar = function (element, elementPara
   var dnbElement = self.dnb.add(element.$wrapper, clipboardData, options);
 
   if (type === "H5P.Image") {
-    var text = '';
-    console.log(H5P.jQuery('.h5p-current'))
-    console.log( H5P.jQuery('.h5p-current').find('#sentence-style'))
-    // if ( H5P.jQuery('.h5p-current').find('#sentence-style').length > 0) {
-    //   console.log("Entered 1st if condition")
-    //   H5P.jQuery('.h5p-current').find('#sentence-style').each(function() {
-       
-    //     var addedTextElement = H5P.jQuery(this);
-    //     var audioElementId=(addedTextElement[0].children[0]!=undefined)?H5P.jQuery(addedTextElement[0].children[0])[0].children[0].id:'';
-    //     var parentElementId = audioElementId.substr(0,audioElementId.length-1)
-    //     for (let i = 0; i < addedTextElement[0].children.length; i++) {
-    //       var splittedText = H5P.jQuery(addedTextElement[0].children[i])[0].innerHTML;
-    //       text = text + '<a href="#" id = img' + parentElementId + i + '>' + H5P.jQuery(splittedText).html() + '</a>'
-    //     }
-    //   })
-    // }
-    var linkEle = '<div class="h5p-dragnbar-context-menu-button dropdown dropbtn linkText" role="button" tabindex="0" aria-label="LinkText"><div class="dropdown-content"></div></div>'
+    
+    var addedTextElement1 = H5P.jQuery(this);
+    
+    
+    if ( H5P.jQuery('.h5p-current').find('#sentence-style').length > 0) {
+      H5P.jQuery('.h5p-current').find('#sentence-style').each(function() {
+        var text = '';
+        var addedTextElement = H5P.jQuery(this);
+        var audioElementId=(addedTextElement[0].children[0]!=undefined)?H5P.jQuery(addedTextElement[0].children[0])[0].children[0].id:'';
+        var parentElementId = audioElementId.substr(0,audioElementId.length-1)
+        console.log(addedTextElement)
+        console.log(audioElementId)
+        console.log(parentElementId)
+        for (let i = 0; i < addedTextElement[0].children.length; i++) {
+          var splittedText= H5P.jQuery(addedTextElement[0].children[i])[0].innerHTML;
+         
+          text = text + '<a href="#" id = img' + parentElementId + i + '>' + H5P.jQuery(splittedText).html() + '</a>'
+          console.log(text)        
+        }
+      })
+    }
+    var linkEle =H5P.jQuery('<div class="h5p-dragnbar-context-menu-button dropdown dropbtn linkText" role="button" tabindex="0" aria-label="LinkText"><div class="dropdown-content"></div></div>')
     var link = dnbElement.contextMenu.$buttons.append(linkEle);
     link[0].children[5].addEventListener('click', function (e) { 
       var textId = e.target.id
