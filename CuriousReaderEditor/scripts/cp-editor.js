@@ -1777,7 +1777,7 @@ H5PEditor.CuriousReader.prototype.addToDragNBar = function (element, elementPara
     if (H5PEditor.Html) {
       H5PEditor.Html.removeWysiwyg();
     }
-    self.removeElement(element, element.$wrapper, (elementParams.action !== undefined && H5P.libraryFromString(elementParams.action.library).machineName === 'H5P.ContinuousText'));
+    self.removeElement(element, element.$wrapper, (elementParams.action !== undefined && H5P.libraryFromString(elementParams.action.library).machineName === 'H5P.ContinuousText'), elementParams);
     self.dnb.blurAll();
   });
 
@@ -1844,7 +1844,7 @@ H5PEditor.CuriousReader.prototype.addToDragNBar = function (element, elementPara
  * @param {Boolean} isContinuousText
  * @returns {undefined}
  */
-H5PEditor.CuriousReader.prototype.removeElement = function (element, $wrapper, isContinuousText) {
+H5PEditor.CuriousReader.prototype.removeElement = function (element, $wrapper, isContinuousText, elementParams) {
   var slideIndex = this.cp.$current.index();
   var elementIndex = $wrapper.index();
 
@@ -1884,6 +1884,10 @@ H5PEditor.CuriousReader.prototype.removeElement = function (element, $wrapper, i
 
   if (isContinuousText) {
     H5P.ContinuousText.Engine.run(this);
+  }
+
+  if (elementParams !== undefined && elementParams.action !== undefined && H5P.libraryFromString(elementParams.action.library).machineName === 'H5P.AdvancedText') {
+    this.cp.enableOrDisableAudio(this.cp.$current.index());
   }
 };
 
@@ -1928,7 +1932,7 @@ H5PEditor.CuriousReader.prototype.showElementForm = function (element, $wrapper,
     if (e.preventRemove) {
       return;
     }
-    that.removeElement(element, $wrapper, isContinuousText);
+    that.removeElement(element, $wrapper, isContinuousText, elementParams);
     that.dnb.blurAll();
     that.dnb.preventPaste = false;
   };
