@@ -19,9 +19,10 @@ let WaveformInit = function (parent, field, params, setValue) {
   this.startTime = this.parent.params.startDuration != undefined ? this.parent.params.startDuration :  0;
   this.endTime = this.parent.params.endDuration != undefined ? this.parent.params.endDuration :  1;
   var self = this;
-
+ 
   $(document).ready(() => {
-    console.log("ready!");
+    // making word textfield disable for user so they can't enter using keyboard
+    parent.children[1].$input[0].setAttribute('disabled',true);
     var wavesurfer = WaveSurfer.create({
       container: self.container[0],
       waveColor: 'violet',
@@ -197,7 +198,6 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
   let checkBoxElementForWord=$wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides,self.parent.parent.parent.parent.cp.currentSlideIndex))
   self.$item.appendTo($wrapper);
   $(checkBoxElementForWord).on('change',function(event){
-
     if($('#'+event.target.id).is(':checked'))
     {
       wordText=wordText+' '+event.target.value+' '
