@@ -943,6 +943,8 @@ H5PEditor.CuriousReader.prototype.initKeywordInteractions = function () {
   $alwaysKeywords.attr('checked', that.params.keywordListAlwaysShow);
   $hideKeywords.attr('checked', that.params.keywordListAutoHide);
   $opacityKeywords.val(that.params.keywordListOpacity);
+
+  that.cp.enableOrDisableAudio(1);
 };
 
 /**

@@ -1973,21 +1973,20 @@ CuriousReader.prototype.jumpToSlide = function (slideNumber, noScroll = false, h
 
 CuriousReader.prototype.enableOrDisableAudio = function (slideNumber) {
   var that = this;
-  console.log('eyeye')
   if (this.editor !== undefined) {
     let isTextPresent = false;
-    console.log(this)
-    console.log(that.elementInstances[slideNumber])
-    for (let i = 0; i < that.elementInstances[slideNumber].length; i++) {
-      if (that.elementInstances[slideNumber][i].libraryInfo.machineName == "H5P.AdvancedText") {
-        isTextPresent = true;
-        if (that.editor.dnb !== undefined) {
-          let $libraryButtonList = that.editor.dnb.$list;
-          let crAudioButton = $($libraryButtonList)[0].children[2];
-          if ($(crAudioButton).find('.shadowButton').length == 1) {
-            $(crAudioButton).find('.shadowButton').remove();
-            let crHoverText =  $(crAudioButton)[0].children[1]
-            $(crHoverText)[0].innerHTML = "Add Audio"
+    if (that.elementInstances[slideNumber] !== undefined) {
+      for (let i = 0; i < that.elementInstances[slideNumber].length; i++) {
+        if (that.elementInstances[slideNumber][i].libraryInfo.machineName == "H5P.AdvancedText") {
+          isTextPresent = true;
+          if (that.editor.dnb !== undefined) {
+            let $libraryButtonList = that.editor.dnb.$list;
+            let crAudioButton = $($libraryButtonList)[0].children[2];
+            if ($(crAudioButton).find('.shadowButton').length == 1) {
+              $(crAudioButton).find('.shadowButton').remove();
+              let crHoverText =  $(crAudioButton)[0].children[1]
+              $(crHoverText)[0].innerHTML = "Add Audio"
+            }
           }
         }
       }
