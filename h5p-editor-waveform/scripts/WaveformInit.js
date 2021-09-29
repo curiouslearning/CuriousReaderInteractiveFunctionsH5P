@@ -17,7 +17,7 @@ let WaveformInit = function (parent, field, params, setValue) {
   this.container;
   this.audioParams = this.parent.parent.parent.params.params;
   this.startTime = this.parent.params.startDuration != undefined ? this.parent.params.startDuration :  0;
-  this.endTime = this.parent.params.endDuration != undefined ? this.parent.params.endDuration :  1;
+  this.endTime = this.parent.params.endDuration != undefined ? this.parent.params.endDuration :  0.2;
   var self = this;
  
   $(document).ready(() => {
@@ -27,6 +27,7 @@ let WaveformInit = function (parent, field, params, setValue) {
       container: self.container[0],
       waveColor: 'violet',
       progressColor: 'purple',
+      fillParent: false,
       plugins: [
         CursorPlugin.create({
           showTime: true,
@@ -66,7 +67,6 @@ let WaveformInit = function (parent, field, params, setValue) {
       let file = H5P.getPath(path, id);
       $.get(file).done(function () {
         setTimeout(function () {
-          
           wavesurfer.load(file);
         }, 1000)
       }).fail(function () {
@@ -81,7 +81,10 @@ let WaveformInit = function (parent, field, params, setValue) {
 
     wavesurfer.on('ready', function () {
       region = Object.values(wavesurfer.regions.list)[0];
-  
+      let width = self.parent.parent.parent.parent.cp.width + (self.parent.parent.parent.parent.cp.width * 0.25);
+      wavesurfer.params.minPxPerSec = width / wavesurfer.getDuration();
+      wavesurfer.drawBuffer();
+      
       // let regionId = self.id + "playRegion"
       // let $playRegionButton = '<button id = '+ regionId +' class = "playRegion">Play</button>'
       // $('#' + self.id).find('.wavesurfer-region').append($playRegionButton)
@@ -96,13 +99,12 @@ let WaveformInit = function (parent, field, params, setValue) {
     $(self.container).parent().parent().find('.field-name-startDuration').find('input').focusout(function (e) {
       if (region != undefined) {
         let value = e.target.value;
-        console.log(value)
         if (!isNaN(value)) {
           let inputStartTime = parseFloat(value);
-          let inputEndTime = self.end < parseFloat(value) ? parseFloat(value) + 1 : self.end;
+          let inputEndTime = region.end <= parseFloat(value) ? parseFloat(value) + 0.2 : region.end;
           params = {
-            start: inputStartTime,
-            end: inputEndTime
+            start: inputStartTime.toFixed(4),
+            end: inputEndTime.toFixed(4)
           }
           region.update(params)
         } else {
@@ -114,14 +116,12 @@ let WaveformInit = function (parent, field, params, setValue) {
     $(self.container).parent().parent().find('.field-name-endDuration').find('input').focusout(function (e) {
       if (region != undefined) {
         let value = e.target.value;
-        console.log(value)
-        console.log(self.start)
         if (!isNaN(value)) {
-          let inputStartTime = value < region.start ? region.start + 0.3 : self.start
+          let inputStartTime = parseFloat(value) <= region.start ? 0 : region.start
           let inputEndTime = parseFloat(value);
           params = {
-            start: inputStartTime,
-            end: inputEndTime
+            start: inputStartTime.toFixed(4),
+            end: inputEndTime.toFixed(4)
           }
           region.update(params)
         } else {
@@ -134,16 +134,15 @@ let WaveformInit = function (parent, field, params, setValue) {
       this.start = event.start;
       this.end = event.end;
       this.$startinput = $('#' + this.id).parent().parent().find('.field-name-startDuration').find('input');
-      
       this.$endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input')
-      this.$startinput.val(this.start);
-      this.$endinput.val(this.end);
-      this.setValue(this.findField("startDuration", this.parent.field.fields), "" + this.start);
-      this.setValue(this.findField("endDuration", this.parent.field.fields), "" + this.end);
+      this.$startinput.val(this.start.toFixed(4));
+      this.$endinput.val(this.end.toFixed(4));
+      this.setValue(this.findField("startDuration", this.parent.field.fields), "" + this.start.toFixed(4));
+      this.setValue(this.findField("endDuration", this.parent.field.fields), "" + this.end.toFixed(4));
     });
 
     $(self.container).parents('.h5p-craudio-editor').find(".h5p-add-file").parent().find('ul').on('DOMSubtreeModified',
-      function () {
+      () => {
         // let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
         let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].parent.params.subContentId;
         let path = self.audioParams.files ? self.audioParams.files[0].path : undefined;
@@ -160,6 +159,19 @@ let WaveformInit = function (parent, field, params, setValue) {
               wavesurfer.load(file);
             }, 1000)
           })
+        }
+        if (region != undefined) {
+          let $startinput = $('#' + this.id).parent().parent().find('.field-name-startDuration').find('input');
+          let $endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input')
+          $startinput.val(0);
+          $endinput.val(0.2);
+          this.setValue(this.findField("startDuration", this.parent.field.fields), "" + 0);
+          this.setValue(this.findField("endDuration", this.parent.field.fields), "" + 0.2);
+          params = {
+            start: 0,
+            end: 0.2
+          }
+          region.update(params)
         }
       });
 
@@ -197,28 +209,22 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
   // $wrapper.append('<label class="h5peditor-label"><input id="field-words-125" type="checkbox">Will Do Animation</label>')
   let checkBoxElementForWord=$wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides,self.parent.parent.parent.parent.cp.currentSlideIndex))
   self.$item.appendTo($wrapper);
+  self.container = self.$item.find('#' + this.id);
   $(checkBoxElementForWord).on('change',function(event){
-    if($('#'+event.target.id).is(':checked'))
-    {
+    if($('#'+event.target.id).is(':checked')) {
       wordText=wordText+' '+event.target.value+' '
       this.$word = $('#' +id).parent().parent().find('.field-name-text').find('input');
        this.$word.val((wordText.trim()).replace(/  +/g, ' '))
       self.setValue(self.findField("text",self.parent.field.fields),"" + wordText.replace(/  +/g, ' '));
       //WaveformInit.self2.setValue(H5PEditor.CuriousReader.findField("text",self2.parent.field.fields),"Sam-ple data")
-      
-    }
-    else{
+    } else {
       let tempWordText=wordText.replace(event.target.value,'')
       wordText=tempWordText
       this.$word = $('#' +id).parent().parent().find('.field-name-text').find('input');
       self.setValue(self.findField("text",self.parent.field.fields),"" + wordText.replace(/  +/g, ' '));
       this.$word.val((wordText.trim()).replace(/  +/g, ' '))
     }
-  
   })
-  
-  
-  self.container = self.$item.find('#' + this.id);
 };
 
 WaveformInit.prototype.findField = function (name, fields) {
@@ -263,7 +269,6 @@ WaveformInit.prototype.getSentence=function(slides,slideIndex){
   }
   return checkBoxWord;
 }
-
 WaveformInit.prototype.remove = function () { };
 
 export default WaveformInit;
