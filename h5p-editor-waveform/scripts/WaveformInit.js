@@ -18,6 +18,7 @@ let WaveformInit = function (parent, field, params, setValue) {
   this.audioParams = this.parent.parent.parent.params.params;
   this.startTime = this.parent.params.startDuration != undefined ? this.parent.params.startDuration :  0;
   this.endTime = this.parent.params.endDuration != undefined ? this.parent.params.endDuration :  0.2;
+  this.audioDuration;
   var self = this;
  
   $(document).ready(() => {
@@ -82,6 +83,7 @@ let WaveformInit = function (parent, field, params, setValue) {
     wavesurfer.on('ready', function () {
       region = Object.values(wavesurfer.regions.list)[0];
       let width = self.parent.parent.parent.parent.cp.width + (self.parent.parent.parent.parent.cp.width * 0.25);
+      self.audioDuration = wavesurfer.getDuration();
       wavesurfer.params.minPxPerSec = width / wavesurfer.getDuration();
       wavesurfer.drawBuffer();
       
@@ -100,6 +102,9 @@ let WaveformInit = function (parent, field, params, setValue) {
       if (region != undefined) {
         let value = e.target.value;
         if (!isNaN(value)) {
+          if (parseFloat(value) > self.audioDuration) {
+            value = 0.0;
+          }
           let inputStartTime = parseFloat(value);
           let inputEndTime = region.end <= parseFloat(value) ? parseFloat(value) + 0.2 : region.end;
           params = {
@@ -117,6 +122,9 @@ let WaveformInit = function (parent, field, params, setValue) {
       if (region != undefined) {
         let value = e.target.value;
         if (!isNaN(value)) {
+          if (parseFloat(value) > self.audioDuration) {
+            value = self.audioDuration - 0.05;
+          }
           let inputStartTime = parseFloat(value) <= region.start ? 0 : region.start
           let inputEndTime = parseFloat(value);
           params = {
@@ -141,7 +149,7 @@ let WaveformInit = function (parent, field, params, setValue) {
       this.setValue(this.findField("endDuration", this.parent.field.fields), "" + this.end.toFixed(4));
     });
 
-    $(self.container).parents('.h5p-craudio-editor').find(".h5p-add-file").parent().find('ul').on('DOMSubtreeModified',
+    $(self.container).parents('.h5p-craudio-editor').find(".h5p-add-file").first().parent().find('ul').on('DOMSubtreeModified',
       () => {
         // let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
         let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].parent.params.subContentId;

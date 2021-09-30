@@ -892,6 +892,11 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   if (element.willDoAnimation==true && element.animationType ==='glow'){
     ele = '-oval-animated';
   } 
+
+  if (instance.libraryInfo.machineName == "H5P.AdvancedText") {
+    self.enableOrDisableAudio(index);
+  }
+
   const displayAsButton = (element.displayAsButton !== undefined && element.displayAsButton);
   var buttonSizeClass = (element.buttonSize !== undefined ? "h5p-element-button-" + element.buttonSize : "");
   var classes = 'h5p-element' + ' element' +
@@ -1830,6 +1835,11 @@ CuriousReader.prototype.attachAllElements = function () {
  */
 CuriousReader.prototype.jumpToSlide = function (slideNumber, noScroll = false, handleFocus = false) {
   var that = this;
+
+  if (this.editor !== undefined) {
+    this.enableOrDisableAudio(slideNumber)
+  }
+
   if (this.editor === undefined && this.contentId) { // Content ID avoids crash when previewing in editor before saving
     var progressedEvent = this.createXAPIEventTemplate('progressed');
     progressedEvent.data.statement.object.definition.extensions['http://id.tincanapi.com/extension/ending-point'] = slideNumber + 1;
@@ -1960,6 +1970,47 @@ CuriousReader.prototype.jumpToSlide = function (slideNumber, noScroll = false, h
   this.fitCT();
   return true;
 };
+
+CuriousReader.prototype.enableOrDisableAudio = function (slideNumber) {
+  var that = this;
+  if (this.editor !== undefined) {
+    let isTextPresent = false;
+    if (that.elementInstances[slideNumber] !== undefined) {
+      for (let i = 0; i < that.elementInstances[slideNumber].length; i++) {
+        if (that.elementInstances[slideNumber][i].libraryInfo.machineName == "H5P.AdvancedText") {
+          isTextPresent = true;
+          if (that.editor.dnb !== undefined) {
+            let $libraryButtonList = that.editor.dnb.$list;
+            let crAudioButton = $($libraryButtonList)[0].children[2];
+            if ($(crAudioButton).find('.shadowButton').length == 1) {
+              $(crAudioButton).find('.shadowButton').remove();
+              let crHoverText =  $(crAudioButton)[0].children[1]
+              $(crHoverText)[0].innerHTML = "Add Audio"
+            }
+          }
+        }
+      }
+    }
+
+    if (!isTextPresent && that.editor.dnb !== undefined) {
+      let $libraryButtonList = that.editor.dnb.$list;
+      let crAudioButton = $($libraryButtonList)[0].children[2];
+      if ($(crAudioButton).find('.shadowButton').length == 0) {
+        let shadowButton = '<a class="shadowButton" href="#" style="z-index: 9;"></a>'
+        $(shadowButton).on('click', function (e){
+          e.preventDefault();
+          e.stopPropagation();
+        });
+        $(crAudioButton).append(shadowButton)
+        let crHoverText =  $(crAudioButton)[0].children[1]
+        $(crHoverText).unbind()
+        $(crHoverText)[0].innerHTML = "Please Add Text First";
+      }
+    } else {
+      console.log()
+    }
+  }
+}
 
 /**
  * Set tab index for text containers that overflow with a scrollbar
