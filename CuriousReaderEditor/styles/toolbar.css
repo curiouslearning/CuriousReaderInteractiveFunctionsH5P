@@ -167,6 +167,21 @@
   content: "\1F5E3";
   font-size: 1.5em;
 }
+
+.shadowButton {
+  content: "";
+  height: 110%;
+  background: #808080;
+  opacity: 0.5;
+  position: absolute;
+  top: -7%;
+  left: 0;
+  width: 100%;
+  padding: 0 0.5em;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
 .h5p-dragnbar-video-button:before {
   content: "\f008";
 }

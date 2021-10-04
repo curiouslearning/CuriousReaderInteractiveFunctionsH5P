@@ -943,6 +943,8 @@ H5PEditor.CuriousReader.prototype.initKeywordInteractions = function () {
   $alwaysKeywords.attr('checked', that.params.keywordListAlwaysShow);
   $hideKeywords.attr('checked', that.params.keywordListAutoHide);
   $opacityKeywords.val(that.params.keywordListOpacity);
+
+  that.cp.enableOrDisableAudio(1);
 };
 
 /**
@@ -1730,8 +1732,11 @@ H5PEditor.CuriousReader.prototype.addToDragNBar = function (element, elementPara
 
   if (type === "H5P.Image") {
     var text = '';
+    console.log(H5P.jQuery('.h5p-current'))
+    console.log( H5P.jQuery('.h5p-current').find('#sentence-style'))
     if ( H5P.jQuery('.h5p-current').find('#sentence-style').length > 0) {
-      H5P.jQuery('.h5p-current').find('#sentence-style').each(function() {
+      console.log("Entered 1st if condition")
+      H5P.jQuery(this.cp.$slidesWrapper).children().eq(element.$wrapper.parent().index()).find('#sentence-style').each(function() {
        
         var addedTextElement = H5P.jQuery(this);
         var audioElementId=(addedTextElement[0].children[0]!=undefined)?H5P.jQuery(addedTextElement[0].children[0])[0].children[0].id:'';
@@ -1751,6 +1756,8 @@ H5PEditor.CuriousReader.prototype.addToDragNBar = function (element, elementPara
       H5P.jQuery(this).find('.dropdown-content').css({ 'display': 'none' })
     });
     H5P.jQuery(link[0].children[5]).mouseenter(function () {
+     
+     
       H5P.jQuery(this).find('.dropdown-content').css({ 'display': 'block' })
       H5P.jQuery(this).find('#'+elementParams.id).css({
         'background-color' : 'yellow'
@@ -1772,7 +1779,7 @@ H5PEditor.CuriousReader.prototype.addToDragNBar = function (element, elementPara
     if (H5PEditor.Html) {
       H5PEditor.Html.removeWysiwyg();
     }
-    self.removeElement(element, element.$wrapper, (elementParams.action !== undefined && H5P.libraryFromString(elementParams.action.library).machineName === 'H5P.ContinuousText'));
+    self.removeElement(element, element.$wrapper, (elementParams.action !== undefined && H5P.libraryFromString(elementParams.action.library).machineName === 'H5P.ContinuousText'), elementParams);
     self.dnb.blurAll();
   });
 
@@ -1839,7 +1846,7 @@ H5PEditor.CuriousReader.prototype.addToDragNBar = function (element, elementPara
  * @param {Boolean} isContinuousText
  * @returns {undefined}
  */
-H5PEditor.CuriousReader.prototype.removeElement = function (element, $wrapper, isContinuousText) {
+H5PEditor.CuriousReader.prototype.removeElement = function (element, $wrapper, isContinuousText, elementParams) {
   var slideIndex = this.cp.$current.index();
   var elementIndex = $wrapper.index();
 
@@ -1879,6 +1886,10 @@ H5PEditor.CuriousReader.prototype.removeElement = function (element, $wrapper, i
 
   if (isContinuousText) {
     H5P.ContinuousText.Engine.run(this);
+  }
+
+  if (elementParams !== undefined && elementParams.action !== undefined && H5P.libraryFromString(elementParams.action.library).machineName === 'H5P.AdvancedText') {
+    this.cp.enableOrDisableAudio(this.cp.$current.index());
   }
 };
 
@@ -1923,7 +1934,7 @@ H5PEditor.CuriousReader.prototype.showElementForm = function (element, $wrapper,
     if (e.preventRemove) {
       return;
     }
-    that.removeElement(element, $wrapper, isContinuousText);
+    that.removeElement(element, $wrapper, isContinuousText, elementParams);
     that.dnb.blurAll();
     that.dnb.preventPaste = false;
   };
