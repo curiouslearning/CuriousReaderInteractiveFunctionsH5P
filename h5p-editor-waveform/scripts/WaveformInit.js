@@ -216,7 +216,7 @@ WaveformInit.prototype.constructor = WaveformInit;
   $wrapper.append('<h1 class="test"> Waveform</h1>')
   // $wrapper.append('<label class="h5peditor-label"><input id="field-words-125" type="checkbox">Will Do Animation</label>')
   //let checkBoxElementForWord=$wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides,self.parent.parent.parent.parent.cp.currentSlideIndex))
-  let checkBoxElementForWord=$wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides,H5P.jQuery(self.parent.parent.parent.parent.cp.$slidesWrapper).children().eq($wrapper.parent().index()).index(),this.parent.params.text))
+  let checkBoxElementForWord=$wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides,this.parent.parent.parent.params.params.currIndex,this.parent.params.text))
   self.$item.appendTo($wrapper);
   self.container = self.$item.find('#' + this.id);
   $(checkBoxElementForWord).on('change',function(event){
@@ -268,7 +268,6 @@ WaveformInit.prototype.validate = function () {
 WaveformInit.prototype.getSentence=function(slides,slideIndex,prevData){
   var sentenceWords=[];
   var splittedPrevData=(prevData!=undefined)?prevData.split(' '):[]
-  
   for(let i=0;i<slides[slideIndex].elements.length;i++)
   {
     

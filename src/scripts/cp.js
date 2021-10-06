@@ -32,7 +32,6 @@ let CuriousReader = function (params, id, extras) {
   this.hasAnswerElements = false;
   this.ignoreResize = false;
   this.isTask = false;
-
   if (extras.cpEditor) {
     this.editor = extras.cpEditor;
   }
@@ -563,7 +562,6 @@ CuriousReader.prototype.hasScoreData = function (obj) {
  */
 CuriousReader.prototype.getScore = function () {
   var self = this;
-
   return flattenArray(self.slidesWithSolutions).reduce(function (sum, slide) {
     return sum + (self.hasScoreData(slide) ? slide.getScore() : 0);
   }, 0);
@@ -577,7 +575,6 @@ CuriousReader.prototype.getScore = function () {
  */
 CuriousReader.prototype.getMaxScore = function () {
   var self = this;
-
   return flattenArray(self.slidesWithSolutions).reduce(function (sum, slide) {
     return sum + (self.hasScoreData(slide) ? slide.getMaxScore() : 0);
   }, 0);
@@ -885,13 +882,17 @@ CuriousReader.prototype.attachElements = function ($slide, index) {
  * @param {Number} index
  * @returns {jQuery}
  */
-CuriousReader.prototype.attachElement = function (element, instance, $slide, index) { 
+CuriousReader.prototype.attachElement = function (element, instance, $slide, index) {
   let ele ='';
   var self=this
   var instances=this.elementInstances
   if (element.willDoAnimation==true && element.animationType ==='glow'){
     ele = '-oval-animated';
   } 
+
+  if (instance.libraryInfo.machineName == "H5P.CRAudio") {
+    element.action.params.currIndex=index
+  }
 
   if (instance.libraryInfo.machineName == "H5P.AdvancedText") {
     self.enableOrDisableAudio(index);
@@ -994,9 +995,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     var slideTextElement = '';
     
     for(let i = 0; i < instances[index].length; i++) {
-      console.log(instances[index][i].splittedWord)
       if(instances[index][i].libraryInfo.machineName == 'H5P.CRAudio') {
-        console.log(instances[index][i])
         if (instances[index][i].splittedWord != undefined ) {
             if((instances[index][i].splittedWord.length!=0 && instances[index][i].splittedWord[0].text!=''))
           for (let j = 0; j < instances[index][i].splittedWord.length; j++) {
@@ -1022,7 +1021,6 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
             {
               temp = sentence
               sentence.id = "sentence-style"
-              console.log(sentence.innerHTML)
               sentence.innerHTML = slideTextElement;
               break;
             }
@@ -1228,7 +1226,6 @@ CuriousReader.prototype.createInteractionButton = function (element, instance) {
  * @param {Object} [popupPosition] X and Y position of popup
  */
 CuriousReader.prototype.showInteractionPopup = function (instance, $button, $buttonElement, libTypePmz, autoPlay, closeCallback, popupPosition = null) {
-
   // Handle exit fullscreen
   const exitFullScreen = () => {
     instance.trigger('resize');
@@ -1381,7 +1378,6 @@ CuriousReader.prototype.addElementSolutionButton = function (element, elementIns
 CuriousReader.prototype.showPopup = function (popupContent, $focusOnClose, parentPosition = null, remove, classes = 'h5p-popup-comment-field') {
   var self = this;
   var doNotClose;
-
   /** @private */
   var close = function (event) {
     if (doNotClose) {
@@ -1835,7 +1831,6 @@ CuriousReader.prototype.attachAllElements = function () {
  */
 CuriousReader.prototype.jumpToSlide = function (slideNumber, noScroll = false, handleFocus = false) {
   var that = this;
-
   if (this.editor !== undefined) {
     this.enableOrDisableAudio(slideNumber)
   }
@@ -2006,9 +2001,7 @@ CuriousReader.prototype.enableOrDisableAudio = function (slideNumber) {
         $(crHoverText).unbind()
         $(crHoverText)[0].innerHTML = "Please Add Text First";
       }
-    } else {
-      console.log()
-    }
+    } 
   }
 }
 
@@ -2045,7 +2038,6 @@ CuriousReader.prototype.setOverflowTabIndex = function () {
  */
 CuriousReader.prototype.setSlideNumberAnnouncer = function (slideNumber, handleFocus = false) {
   let slideTitle = '';
-
   if (!this.navigationLine) {
     return slideTitle;
   }

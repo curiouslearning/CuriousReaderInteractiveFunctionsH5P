@@ -60,6 +60,12 @@
     "default": "Play audio"
   },
   {
+    "name": "currIndex",
+    "type": "number",
+    "default": "0",
+    "optional": false
+  },
+  {
     "name": "pauseAudio",
     "type": "text",
     "importance": "low",

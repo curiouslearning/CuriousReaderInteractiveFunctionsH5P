@@ -95,3 +95,6 @@
 .h5p-audio-inner.h5p-audio-transparent .h5p-audio-minimal-pause:before {
   content: none;
 }
+.field-name-currIndex{
+  display: none;
+}
