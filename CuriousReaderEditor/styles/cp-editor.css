@@ -544,3 +544,7 @@
 .collapsed .h5peditor-label{
   display: none;
 }
+
+.h5peditor .h5p-add-dialog.h5p-open {
+  z-index: 9;
+}
