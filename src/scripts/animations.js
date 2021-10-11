@@ -110,14 +110,13 @@ export const jiggle =({imageTobeAnimated}) =>{
 export const pulse =({imageTobeAnimated}) =>{ 
    doPulsing(imageTobeAnimated);
 }
-export const glow =({imageTobeAnimated,durationTime}) =>{ 
-    console.log(durationTime)
+export const glow =({imageTobeAnimated, durationTime, glowColor}) =>{ 
     if(durationTime==undefined || durationTime == NaN){
         durationTime = 600;
     }else{
         durationTime = durationTime * 1000;
     }
-    imageTobeAnimated.css("box-shadow", "0 0 50px yellow");
+    imageTobeAnimated.css("box-shadow", "0 0 50px " + glowColor);
     imageTobeAnimated.css("transition", "border 1s linear, box-shadow 1s linear");
     setTimeout(function () {
         imageTobeAnimated.css("box-shadow", "0 0 50px transparent");
