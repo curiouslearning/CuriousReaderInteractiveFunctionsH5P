@@ -306,6 +306,7 @@ CuriousReader.prototype.attach = function ($container) {
   // by mobile browsers already. (The Android native browser does this.)
   this.fontSize = 16;
 
+
   this.$boxWrapper = this.$wrapper.children('.h5p-box-wrapper');
   var $presentationWrapper = this.$boxWrapper.children('.h5p-presentation-wrapper');
   this.$slidesWrapper = $presentationWrapper.children('.h5p-slides-wrapper');
@@ -947,14 +948,14 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
       $('.h5p-current').each(function () {
         imageTobeAnimated=$(this).find('#' + id);
       });
-      self.animation(imageTobeAnimated)
+      self.animation(imageTobeAnimated, null, audio.glowColor)
     }
   }).appendTo($slide);
 
   if(instance.libraryInfo.machineName == 'H5P.Image')
   {
     if(element.willDoAnimation){
-      $elementContainer.attr('animation', element.animationType)
+      $elementContainer.attr('animation', element.animationType);
     }
   }
   const isTransparent = element.backgroundOpacity === undefined || element.backgroundOpacity === 0;
@@ -1080,7 +1081,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   return $elementContainer;
 };
 
-CuriousReader.prototype.animation = function (element) {
+CuriousReader.prototype.animation = function (element, durationTime, glowColor) {
   var animationType=element.attr('animation')
   if (animationType == "spin") {
     spin({imageTobeAnimated:element});
@@ -1094,7 +1095,7 @@ CuriousReader.prototype.animation = function (element) {
   }  else if(animationType == "pulse"){
     pulse({imageTobeAnimated:element});
   }  else if(animationType == "glow"){
-    glow({imageTobeAnimated:element});
+    glow({imageTobeAnimated:element, durationTime: durationTime, glowColor: glowColor});
   }else if(animationType == "backgroundFade"){
     element.removeClass('element');
      parent=$(this).find('.' + 'element');
