@@ -206,33 +206,39 @@ WaveformInit.prototype.constructor = WaveformInit;
  */
 
 
-WaveformInit.prototype.appendTo = function ($wrapper) {
+ WaveformInit.prototype.appendTo = function ($wrapper) {
   var self = this;
   const id = ns.getNextFieldId(this.field);
   var html = H5PEditor.createFieldMarkup(this.field, '<div class="waveform" id="' + id + '" class="h5p-color-picker">', id);
   self.$item = H5PEditor.$(html);
   this.setId(id);
-  let wordText=''
+  let wordText=(this.parent.params.text!=undefined)?this.parent.params.text:''
   $wrapper.append('<h1 class="test"> Waveform</h1>')
   // $wrapper.append('<label class="h5peditor-label"><input id="field-words-125" type="checkbox">Will Do Animation</label>')
-  let checkBoxElementForWord=$wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides,self.parent.parent.parent.parent.cp.currentSlideIndex))
+  //let checkBoxElementForWord=$wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides,self.parent.parent.parent.parent.cp.currentSlideIndex))
+  let checkBoxElementForWord=$wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides,this.parent.parent.parent.params.params.currIndex,this.parent.params.text))
   self.$item.appendTo($wrapper);
   self.container = self.$item.find('#' + this.id);
   $(checkBoxElementForWord).on('change',function(event){
     if($('#'+event.target.id).is(':checked')) {
       wordText=wordText+' '+event.target.value+' '
+      $('#'+event.target.id).attr('checked',true)
       this.$word = $('#' +id).parent().parent().find('.field-name-text').find('input');
        this.$word.val((wordText.trim()).replace(/  +/g, ' '))
+       $(this.$word).attr('checked',true)
       self.setValue(self.findField("text",self.parent.field.fields),"" + wordText.replace(/  +/g, ' '));
       //WaveformInit.self2.setValue(H5PEditor.CuriousReader.findField("text",self2.parent.field.fields),"Sam-ple data")
     } else {
+      $('#'+event.target.id).attr('checked',false)
       let tempWordText=wordText.replace(event.target.value,'')
       wordText=tempWordText
       this.$word = $('#' +id).parent().parent().find('.field-name-text').find('input');
       self.setValue(self.findField("text",self.parent.field.fields),"" + wordText.replace(/  +/g, ' '));
+      $(this.$word).attr('checked',false)
       this.$word.val((wordText.trim()).replace(/  +/g, ' '))
     }
   })
+  self.setValue(self.findField("text",self.parent.field.fields),"" + this.parent.params.text);
 };
 
 WaveformInit.prototype.findField = function (name, fields) {
@@ -259,18 +265,32 @@ WaveformInit.prototype.validate = function () {
   // return (this.params !== undefined && this.params.length !== 0);
 };
 
-WaveformInit.prototype.getSentence=function(slides,slideIndex){
+WaveformInit.prototype.getSentence=function(slides,slideIndex,prevData){
   var sentenceWords=[];
+  var splittedPrevData=(prevData!=undefined)?prevData.split(' '):[]
   for(let i=0;i<slides[slideIndex].elements.length;i++)
   {
+    
     if(slides[slideIndex].elements[i].action.library.split(' ')[0]=="H5P.AdvancedText")
     {
       var checkBoxWord=''
       sentenceWords=$(slides[slideIndex].elements[i].action.params.text)[0].innerText.split(' ')
       for(let j=0;j<sentenceWords.length;j++)
       {
+        var def=(splittedPrevData.indexOf(sentenceWords[j])!==-1)?true:false
         if(sentenceWords[j].replace(/  +/g, ' ')!='')
-        checkBoxWord=checkBoxWord+'<label class="h5peditor-label id ='+this.id+j+'"><input id='+this.id+j+' type="checkbox" value="'+sentenceWords[j]+'">'+sentenceWords[j]+'</label>'
+        {
+          if(def)    
+           {  
+          checkBoxWord=checkBoxWord+'<label class="h5peditor-label id ='+this.id+j+'"><input id='+this.id+j+' type="checkbox" value="'+sentenceWords[j]+'"checked>'+sentenceWords[j]+'</label>'
+           }
+          else
+          {
+          checkBoxWord=checkBoxWord+'<label class="h5peditor-label id ='+this.id+j+'"><input id='+this.id+j+' type="checkbox" value="'+sentenceWords[j]+'">'+sentenceWords[j]+'</label>'
+          }
+        }
+        
+       
       }
      
     }

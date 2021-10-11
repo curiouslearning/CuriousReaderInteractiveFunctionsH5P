@@ -6,6 +6,7 @@ var H5P = H5P || {};
  * @external {jQuery} $ H5P.jQuery
  */
 H5P.CRAudio = (function ($) {
+  console.log('CRAudio')
   /**
   * @param {Object} params Options for this library.
   * @param {Number} id Content identifier.
@@ -21,7 +22,6 @@ H5P.CRAudio = (function ($) {
     this.clickedByPlayOnDemand = false;
     this.toggleButtonEnabled = true;
     this.glowColor = this.params.glowColor == "000000" ? "#FFFF00" : this.params.glowColor;
-
     if (extras && extras.previousState !== undefined) {
       this.oldTime = extras.previousState.currentTime;
     }
@@ -139,7 +139,6 @@ H5P.CRAudio = (function ($) {
           }
           if (time > word['startDuration'] && time < word['endDuration']) {
             if (!word.highlighted) {
-              console.log('Inside highlight')
               word.highlighted = true;
               if (self.parent != undefined) {
                 $('.h5p-current >div').each(function (index, element) {
@@ -228,7 +227,6 @@ H5P.CRAudio = (function ($) {
       demandAudio.play();
       if (self.parent != undefined) {
         $('.h5p-current').each(function (index,element) {
-          console.log(element)
           $(element.children).find('#' + clickedTextId).parent('div').css({
             "transform": 'scale(1.5)',
             'z-index': '2',
