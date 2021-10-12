@@ -37,7 +37,6 @@ let CuriousReader = function (params, id, extras) {
   if (extras.cpEditor) {
     this.editor = extras.cpEditor;
   }
-  console.log(this.contentId)
 
   if (extras) {
     this.previousState = extras.previousState;
@@ -315,10 +314,14 @@ CuriousReader.prototype.attach = function ($container) {
   this.$footer = this.$wrapper.children('.h5p-footer');
  // $('<div>'+that.libraryInfo.versionedName+'</div>').appendTo($presentationWrapper)
  if(that.libraryInfo!=undefined)
+ {
   $('<div class=version>V:'+that.libraryInfo.versionedName.split(' ')[1]+'</div>').appendTo($presentationWrapper)
-  if(this.editor!=undefined)
+ }
+ if(this.editor!=undefined)
+ {
   $('<div class=version>V:'+this.editor.parent.currentLibrary.split(' ')[1]+'</div>').appendTo($presentationWrapper)
-  // Determine if keywords pane should be initialized
+  
+ }// Determine if keywords pane should be initialized
   this.initKeywords = (this.presentation.keywordListEnabled === undefined || this.presentation.keywordListEnabled === true || this.editor !== undefined);
   if (this.activeSurface && this.editor === undefined) {
     this.initKeywords = false;
@@ -867,9 +870,6 @@ CuriousReader.prototype.attachElements = function ($slide, index) {
  
   var slide = this.slides[index];
   var instances = this.elementInstances[index];
-  console.log($slide)
-  // console.log(slide)
-  // console.log(instances)
   if (slide.elements !== undefined) {
     for (var i = 0; i < slide.elements.length; i++) {
       this.attachElement(slide.elements[i], instances[i], $slide, index);
@@ -901,6 +901,9 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     ele = '-oval-animated';
   } 
 
+  if (instance.libraryInfo.machineName == "H5P.CRAudio") {
+    element.action.params.currIndex=index
+  }
   if (instance.libraryInfo.machineName == "H5P.AdvancedText") {
     self.enableOrDisableAudio(index);
   }
@@ -1002,9 +1005,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     var slideTextElement = '';
     
     for(let i = 0; i < instances[index].length; i++) {
-      console.log(instances[index][i].splittedWord)
       if(instances[index][i].libraryInfo.machineName == 'H5P.CRAudio') {
-        console.log(instances[index][i])
         if (instances[index][i].splittedWord != undefined ) {
             if((instances[index][i].splittedWord.length!=0 && instances[index][i].splittedWord[0].text!=''))
           for (let j = 0; j < instances[index][i].splittedWord.length; j++) {
@@ -1030,7 +1031,6 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
             {
               temp = sentence
               sentence.id = "sentence-style"
-              console.log(sentence.innerHTML)
               sentence.innerHTML = slideTextElement;
               break;
             }
