@@ -82,6 +82,14 @@
     "default": "Audio"
   },
   {
+    "name": "glowColor",
+    "type": "text",
+    "label": "Choose Glow color effect",
+    "description": "The color of the element",
+    "optional": true,
+    "widget": "colorSelector"
+  },
+  {
     "name": "timeStampForEachText",
     "type": "list",
     "label": "Duration for each text",

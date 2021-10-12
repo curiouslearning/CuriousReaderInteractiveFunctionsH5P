@@ -30,16 +30,6 @@ let WaveformInit = function (parent, field, params, setValue) {
       progressColor: 'purple',
       fillParent: false,
       plugins: [
-        CursorPlugin.create({
-          showTime: true,
-          opacity: 1,
-          customShowTimeStyle: {
-            'background-color': '#000',
-            color: '#fff',
-            padding: '23px',
-            'font-size': '10px',
-          }
-        }),
         RegionsPlugin.create({
           regionsMinLength: 0.1,
           maxRegions: 1,
