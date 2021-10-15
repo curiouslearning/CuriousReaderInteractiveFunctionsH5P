@@ -836,3 +836,14 @@
   margin: 0.3125em 0em 0em 0.3125em;
   line-height: 120%;
 }
+/* #version{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+} */
+.version {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  font-size: 0.6em;
+}

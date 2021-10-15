@@ -6,6 +6,7 @@ var H5P = H5P || {};
  * @external {jQuery} $ H5P.jQuery
  */
 H5P.CRAudio = (function ($) {
+  console.log('CRAudio')
   /**
   * @param {Object} params Options for this library.
   * @param {Number} id Content identifier.
@@ -20,7 +21,7 @@ H5P.CRAudio = (function ($) {
     this.splittedWord = params.timeStampForEachText;
     this.clickedByPlayOnDemand = false;
     this.toggleButtonEnabled = true;
-
+    this.glowColor = this.params.glowColor == "000000" ? "#FFFF00" : this.params.glowColor;
     if (extras && extras.previousState !== undefined) {
       this.oldTime = extras.previousState.currentTime;
     }
@@ -138,23 +139,22 @@ H5P.CRAudio = (function ($) {
           }
           if (time > word['startDuration'] && time < word['endDuration']) {
             if (!word.highlighted) {
-              console.log('Inside highlight')
               word.highlighted = true;
               if (self.parent != undefined) {
-                $('.h5p-current >div').each(function (index,element) {
+                $('.h5p-current >div').each(function (index, element) {
                   var h5pCurrentInnerDiv=(element.children[0].children[0]!=undefined)?element.children[0].children[0]:element
                    $(this).find('#' + self.subContentId + j).parent('div').css({
                     "transform": 'scale(1.5)',
                     'z-index': '2',
-                    'text-shadow': '0px 0px 5px yellow',
+                    'text-shadow': '0px 0px 5px ' + self.glowColor,
                   });
+                  $(this).find('#' + self.subContentId + j).parent('div').css('text-shadow', )
                    if(h5pCurrentInnerDiv.id.substr(0,3)=='img' && h5pCurrentInnerDiv.id!=undefined)
                    {
                      if('img'+self.subContentId + j==h5pCurrentInnerDiv.id)
                      {
                       //self.glow($(this).find('#img' + self.subContentId + j).parent('div').parent('div'));
-                      self.parent.animation($(this).find('#img' + self.subContentId + j).parent('div').parent('div'))
-        
+                      self.parent.animation($(this).find('#img' + self.subContentId + j).parent('div').parent('div'), null, self.glowColor)
                      }
                    }
                 })
@@ -227,11 +227,10 @@ H5P.CRAudio = (function ($) {
       demandAudio.play();
       if (self.parent != undefined) {
         $('.h5p-current').each(function (index,element) {
-          console.log(element)
           $(element.children).find('#' + clickedTextId).parent('div').css({
             "transform": 'scale(1.5)',
             'z-index': '2',
-            'text-shadow': '0px 0px 5px yellow',
+            'text-shadow': '0px 0px 5px ' + self.glowColor,
           });
          
           setTimeout(function () {
@@ -252,15 +251,15 @@ H5P.CRAudio = (function ($) {
               // console.log($('#img' + clickedTextId).parent('div').parent('div'))
               //self.parent.animation($('#img' + clickedTextId).parent('div').parent('div'))
               self.parent.animation(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'),
-              e.currentTarget.duration
+              e.currentTarget.duration,
+              self.glowColor
               )
              });
              if(canWe==false){
               // console.log(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'))
               // console.log($('#img' + clickedTextId).parent('div').parent('div'))
               //self.parent.animation($('#img' + clickedTextId).parent('div').parent('div'))
-              self.parent.animation(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div')
-              )
+              self.parent.animation(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'), null, self.glowColor)
              }
           })
         
@@ -270,13 +269,13 @@ H5P.CRAudio = (function ($) {
         $('#' + clickedTextId).parent('div').css({
           "transform": 'scale(1.5)',
           'z-index': '2',
-          'text-shadow': '0px 0px 5px yellow',
+          'text-shadow': '0px 0px 5px ' + self.glowColor,
         });
         setTimeout(function () {
           $('#' + clickedTextId).parent('div').css({
             "transform": 'scale(1)',
             'z-index': '1',
-            'text-shadow': '0px 0px 5px yellow',
+            'text-shadow': '0px 0px 5px ' + self.glowColor,
           })
         }, 600)
       }

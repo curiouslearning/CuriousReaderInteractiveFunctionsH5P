@@ -60,6 +60,12 @@
     "default": "Play audio"
   },
   {
+    "name": "currIndex",
+    "type": "number",
+    "default": "0",
+    "optional": false
+  },
+  {
     "name": "pauseAudio",
     "type": "text",
     "importance": "low",
@@ -74,6 +80,14 @@
     "label": "Audio content name",
     "common": true,
     "default": "Audio"
+  },
+  {
+    "name": "glowColor",
+    "type": "text",
+    "label": "Choose Glow color effect",
+    "description": "The color of the element",
+    "optional": true,
+    "widget": "colorSelector"
   },
   {
     "name": "timeStampForEachText",

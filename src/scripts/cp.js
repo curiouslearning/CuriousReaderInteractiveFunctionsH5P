@@ -32,7 +32,8 @@ let CuriousReader = function (params, id, extras) {
   this.hasAnswerElements = false;
   this.ignoreResize = false;
   this.isTask = false;
-
+  
+  
   if (extras.cpEditor) {
     this.editor = extras.cpEditor;
   }
@@ -144,7 +145,6 @@ let CuriousReader = function (params, id, extras) {
 
 CuriousReader.prototype = Object.create(Parent.prototype);
 CuriousReader.prototype.constructor = CuriousReader;
-
 /**
  * @public
  * @return {object}
@@ -200,7 +200,6 @@ CuriousReader.prototype.slideHasAnsweredTask = function (index) {
  */
 CuriousReader.prototype.attach = function ($container) {
   var that = this;
-
   // isRoot is undefined in the editor
   if (this.isRoot !== undefined && this.isRoot()) {
     this.setActivityStarted();
@@ -306,14 +305,23 @@ CuriousReader.prototype.attach = function ($container) {
   // by mobile browsers already. (The Android native browser does this.)
   this.fontSize = 16;
 
+
   this.$boxWrapper = this.$wrapper.children('.h5p-box-wrapper');
   var $presentationWrapper = this.$boxWrapper.children('.h5p-presentation-wrapper');
   this.$slidesWrapper = $presentationWrapper.children('.h5p-slides-wrapper');
   this.$keywordsWrapper = $presentationWrapper.children('.h5p-keywords-wrapper');
   this.$progressbar = this.$wrapper.find('.h5p-progressbar');
   this.$footer = this.$wrapper.children('.h5p-footer');
-
-  // Determine if keywords pane should be initialized
+ // $('<div>'+that.libraryInfo.versionedName+'</div>').appendTo($presentationWrapper)
+ if(that.libraryInfo!=undefined)
+ {
+  $('<div class=version>V:'+that.libraryInfo.versionedName.split(' ')[1]+'</div>').appendTo($presentationWrapper)
+ }
+ if(this.editor!=undefined)
+ {
+  $('<div class=version>V:'+this.editor.parent.currentLibrary.split(' ')[1]+'</div>').appendTo($presentationWrapper)
+  
+ }// Determine if keywords pane should be initialized
   this.initKeywords = (this.presentation.keywordListEnabled === undefined || this.presentation.keywordListEnabled === true || this.editor !== undefined);
   if (this.activeSurface && this.editor === undefined) {
     this.initKeywords = false;
@@ -893,6 +901,9 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     ele = '-oval-animated';
   } 
 
+  if (instance.libraryInfo.machineName == "H5P.CRAudio") {
+    element.action.params.currIndex=index
+  }
   if (instance.libraryInfo.machineName == "H5P.AdvancedText") {
     self.enableOrDisableAudio(index);
   }
@@ -947,14 +958,14 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
       $('.h5p-current').each(function () {
         imageTobeAnimated=$(this).find('#' + id);
       });
-      self.animation(imageTobeAnimated)
+      self.animation(imageTobeAnimated, null, audio.glowColor)
     }
   }).appendTo($slide);
 
   if(instance.libraryInfo.machineName == 'H5P.Image')
   {
     if(element.willDoAnimation){
-      $elementContainer.attr('animation', element.animationType)
+      $elementContainer.attr('animation', element.animationType);
     }
   }
   const isTransparent = element.backgroundOpacity === undefined || element.backgroundOpacity === 0;
@@ -994,9 +1005,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     var slideTextElement = '';
     
     for(let i = 0; i < instances[index].length; i++) {
-      console.log(instances[index][i].splittedWord)
       if(instances[index][i].libraryInfo.machineName == 'H5P.CRAudio') {
-        console.log(instances[index][i])
         if (instances[index][i].splittedWord != undefined ) {
             if((instances[index][i].splittedWord.length!=0 && instances[index][i].splittedWord[0].text!=''))
           for (let j = 0; j < instances[index][i].splittedWord.length; j++) {
@@ -1022,7 +1031,6 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
             {
               temp = sentence
               sentence.id = "sentence-style"
-              console.log(sentence.innerHTML)
               sentence.innerHTML = slideTextElement;
               break;
             }
@@ -1080,7 +1088,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   return $elementContainer;
 };
 
-CuriousReader.prototype.animation = function (element) {
+CuriousReader.prototype.animation = function (element, durationTime, glowColor) {
   var animationType=element.attr('animation')
   if (animationType == "spin") {
     spin({imageTobeAnimated:element});
@@ -1094,7 +1102,7 @@ CuriousReader.prototype.animation = function (element) {
   }  else if(animationType == "pulse"){
     pulse({imageTobeAnimated:element});
   }  else if(animationType == "glow"){
-    glow({imageTobeAnimated:element});
+    glow({imageTobeAnimated:element, durationTime: durationTime, glowColor: glowColor});
   }else if(animationType == "backgroundFade"){
     element.removeClass('element');
      parent=$(this).find('.' + 'element');
