@@ -112,7 +112,7 @@
                   {
                     "name": "willDoAnimation",
                     "type": "boolean",
-                    "label": "Will Do Animation",
+                    "label": "Enable Animation",
                     "importance": "low",
                     "default": false,
                     "optional": true
