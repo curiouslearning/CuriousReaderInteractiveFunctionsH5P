@@ -958,7 +958,11 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
       $('.h5p-current').each(function () {
         imageTobeAnimated=$(this).find('#' + id);
       });
-      self.animation(imageTobeAnimated, null, audio.glowColor)
+      if (audio == undefined) {
+        self.animation(imageTobeAnimated, null, "ff0000")
+      } else {
+        self.animation(imageTobeAnimated, null, audio.glowColor)
+      }
     }
   }).appendTo($slide);
 
