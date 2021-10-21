@@ -47,6 +47,7 @@ let WaveformInit = function (parent, field, params, setValue) {
         })
       ]
     });
+    $('.wavesurfer-handle').css("width", "4px");
 
     let region;
     self.crAudioIndex = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields.length;
