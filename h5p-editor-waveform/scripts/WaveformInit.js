@@ -28,7 +28,8 @@ let WaveformInit = function (parent, field, params, setValue) {
       container: self.container[0],
       waveColor: 'violet',
       progressColor: 'purple',
-      fillParent: false,
+      fillParent: true,
+      responsive : true,
       plugins: [
         RegionsPlugin.create({
           regionsMinLength: 0.1,
@@ -75,8 +76,8 @@ let WaveformInit = function (parent, field, params, setValue) {
       region = Object.values(wavesurfer.regions.list)[0];
       let width = self.parent.parent.parent.parent.cp.width + (self.parent.parent.parent.parent.cp.width * 0.25);
       self.audioDuration = wavesurfer.getDuration();
-      wavesurfer.params.minPxPerSec = width / wavesurfer.getDuration();
-      wavesurfer.drawBuffer();
+      // wavesurfer.params.minPxPerSec = width / wavesurfer.getDuration();
+      // wavesurfer.drawBuffer();
       
       // let regionId = self.id + "playRegion"
       // let $playRegionButton = '<button id = '+ regionId +' class = "playRegion">Play</button>'
