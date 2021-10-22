@@ -1454,6 +1454,12 @@ H5PEditor.CuriousReader.prototype.generateForm = function (elementParams, type) 
       ns.$(this).css({'display':'none'})
     });
   }
+
+  element.$form.find('.h5p-advancedtext-editor').each(function () {
+    element.$form[0].children[0].append("Please double check and finalize the page text before beginning the process of adding audio or linking to text. Text styling can be changed later without issue but changing the text after these processes will require these elements to be recreated.")
+
+  });
+  
   // Show or hide button size dropdown depending on display as button checkbox
   element.$form.find('.field-name-displayAsButton').each(function () { // TODO: Use showWhen in semantics.json instead…
     var buttonSizeField = ns.$(this).parent().find('.field-name-buttonSize');
