@@ -1388,7 +1388,6 @@ H5PEditor.CuriousReader.prototype.generateForm = function (elementParams, type) 
       children: self.ct.element.children
     };
   }
-
   // Get semantics for the elements field
   var slides = H5PEditor.CuriousReader.findField('slides', this.field.fields);
   var elementFields = H5PEditor.$.extend(true, [], H5PEditor.CuriousReader.findField('elements', slides.field.fields).field.fields);
@@ -1402,7 +1401,7 @@ H5PEditor.CuriousReader.prototype.generateForm = function (elementParams, type) 
     self.hideFields(elementFields, fieldsToHide);
   }
   if(type==='H5P.CRAudio'){
-    fieldsToHide = ['solution','alwaysDisplayComments','isEdit','displayAsButton','buttonSize','willDoAnimation','animationType','backgroundOpacity'];
+    fieldsToHide = ['solution','alwaysDisplayComments','isEdit','displayAsButton','buttonSize','backgroundOpacity'];
     self.hideFields(elementFields, fieldsToHide);
   }
   console.log('hello rahul singh End');
@@ -1448,6 +1447,19 @@ H5PEditor.CuriousReader.prototype.generateForm = function (elementParams, type) 
     element.$form.css('padding-top', '0');
   }
 
+  if(type==='H5P.CRAudio')
+  {
+    console.log("inside cr audio")
+    element.$form.find('.field-name-willDoAnimation').each(function () { // TODO: Use showWhen in semantics.json instead…
+      ns.$(this).css({'display':'none'})
+    });
+  }
+
+  element.$form.find('.h5p-advancedtext-editor').each(function () {
+    element.$form[0].children[0].append("Please double check and finalize the page text before beginning the process of adding audio or linking to text. Text styling can be changed later without issue but changing the text after these processes will require these elements to be recreated.")
+
+  });
+  
   // Show or hide button size dropdown depending on display as button checkbox
   element.$form.find('.field-name-displayAsButton').each(function () { // TODO: Use showWhen in semantics.json instead…
     var buttonSizeField = ns.$(this).parent().find('.field-name-buttonSize');
@@ -1569,8 +1581,9 @@ H5PEditor.CuriousReader.prototype.hideFields = function (elementFields, fields) 
   for (var i = 0; i < fields.length; i++) {
     var field = H5PEditor.CuriousReader.findField(fields[i], elementFields);
     if (field) {
-      field.widget = 'none';
+      field.widget='none';
     }
+
   }
 };
 
