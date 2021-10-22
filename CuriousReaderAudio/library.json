@@ -43,5 +43,9 @@
       "majorVersion": 1,
       "minorVersion": 1
     }
-  ] 
+  ],
+    "metadataSettings": {
+    "disable": 0,
+    "disableExtraTitleField": 1
+  } 
 }
