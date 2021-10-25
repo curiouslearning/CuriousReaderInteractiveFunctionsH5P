@@ -164,8 +164,9 @@
   content: "\f03e";
 }
 .h5p-dragnbar-craudio-button:before {
-  content: "\1F5E3";
-  font-size: 1.5em;
+  position: relative;
+  content: url("../icons/record_voice_over_black.svg");
+  top: -0.23em;
 }
 
 .shadowButton {
