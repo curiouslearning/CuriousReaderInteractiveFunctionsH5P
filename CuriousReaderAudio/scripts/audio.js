@@ -137,6 +137,9 @@ H5P.CRAudio = (function ($) {
           if (word.highlighted == undefined) {
             word.highlighted = false
           }
+          if (word['endDuration'] > self.audio.duration) {
+            word['endDuration'] = self.audio.duration;
+          }
           if (time > word['startDuration'] && time < word['endDuration']) {
             if (!word.highlighted) {
               word.highlighted = true;
