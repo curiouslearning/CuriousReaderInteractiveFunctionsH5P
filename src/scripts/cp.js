@@ -960,7 +960,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
         imageTobeAnimated=$(this).find('#' + id);
       });
       if (audio == undefined) {
-        self.animation(imageTobeAnimated, null, "ffff00")
+        self.animation(imageTobeAnimated, undefined, "#FFFF00")
       } else {
         self.animation(imageTobeAnimated, null, audio.glowColor)
       }
