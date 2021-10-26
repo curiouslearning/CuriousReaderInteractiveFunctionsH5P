@@ -32,6 +32,8 @@ let CuriousReader = function (params, id, extras) {
   this.hasAnswerElements = false;
   this.ignoreResize = false;
   this.isTask = false;
+  
+  
   if (extras.cpEditor) {
     this.editor = extras.cpEditor;
   }
@@ -143,7 +145,6 @@ let CuriousReader = function (params, id, extras) {
 
 CuriousReader.prototype = Object.create(Parent.prototype);
 CuriousReader.prototype.constructor = CuriousReader;
-
 /**
  * @public
  * @return {object}
@@ -199,7 +200,6 @@ CuriousReader.prototype.slideHasAnsweredTask = function (index) {
  */
 CuriousReader.prototype.attach = function ($container) {
   var that = this;
-
   // isRoot is undefined in the editor
   if (this.isRoot !== undefined && this.isRoot()) {
     this.setActivityStarted();
@@ -312,8 +312,16 @@ CuriousReader.prototype.attach = function ($container) {
   this.$keywordsWrapper = $presentationWrapper.children('.h5p-keywords-wrapper');
   this.$progressbar = this.$wrapper.find('.h5p-progressbar');
   this.$footer = this.$wrapper.children('.h5p-footer');
-
-  // Determine if keywords pane should be initialized
+ // $('<div>'+that.libraryInfo.versionedName+'</div>').appendTo($presentationWrapper)
+ if(that.libraryInfo!=undefined)
+ {
+  $('<div class=version>V:'+that.libraryInfo.versionedName.split(' ')[1]+'</div>').appendTo($presentationWrapper)
+ }
+ if(this.editor!=undefined)
+ {
+  $('<div class=version>V:'+this.editor.parent.currentLibrary.split(' ')[1]+'</div>').appendTo($presentationWrapper)
+  
+ }// Determine if keywords pane should be initialized
   this.initKeywords = (this.presentation.keywordListEnabled === undefined || this.presentation.keywordListEnabled === true || this.editor !== undefined);
   if (this.activeSurface && this.editor === undefined) {
     this.initKeywords = false;
@@ -563,6 +571,7 @@ CuriousReader.prototype.hasScoreData = function (obj) {
  */
 CuriousReader.prototype.getScore = function () {
   var self = this;
+
   return flattenArray(self.slidesWithSolutions).reduce(function (sum, slide) {
     return sum + (self.hasScoreData(slide) ? slide.getScore() : 0);
   }, 0);
@@ -576,6 +585,7 @@ CuriousReader.prototype.getScore = function () {
  */
 CuriousReader.prototype.getMaxScore = function () {
   var self = this;
+
   return flattenArray(self.slidesWithSolutions).reduce(function (sum, slide) {
     return sum + (self.hasScoreData(slide) ? slide.getMaxScore() : 0);
   }, 0);
@@ -883,10 +893,11 @@ CuriousReader.prototype.attachElements = function ($slide, index) {
  * @param {Number} index
  * @returns {jQuery}
  */
-CuriousReader.prototype.attachElement = function (element, instance, $slide, index) {
+CuriousReader.prototype.attachElement = function (element, instance, $slide, index) { 
   let ele ='';
   var self=this
   var instances=this.elementInstances
+
   if (element.willDoAnimation==true && element.animationType ==='glow'){
     ele = '-oval-animated';
   } 
@@ -894,7 +905,6 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   if (instance.libraryInfo.machineName == "H5P.CRAudio") {
     element.action.params.currIndex=index
   }
-
   if (instance.libraryInfo.machineName == "H5P.AdvancedText") {
     self.enableOrDisableAudio(index);
   }
@@ -949,7 +959,11 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
       $('.h5p-current').each(function () {
         imageTobeAnimated=$(this).find('#' + id);
       });
-      self.animation(imageTobeAnimated, null, audio.glowColor)
+      if (audio == undefined) {
+        self.animation(imageTobeAnimated, null, "ffff00")
+      } else {
+        self.animation(imageTobeAnimated, null, audio.glowColor)
+      }
     }
   }).appendTo($slide);
 
@@ -1227,6 +1241,7 @@ CuriousReader.prototype.createInteractionButton = function (element, instance) {
  * @param {Object} [popupPosition] X and Y position of popup
  */
 CuriousReader.prototype.showInteractionPopup = function (instance, $button, $buttonElement, libTypePmz, autoPlay, closeCallback, popupPosition = null) {
+
   // Handle exit fullscreen
   const exitFullScreen = () => {
     instance.trigger('resize');
@@ -1379,6 +1394,7 @@ CuriousReader.prototype.addElementSolutionButton = function (element, elementIns
 CuriousReader.prototype.showPopup = function (popupContent, $focusOnClose, parentPosition = null, remove, classes = 'h5p-popup-comment-field') {
   var self = this;
   var doNotClose;
+
   /** @private */
   var close = function (event) {
     if (doNotClose) {
@@ -1832,6 +1848,7 @@ CuriousReader.prototype.attachAllElements = function () {
  */
 CuriousReader.prototype.jumpToSlide = function (slideNumber, noScroll = false, handleFocus = false) {
   var that = this;
+
   if (this.editor !== undefined) {
     this.enableOrDisableAudio(slideNumber)
   }
@@ -2002,7 +2019,9 @@ CuriousReader.prototype.enableOrDisableAudio = function (slideNumber) {
         $(crHoverText).unbind()
         $(crHoverText)[0].innerHTML = "Please Add Text First";
       }
-    } 
+    } else {
+      console.log()
+    }
   }
 }
 
@@ -2039,6 +2058,7 @@ CuriousReader.prototype.setOverflowTabIndex = function () {
  */
 CuriousReader.prototype.setSlideNumberAnnouncer = function (slideNumber, handleFocus = false) {
   let slideTitle = '';
+
   if (!this.navigationLine) {
     return slideTitle;
   }
