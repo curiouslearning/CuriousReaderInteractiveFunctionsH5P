@@ -11,7 +11,7 @@
     "type": "select",
     "importance": "low",
     "label": "Player mode",
-    "description": "Select the layout of the player.",
+    "description": "Select the layout of the audio player.",
     "options": [
       {
         "value": "minimalistic",
@@ -84,16 +84,16 @@
   {
     "name": "glowColor",
     "type": "text",
-    "label": "Choose Glow color effect",
-    "description": "The color of the element",
+    "label": "Choose Glow Color",
+    "description": "This will also change the text glow color to match",
     "optional": true,
     "widget": "colorSelector"
   },
   {
     "name": "timeStampForEachText",
     "type": "list",
-    "label": "Duration for each text",
-    "description": "Add duration for particular text in sequence",
+    "label": "Timestamps for highlighting text",
+    "description": "Set the time and duration for each word",
     "optional": false,
     "min": 1,
     "defaultNum": 1,
@@ -120,22 +120,21 @@
           "type": "text",
           "optional": false,
           "default": "0",
-          "label": "Start time for word",
-          "description": "Add duration for particular text in sequence"
+          "label": "Start time for word"
         },
         {
           "name": "endDuration",
           "type": "text",
           "optional": false,
           "default": "0.02",
-          "label": "End time for word",
-          "description": "Add duration for particular text in sequence"
+          "label": "End time for word"
         },
         {
           "name": "wordfile",
           "type": "audio",
           "importance": "low",
-          "label": "Word Audio File",
+          "label": "Enunciated Audio File",
+          "description": "This audio will play when the text is touched",
           "disableCopyright": true
         }
       ]
