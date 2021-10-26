@@ -203,7 +203,7 @@ WaveformInit.prototype.constructor = WaveformInit;
   self.$item = H5PEditor.$(html);
   this.setId(id);
   let wordText=(this.parent.params.text!=undefined)?this.parent.params.text:''
-  $wrapper.append('<h1 class="test"> Waveform</h1>')
+  $wrapper.append('<h1 class="test">Select word(s)</h1>')
   // $wrapper.append('<label class="h5peditor-label"><input id="field-words-125" type="checkbox">Will Do Animation</label>')
   //let checkBoxElementForWord=$wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides,self.parent.parent.parent.parent.cp.currentSlideIndex))
   let checkBoxElementForWord=$wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides,this.parent.parent.parent.params.params.currIndex,this.parent.params.text))
