@@ -312,11 +312,7 @@ CuriousReader.prototype.attach = function ($container) {
   this.$keywordsWrapper = $presentationWrapper.children('.h5p-keywords-wrapper');
   this.$progressbar = this.$wrapper.find('.h5p-progressbar');
   this.$footer = this.$wrapper.children('.h5p-footer');
- // $('<div>'+that.libraryInfo.versionedName+'</div>').appendTo($presentationWrapper)
- if(that.libraryInfo!=undefined)
- {
-  $('<div class=version>V:'+that.libraryInfo.versionedName.split(' ')[1]+'</div>').appendTo($presentationWrapper)
- }
+
  if(this.editor!=undefined)
  {
   $('<div class=version>V:'+this.editor.parent.currentLibrary.split(' ')[1]+'</div>').appendTo($presentationWrapper)
