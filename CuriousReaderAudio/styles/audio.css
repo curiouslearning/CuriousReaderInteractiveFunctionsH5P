@@ -98,3 +98,21 @@
 .field-name-currIndex{
   display: none;
 }
+
+.field-name-text {
+  visibility: hidden;
+  display: none;
+}
+.field-name-startDuration {
+  display: inline-block;
+  margin-right: 20px;
+}
+.field-name-endDuration {
+  display: inline-block;
+}
+.field-name-eachWordTimeStampInfo > .content > h1 {
+  font-size: 1.17em;
+}
+.field-name-eachWordTimeStampInfo > .content > .h5peditor-label {
+  display: inline-block;
+}

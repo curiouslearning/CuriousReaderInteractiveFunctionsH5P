@@ -23,7 +23,7 @@ let WaveformInit = function (parent, field, params, setValue) {
  
   $(document).ready(() => {
     // making word textfield disable for user so they can't enter using keyboard
-    parent.children[1].$input[0].setAttribute('disabled',true);
+    // parent.children[1].$input[0].setAttribute('disabled',true);
     var wavesurfer = WaveSurfer.create({
       container: self.container[0],
       waveColor: 'violet',
