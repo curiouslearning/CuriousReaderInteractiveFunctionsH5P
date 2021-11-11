@@ -328,10 +328,6 @@ CuriousReader.prototype.attach = function ($container) {
   this.$progressbar = this.$wrapper.find('.h5p-progressbar');
   this.$footer = this.$wrapper.children('.h5p-footer');
 
-  if (this.editor != undefined) {
-    $('<div class=version>V:' + this.editor.parent.currentLibrary.split(' ')[1] + '</div>').appendTo($presentationWrapper)
-
-  } // Determine if keywords pane should be initialized
   this.initKeywords = (this.presentation.keywordListEnabled === undefined || this.presentation.keywordListEnabled === true || this.editor !== undefined);
   if (this.activeSurface && this.editor === undefined) {
     this.initKeywords = false;
