@@ -21,22 +21,20 @@
   float: right;
 }
 
+.h5p-dragnbar-ul > .paste-button {
+  display: none;
+}
+
 .h5p-dragnbar-li {
   float: left;
-  margin: 0;
-  padding: 0;
-  border-right: 1px solid #ccc;
-  border-left: 1px solid #eee;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  border: 2px solid #707070;
+  background-color: #ededed;
+  border-radius: 4px;
   height: 100%;
-
-  background: rgb(240,240,240); /* Old browsers */
-  background: -moz-linear-gradient(top,  rgba(240,240,240,1) 1%, rgba(204,204,204,1) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,rgba(240,240,240,1)), color-stop(100%,rgba(204,204,204,1))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgba(240,240,240,1) 1%,rgba(204,204,204,1) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgba(240,240,240,1) 1%,rgba(204,204,204,1) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgba(240,240,240,1) 1%,rgba(204,204,204,1) 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  rgba(240,240,240,1) 1%,rgba(204,204,204,1) 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
 }
 
 .h5p-curiousreader-editor .h5p-dragnbar-li {
@@ -58,16 +56,6 @@
 .h5p-dragnbar-li.disabled:hover {
   opacity: 0.3;
   cursor: auto;
-}
-
-.h5peditor-dragnbar > .h5p-dragnbar-ul > .h5p-dragnbar-li:first-child {
-  border-left: 0;
-  border-top-left-radius: 0.5em;
-}
-
-.h5peditor-dragnbar > .h5p-dragnbar-ul > .h5p-dragnbar-li:last-child {
-  border-right: 0;
-  border-top-right-radius: 0.5em;
 }
 
 .h5peditor-dragnbar .h5p-dragnbar-li .h5p-dragnbar-paste-button {
@@ -117,7 +105,7 @@
 .h5p-dragnbar-a:before {
   font-size: 1.2em;
 }
-.h5p-dragnbar-advancedtext-button:before {
+.h5p-dragnbar-cradvancedtext-button:before {
   content: "\e997";
   font-size: 1.6em;
 }
@@ -171,7 +159,7 @@
 
 .shadowButton {
   content: "";
-  height: 110%;
+  height: 102%;
   background: #808080;
   opacity: 0.5;
   position: absolute;
