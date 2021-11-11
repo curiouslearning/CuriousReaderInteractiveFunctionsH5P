@@ -3,10 +3,28 @@ import SummarySlide from './summary-slide';
 import NavigationLine from './navigation-line';
 import SlideBackground from './slide-backgrounds';
 import KeywordsMenu from './keyword-menu';
-import { jQuery as $ } from './globals';
-import { flattenArray, addClickAndKeyboardListeners, isFunction, kebabCase, stripHTML, keyCode } from './utils';
+import {
+  jQuery as $
+} from './globals';
+import {
+  flattenArray,
+  addClickAndKeyboardListeners,
+  isFunction,
+  kebabCase,
+  stripHTML,
+  keyCode
+} from './utils';
 import Slide from './slide.js';
-import {spin,pop,bounce,jiggle,pulse,glow,backgroundFade,flip} from './animations';
+import {
+  spin,
+  pop,
+  bounce,
+  jiggle,
+  pulse,
+  glow,
+  backgroundFade,
+  flip
+} from './animations';
 /**
  * @const {string}
  */
@@ -32,8 +50,8 @@ let CuriousReader = function (params, id, extras) {
   this.hasAnswerElements = false;
   this.ignoreResize = false;
   this.isTask = false;
-  
-  
+
+
   if (extras.cpEditor) {
     this.editor = extras.cpEditor;
   }
@@ -97,10 +115,10 @@ let CuriousReader = function (params, id, extras) {
     this.activeSurface = !!params.override.activeSurface;
     this.hideSummarySlide = !!params.override.hideSummarySlide;
     this.enablePrintButton = !!params.override.enablePrintButton;
-    this.showSummarySlideSolutionButton = params.override.summarySlideSolutionButton !== undefined
-      ? params.override.summarySlideSolutionButton : true;
-    this.showSummarySlideRetryButton = params.override.summarySlideRetryButton !== undefined
-      ? params.override.summarySlideRetryButton : true;
+    this.showSummarySlideSolutionButton = params.override.summarySlideSolutionButton !== undefined ?
+      params.override.summarySlideSolutionButton : true;
+    this.showSummarySlideRetryButton = params.override.summarySlideRetryButton !== undefined ?
+      params.override.summarySlideRetryButton : true;
 
     if (!!params.override.social) {
       this.enableTwitterShare = !!params.override.social.showTwitterShare;
@@ -119,7 +137,7 @@ let CuriousReader = function (params, id, extras) {
   }
 
   this.keywordMenu = new KeywordsMenu({
-    l10n : this.l10n,
+    l10n: this.l10n,
     currentIndex: this.previousState !== undefined ? this.previousState.progress : 0
   });
 
@@ -136,8 +154,7 @@ let CuriousReader = function (params, id, extras) {
 
     if (event.data.finished) {
       that.resize();
-    }
-    else if (event.data.allSlides) {
+    } else if (event.data.allSlides) {
       that.attachAllElements();
     }
   });
@@ -165,7 +182,7 @@ CuriousReader.prototype.getCurrentState = function () {
       for (var element = 0; element < this.elementInstances[slide].length; element++) {
         var instance = this.elementInstances[slide][element];
         if (instance.getCurrentState instanceof Function ||
-            typeof instance.getCurrentState === 'function') {
+          typeof instance.getCurrentState === 'function') {
           if (!state.answers[slide]) {
             state.answers[slide] = [];
           }
@@ -206,22 +223,22 @@ CuriousReader.prototype.attach = function ($container) {
   }
 
   var html =
-          '<div class="h5p-keymap-explanation hidden-but-read">' + this.l10n.accessibilitySlideNavigationExplanation + '</div>' +
-          '<div class="h5p-fullscreen-announcer hidden-but-read" aria-live="polite"></div>' +
-          '<div class="h5p-wrapper" tabindex="0" aria-label="' + this.l10n.accessibilityCanvasLabel + '">' +
-          '  <div class="h5p-current-slide-announcer hidden-but-read" aria-live="polite"></div>' +
-          '  <div tabindex="-1"></div>' +
-          '  <div class="h5p-box-wrapper">' +
-          '    <div class="h5p-presentation-wrapper">' +
-          '      <div class="h5p-keywords-wrapper"></div>' +
-          '     <div class="h5p-slides-wrapper"></div>' +
-          '    </div>' +
-          '  </div>' +
-          '  <nav class="h5p-cp-navigation">' +
-          '    <ol class="h5p-progressbar list-unstyled"></ol>' +
-          '  </nav>' +
-          '  <div class="h5p-footer"></div>' +
-          '</div>';
+    '<div class="h5p-keymap-explanation hidden-but-read">' + this.l10n.accessibilitySlideNavigationExplanation + '</div>' +
+    '<div class="h5p-fullscreen-announcer hidden-but-read" aria-live="polite"></div>' +
+    '<div class="h5p-wrapper" tabindex="0" aria-label="' + this.l10n.accessibilityCanvasLabel + '">' +
+    '  <div class="h5p-current-slide-announcer hidden-but-read" aria-live="polite"></div>' +
+    '  <div tabindex="-1"></div>' +
+    '  <div class="h5p-box-wrapper">' +
+    '    <div class="h5p-presentation-wrapper">' +
+    '      <div class="h5p-keywords-wrapper"></div>' +
+    '     <div class="h5p-slides-wrapper"></div>' +
+    '    </div>' +
+    '  </div>' +
+    '  <nav class="h5p-cp-navigation">' +
+    '    <ol class="h5p-progressbar list-unstyled"></ol>' +
+    '  </nav>' +
+    '  <div class="h5p-footer"></div>' +
+    '</div>';
 
   $container
     .attr('role', 'application')
@@ -259,16 +276,14 @@ CuriousReader.prototype.attach = function ($container) {
       if (!isWithinDialog) {
         // We're not within a dialog, so we can seafely put focus on wrapper
         that.$wrapper.focus();
-      }
-      else {
+      } else {
         // Find the closest tabbable parent element
         const $tabbable = $target.closest('[tabindex]');
         // Is the parent tabbable element inside the popup?
         if ($tabbable.closest('.h5p-popup-container').length === 1) {
           // We'll set focus here
           $tabbable.focus();
-        }
-        else {
+        } else {
           // Fallback: set focus on close button
           $dialogParent.find('.h5p-close-popup').focus();
         }
@@ -276,9 +291,9 @@ CuriousReader.prototype.attach = function ($container) {
     }
 
     if (that.presentation.keywordListEnabled &&
-        !that.presentation.keywordListAlwaysShow &&
-        that.presentation.keywordListAutoHide &&
-        !$target.is('textarea, .h5p-icon-pencil, span')) {
+      !that.presentation.keywordListAlwaysShow &&
+      that.presentation.keywordListAutoHide &&
+      !$target.is('textarea, .h5p-icon-pencil, span')) {
       that.hideKeywords(); // Auto-hide keywords
     }
   });
@@ -300,7 +315,7 @@ CuriousReader.prototype.attach = function ($container) {
   var wrapperHeight = parseInt(this.$wrapper.css('height'));
   this.height = wrapperHeight !== 0 ? wrapperHeight : 400;
 
-  this.ratio = 16/9;
+  this.ratio = 16 / 9;
   // Intended base font size cannot be read from CSS, as it might be modified
   // by mobile browsers already. (The Android native browser does this.)
   this.fontSize = 16;
@@ -313,11 +328,10 @@ CuriousReader.prototype.attach = function ($container) {
   this.$progressbar = this.$wrapper.find('.h5p-progressbar');
   this.$footer = this.$wrapper.children('.h5p-footer');
 
- if(this.editor!=undefined)
- {
-  $('<div class=version>V:'+this.editor.parent.currentLibrary.split(' ')[1]+'</div>').appendTo($presentationWrapper)
-  
- }// Determine if keywords pane should be initialized
+  if (this.editor != undefined) {
+    $('<div class=version>V:' + this.editor.parent.currentLibrary.split(' ')[1] + '</div>').appendTo($presentationWrapper)
+
+  } // Determine if keywords pane should be initialized
   this.initKeywords = (this.presentation.keywordListEnabled === undefined || this.presentation.keywordListEnabled === true || this.editor !== undefined);
   if (this.activeSurface && this.editor === undefined) {
     this.initKeywords = false;
@@ -337,8 +351,7 @@ CuriousReader.prototype.attach = function ($container) {
   if (this.hideSummarySlide) {
     // Always hide
     this.showSummarySlide = !this.hideSummarySlide;
-  }
-  else {
+  } else {
     // Determine by checking for slides with tasks
     this.slidesWithSolutions.forEach(function (slide) {
       that.showSummarySlide = slide.length;
@@ -381,8 +394,7 @@ CuriousReader.prototype.attach = function ($container) {
     if (this.presentation.keywordListAlwaysShow) {
       this.showKeywords();
     }
-  }
-  else {
+  } else {
     // Remove keyword titles completely
     this.$keywordsWrapper.remove();
 
@@ -403,8 +415,7 @@ CuriousReader.prototype.attach = function ($container) {
     }
 
     this.summarySlideObject = new SummarySlide(this, $summarySlide);
-  }
-  else {
+  } else {
     this.$progressbar.add(this.$footer).remove();
 
     if (H5P.fullscreenSupported) {
@@ -596,7 +607,7 @@ CuriousReader.prototype.setProgressBarFeedback = function (slideScores) {
   if (slideScores !== undefined && slideScores) {
     // Set feedback icons for progress bar.
     slideScores.forEach(singleSlide => {
-      const $indicator = this.progressbarParts[singleSlide.slide-1]
+      const $indicator = this.progressbarParts[singleSlide.slide - 1]
         .find('.h5p-progressbar-part-has-task');
 
       if ($indicator.hasClass('h5p-answered')) {
@@ -606,8 +617,7 @@ CuriousReader.prototype.setProgressBarFeedback = function (slideScores) {
         this.navigationLine.updateSlideTitle(singleSlide.slide - 1);
       }
     });
-  }
-  else {
+  } else {
     // Remove all feedback icons.
     this.progressbarParts.forEach(pbPart => {
       pbPart.find('.h5p-progressbar-part-has-task')
@@ -764,27 +774,22 @@ CuriousReader.prototype.toggleFullScreen = function () {
     // Cancel fullscreen
     if (H5P.exitFullScreen !== undefined && H5P.fullScreenBrowserPrefix !== undefined) {
       H5P.exitFullScreen();
-    }
-    else {
+    } else {
       // Use old system
       if (H5P.fullScreenBrowserPrefix === undefined) {
         // Click button to disable fullscreen
         H5P.jQuery('.h5p-disable-fullscreen').click();
-      }
-      else {
+      } else {
         if (H5P.fullScreenBrowserPrefix === '') {
           window.top.document.exitFullScreen();
-        }
-        else if (H5P.fullScreenBrowserPrefix === 'ms') {
+        } else if (H5P.fullScreenBrowserPrefix === 'ms') {
           window.top.document.msExitFullscreen();
-        }
-        else {
+        } else {
           window.top.document[H5P.fullScreenBrowserPrefix + 'CancelFullScreen']();
         }
       }
     }
-  }
-  else {
+  } else {
     // Rescale footer buttons
     this.$footer.addClass('footer-full-screen');
 
@@ -842,13 +847,13 @@ CuriousReader.prototype.setElementsOverride = function (override) {
     if (override.showSolutionButton) {
       // Override show solutions button
       this.elementsOverride.params.behaviour.enableSolutionsButton =
-          (override.showSolutionButton === 'on' ? true : false);
+        (override.showSolutionButton === 'on' ? true : false);
     }
 
     if (override.retryButton) {
       // Override retry button
       this.elementsOverride.params.behaviour.enableRetry =
-          (override.retryButton === 'on' ? true : false);
+        (override.retryButton === 'on' ? true : false);
     }
   }
 };
@@ -863,7 +868,7 @@ CuriousReader.prototype.attachElements = function ($slide, index) {
   if (this.elementsAttached[index] !== undefined) {
     return; // Already attached
   }
- 
+
   var slide = this.slides[index];
   var instances = this.elementInstances[index];
   if (slide.elements !== undefined) {
@@ -875,7 +880,10 @@ CuriousReader.prototype.attachElements = function ($slide, index) {
     '$target': $slide,
     'library': 'CuriousReader',
     'key': 'newSlide'
-  }, {'bubbles': true, 'external': true});
+  }, {
+    'bubbles': true,
+    'external': true
+  });
 
   this.elementsAttached[index] = true;
 };
@@ -889,19 +897,19 @@ CuriousReader.prototype.attachElements = function ($slide, index) {
  * @param {Number} index
  * @returns {jQuery}
  */
-CuriousReader.prototype.attachElement = function (element, instance, $slide, index) { 
-  let ele ='';
-  var self=this
-  var instances=this.elementInstances
+CuriousReader.prototype.attachElement = function (element, instance, $slide, index) {
+  let ele = '';
+  var self = this
+  var instances = this.elementInstances
 
-  if (element.willDoAnimation==true && element.animationType ==='glow'){
+  if (element.willDoAnimation == true && element.animationType === 'glow') {
     ele = '-oval-animated';
-  } 
+  }
 
   if (instance.libraryInfo.machineName == "H5P.CRAudio") {
-    element.action.params.currIndex=index
+    element.action.params.currIndex = index
   }
-  if (instance.libraryInfo.machineName == "H5P.AdvancedText") {
+  if (instance.libraryInfo.machineName == "H5P.CRAdvancedText") {
     self.enableOrDisableAudio(index);
   }
 
@@ -909,27 +917,27 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   var buttonSizeClass = (element.buttonSize !== undefined ? "h5p-element-button-" + element.buttonSize : "");
   var classes = 'h5p-element' + ' element' +
     (displayAsButton ? ' h5p-element-button-wrapper' : '') +
-    (buttonSizeClass.length ? ' ' + buttonSizeClass : '') ;
+    (buttonSizeClass.length ? ' ' + buttonSizeClass : '');
   var $elementContainer = H5P.jQuery('<div>', {
     'class': classes,
-    'id':`${element.action.subContentId + ele}` ,
+    'id': `${element.action.subContentId + ele}`,
   }).css({
     left: element.x + '%',
     top: element.y + '%',
     width: element.width + '%',
     height: element.height + '%',
-    borderRadius: ele==''?'0%':'50%',
-    borderStyle: (this.editor !== undefined)&& (ele==='-oval-animated')?'dotted':'none'
+    borderRadius: ele == '' ? '0%' : '50%',
+    borderStyle: (this.editor !== undefined) && (ele === '-oval-animated') ? 'dotted' : 'none'
   }).click(function (event) {
 
     let id = event.target.id.substr(0, event.target.id.length - 1);
     var audio;
     if (self.editor === undefined) {
-      if (instance.libraryInfo.machineName == "H5P.Image" || instance.libraryInfo.machineName == "H5P.AdvancedText") {
-        for(let i = 0; i < instances[index].length; i++) {
-          if(instances[index][i].libraryInfo.machineName == 'H5P.CRAudio') {
+      if (instance.libraryInfo.machineName == "H5P.Image" || instance.libraryInfo.machineName == "H5P.CRAdvancedText") {
+        for (let i = 0; i < instances[index].length; i++) {
+          if (instances[index][i].libraryInfo.machineName == 'H5P.CRAudio') {
             audio = instances[index][i];
-            break;           
+            break;
           }
         }
       }
@@ -940,20 +948,20 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     }
 
     var imgId = $(event.target).parent()[0].id
-    if (audio != undefined &&  imgId != "" && instance.libraryInfo.machineName == "H5P.Image") {
+    if (audio != undefined && imgId != "" && instance.libraryInfo.machineName == "H5P.Image") {
       audio.playOnDemand($(event.target).parent()[0].id.substr(3, $(event.target).parent()[0].id.length))
     }
-    
+
 
     if (element.willDoAnimation == true) {
       let imageTobeAnimated;
       let id = instance.subContentId;
-      if(element.animationType ==='glow'){
-        id = id +'-oval-animated';
+      if (element.animationType === 'glow') {
+        id = id + '-oval-animated';
       }
 
       $('.h5p-current').each(function () {
-        imageTobeAnimated=$(this).find('#' + id);
+        imageTobeAnimated = $(this).find('#' + id);
       });
       if (audio == undefined) {
         self.animation(imageTobeAnimated, undefined, "#FFFF00")
@@ -963,9 +971,8 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     }
   }).appendTo($slide);
 
-  if(instance.libraryInfo.machineName == 'H5P.Image')
-  {
-    if(element.willDoAnimation){
+  if (instance.libraryInfo.machineName == 'H5P.Image') {
+    if (element.willDoAnimation) {
       $elementContainer.attr('animation', element.animationType);
     }
   }
@@ -975,8 +982,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   if (displayAsButton) {
     const $button = this.createInteractionButton(element, instance);
     $button.appendTo($elementContainer);
-  }
-  else {
+  } else {
     const hasLibrary = element.action && element.action.library;
     const libTypePmz = hasLibrary ? this.getLibraryTypePmz(element.action.library) : 'other';
 
@@ -988,9 +994,9 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
 
     var $innerElementContainer = H5P.jQuery('<div>', {
       'class': 'h5p-element-inner',
-      'id' : element.id != "" ? element.id : ""
+      'id': element.id != "" ? element.id : ""
     }).css({
-     opacity:(ele==='-oval-animated')?0:1
+      opacity: (ele === '-oval-animated') ? 0 : 1
     }).appendTo($outerElementContainer);
 
     // H5P.Shape sets it's own size when line in selected
@@ -1000,52 +1006,49 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
       }
     });
 
-    
-    if(instance.libraryInfo.machineName=='H5P.CRAudio'|| instance.libraryInfo.machineName=='H5P.AdvancedText')
-    {
-    var slideTextElement = '';
-    
-    for(let i = 0; i < instances[index].length; i++) {
-      if(instances[index][i].libraryInfo.machineName == 'H5P.CRAudio') {
-        if (instances[index][i].splittedWord != undefined ) {
-            if((instances[index][i].splittedWord.length!=0 && instances[index][i].splittedWord[0].text!=''))
-          for (let j = 0; j < instances[index][i].splittedWord.length; j++) {
-            slideTextElement = slideTextElement + "<div class='divText'><span id=" + instances[index][i].subContentId + j + ">" + instances[index][i].splittedWord[j].text.trim() + ' </span></div>'
+
+    if (instance.libraryInfo.machineName == 'H5P.CRAudio' || instance.libraryInfo.machineName == 'H5P.CRAdvancedText') {
+      var slideTextElement = '';
+
+      for (let i = 0; i < instances[index].length; i++) {
+        if (instances[index][i].libraryInfo.machineName == 'H5P.CRAudio') {
+          if (instances[index][i].splittedWord != undefined) {
+            if ((instances[index][i].splittedWord.length != 0 && instances[index][i].splittedWord[0].text != ''))
+              for (let j = 0; j < instances[index][i].splittedWord.length; j++) {
+                slideTextElement = slideTextElement + "<div class='divText'><span id=" + instances[index][i].subContentId + j + ">" + instances[index][i].splittedWord[j].text.trim() + ' </span></div>'
+              }
           }
         }
       }
-    }
-      if(slideTextElement!='')
-      {
-      var domSlide = $('.h5p-slides-wrapper')[0].children;
-      if ($(domSlide[index]).find('.h5p-advanced-text').length > 0) {
-        var $elementText = $(domSlide[index]).find('.h5p-advanced-text')[0].children;
-        if ($(domSlide[index]).find('#sentence-style').length > 0) {
-          $(domSlide[index]).find('#sentence-style')[0].innerHTML = "";
-        }
-        var sentence = $($elementText)[0]
-        do {
-          var temp;
-          if (sentence.children.length != 0) {
-            sentence = sentence.children[0];
-            if(sentence.children.length == 0)
-            {
-              temp = sentence
+      if (slideTextElement != '') {
+        var domSlide = $('.h5p-slides-wrapper')[0].children;
+        if ($(domSlide[index]).find('.h5p-advanced-text').length > 0) {
+          var $elementText = $(domSlide[index]).find('.h5p-advanced-text')[0].children;
+          if ($(domSlide[index]).find('#sentence-style').length > 0) {
+            $(domSlide[index]).find('#sentence-style')[0].innerHTML = "";
+          }
+          var sentence = $($elementText)[0];
+          do {
+            var temp;
+            if (sentence.children.length != 0) {
+              sentence = sentence.children[0];
+              if (sentence.children.length == 0) {
+                temp = sentence
+                sentence.id = "sentence-style"
+                sentence.innerHTML = slideTextElement;
+                break;
+              }
+            } else {
               sentence.id = "sentence-style"
               sentence.innerHTML = slideTextElement;
               break;
             }
-          } else {
-              sentence.id = "sentence-style"
-              sentence.innerHTML = slideTextElement;
-              break;
-          }
-        } while (sentence.children.length != 0)
-      }
+          } while (sentence.children.length != 0)
+        }
 
+      }
     }
-  }
-   
+
     instance.attach($innerElementContainer);
     if (element.action !== undefined && element.action.library.substr(0, 20) === 'H5P.InteractiveVideo') {
       var handleIV = function () {
@@ -1056,15 +1059,13 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
         instance.hasFullScreen = true;
         if (instance.controls.$play.hasClass('h5p-pause')) {
           instance.$controls.addClass('h5p-autohide');
-        }
-        else {
+        } else {
           instance.enableAutoHide();
         }
       };
       if (instance.controls !== undefined) {
         handleIV();
-      }
-      else {
+      } else {
         instance.on('controls', handleIV);
       }
     }
@@ -1076,8 +1077,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
   if (this.editor !== undefined) {
     // If we're in the H5P editor, allow it to manipulate the elementInstances
     this.editor.processElement(element, $elementContainer, index, instance);
-  }
-  else {
+  } else {
     if (element.solution) {
       this.addElementSolutionButton(element, instance, $elementContainer);
     }
@@ -1090,27 +1090,44 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
 };
 
 CuriousReader.prototype.animation = function (element, durationTime, glowColor) {
-  var animationType=element.attr('animation')
+  var animationType = element.attr('animation')
   if (animationType == "spin") {
-    spin({imageTobeAnimated:element});
-  } else if(animationType == "flip"){
-    flip({imageTobeAnimated:element});
-  }
-  else if(animationType == "bounce"){
-    bounce({imageTobeAnimated:element});
-  } else if(animationType == "jiggle"){
-    jiggle({imageTobeAnimated:element});
-  }  else if(animationType == "pulse"){
-    pulse({imageTobeAnimated:element});
-  }  else if(animationType == "glow"){
-    glow({imageTobeAnimated:element, durationTime: durationTime, glowColor: glowColor});
-  }else if(animationType == "backgroundFade"){
+    spin({
+      imageTobeAnimated: element
+    });
+  } else if (animationType == "flip") {
+    flip({
+      imageTobeAnimated: element
+    });
+  } else if (animationType == "bounce") {
+    bounce({
+      imageTobeAnimated: element
+    });
+  } else if (animationType == "jiggle") {
+    jiggle({
+      imageTobeAnimated: element
+    });
+  } else if (animationType == "pulse") {
+    pulse({
+      imageTobeAnimated: element
+    });
+  } else if (animationType == "glow") {
+    glow({
+      imageTobeAnimated: element,
+      durationTime: durationTime,
+      glowColor: glowColor
+    });
+  } else if (animationType == "backgroundFade") {
     element.removeClass('element');
-     parent=$(this).find('.' + 'element');
-    backgroundFade({imageTobeAnimated:element ,parent:parent});
-  } 
-  else {
-    pop({imageTobeAnimated:element});
+    parent = $(this).find('.' + 'element');
+    backgroundFade({
+      imageTobeAnimated: element,
+      parent: parent
+    });
+  } else {
+    pop({
+      imageTobeAnimated: element
+    });
   }
 }
 
@@ -1158,12 +1175,10 @@ CuriousReader.prototype.restoreTabIndexes = function () {
       if ($element.hasClass('ui-slider-handle')) {
         $element.attr('tabindex', 0);
         $element.removeData('tabindex');
-      }
-      else if (tabindex !== undefined) {
+      } else if (tabindex !== undefined) {
         $element.attr('tabindex', tabindex);
         $element.removeData('tabindex');
-      }
-      else {
+      } else {
         $element.removeAttr('tabindex');
       }
     });
@@ -1270,8 +1285,7 @@ CuriousReader.prototype.showInteractionPopup = function (instance, $button, $but
       var $tabbables = $buttonElement.find(':input').add($buttonElement.find('[tabindex]'));
       if ($tabbables.length) {
         $tabbables[0].focus();
-      }
-      else {
+      } else {
         $buttonElement.attr('tabindex', 0);
         $buttonElement.focus();
       }
@@ -1333,8 +1347,7 @@ CuriousReader.prototype.resizePopupImage = function ($wrapper) {
     $img.one('load', function () {
       resize(this.width, this.height);
     });
-  }
-  else {
+  } else {
     // Image already loaded, resize!
     resize($img.width(), $img.height());
   }
@@ -1351,13 +1364,13 @@ CuriousReader.prototype.addElementSolutionButton = function (element, elementIns
   elementInstance.showCPComments = () => {
     if ($elementContainer.children('.h5p-element-solution').length === 0 && stripHTML(element.solution).length > 0) {
       const $commentButton = $('<div/>', {
-        role: 'button',
-        tabindex: 0,
-        title: this.l10n.solutionsButtonTitle,
-        'aria-popup': true,
-        'aria-expanded': false,
-        'class': 'h5p-element-solution'
-      }).append('<span class="joubel-icon-comment-normal"><span class="h5p-icon-shadow"></span><span class="h5p-icon-speech-bubble"></span><span class="h5p-icon-question"></span></span>')
+          role: 'button',
+          tabindex: 0,
+          title: this.l10n.solutionsButtonTitle,
+          'aria-popup': true,
+          'aria-expanded': false,
+          'class': 'h5p-element-solution'
+        }).append('<span class="joubel-icon-comment-normal"><span class="h5p-icon-shadow"></span><span class="h5p-icon-speech-bubble"></span><span class="h5p-icon-question"></span></span>')
         .appendTo($elementContainer);
 
       const parentPosition = {
@@ -1419,20 +1432,19 @@ CuriousReader.prototype.showPopup = function (popupContent, $focusOnClose, paren
 
   const $popup = $(
     '<div class="h5p-popup-overlay ' + classes + '">' +
-      '<div class="h5p-popup-container" role="dialog">' +
-        '<div class="h5p-cp-dialog-titlebar">' +
-          '<div class="h5p-dialog-title"></div>' +
-          '<div role="button" tabindex="0" class="h5p-close-popup" title="' + this.l10n.close + '"></div>' +
-        '</div>' +
-        '<div class="h5p-popup-wrapper" role="document"></div>' +
-      '</div>' +
+    '<div class="h5p-popup-container" role="dialog">' +
+    '<div class="h5p-cp-dialog-titlebar">' +
+    '<div class="h5p-dialog-title"></div>' +
+    '<div role="button" tabindex="0" class="h5p-close-popup" title="' + this.l10n.close + '"></div>' +
+    '</div>' +
+    '<div class="h5p-popup-wrapper" role="document"></div>' +
+    '</div>' +
     '</div>');
 
   const $popupWrapper = $popup.find('.h5p-popup-wrapper');
   if (popupContent instanceof H5P.jQuery) {
     $popupWrapper.append(popupContent);
-  }
-  else {
+  } else {
     $popupWrapper.html(popupContent);
   }
 
@@ -1444,7 +1456,9 @@ CuriousReader.prototype.showPopup = function (popupContent, $focusOnClose, paren
     }
 
     // Do not show until we have finished calculating position
-    $popupContainer.css({ visibility: 'hidden' });
+    $popupContainer.css({
+      visibility: 'hidden'
+    });
     $popup.prependTo(this.$wrapper);
 
     let popupHeight = $popupContainer.height();
@@ -1477,8 +1491,7 @@ CuriousReader.prototype.showPopup = function (popupContent, $focusOnClose, paren
     let leftPos = parentPosition.x;
     if (parentPosition.x > leftPosThreshold) {
       leftPos = leftPosThreshold;
-    }
-    else if (parentPosition.x < widthPadding) {
+    } else if (parentPosition.x < widthPadding) {
       leftPos = widthPadding;
     }
 
@@ -1488,8 +1501,7 @@ CuriousReader.prototype.showPopup = function (popupContent, $focusOnClose, paren
     let topPos = parentPosition.y;
     if (parentPosition.y > topPosThreshold) {
       topPos = topPosThreshold;
-    }
-    else if (parentPosition.y < heightPadding) {
+    } else if (parentPosition.y < heightPadding) {
       topPos = heightPadding;
     }
 
@@ -1539,7 +1551,7 @@ CuriousReader.prototype.showPopup = function (popupContent, $focusOnClose, paren
  */
 CuriousReader.prototype.checkForSolutions = function (elementInstance) {
   return (elementInstance.showSolutions !== undefined ||
-          elementInstance.showCPComments !== undefined);
+    elementInstance.showCPComments !== undefined);
 };
 
 
@@ -1620,7 +1632,7 @@ CuriousReader.prototype.initTouchEvents = function () {
     const slideWidth = that.$slidesWrapper.width();
 
     // Set classes for slide movement and remember how much they move
-    prevX = (that.currentSlideIndex === 0 ? 0 : - slideWidth);
+    prevX = (that.currentSlideIndex === 0 ? 0 : -slideWidth);
     nextX = (that.currentSlideIndex + 1 >= that.slides.length ? 0 : slideWidth)
 
     // containerWidth = H5P.jQuery(this).width();
@@ -1666,8 +1678,7 @@ CuriousReader.prototype.initTouchEvents = function () {
       if (movedX < 0) {
         // Move previous slide
         that.$current.prev().css(transform('translateX(' + (prevX - movedX) + 'px'));
-      }
-      else {
+      } else {
         // Move next slide
         that.$current.next().css(transform('translateX(' + (nextX - movedX) + 'px)'));
       }
@@ -1730,9 +1741,8 @@ CuriousReader.prototype.updateTouchPopup = function ($container, slideNumber, xP
 
   if ((this.$keywords !== undefined) && (this.$keywords.children(':eq(' + slideNumber + ')').find('span').html() !== undefined)) {
     keyword += this.$keywords.children(':eq(' + slideNumber + ')').find('span').html();
-  }
-  else {
-    var slideIndexToNumber = slideNumber+1;
+  } else {
+    var slideIndexToNumber = slideNumber + 1;
     keyword += this.l10n.slide + ' ' + slideIndexToNumber;
   }
 
@@ -1747,16 +1757,14 @@ CuriousReader.prototype.updateTouchPopup = function ($container, slideNumber, xP
     this.touchPopup = H5P.jQuery('<div/>', {
       'class': 'h5p-touch-popup'
     }).insertAfter($container);
-  }
-  else {
+  } else {
     this.touchPopup.insertAfter($container);
   }
 
   // Adjust yPos above finger.
   if ((yPos - ($container.parent().height() * yPosAdjustment)) < 0) {
     yPos = 0;
-  }
-  else {
+  } else {
     yPos -= ($container.parent().height() * yPosAdjustment);
   }
 
@@ -1824,14 +1832,14 @@ CuriousReader.prototype.getCurrentSlideIndex = function () {
 CuriousReader.prototype.attachAllElements = function () {
   var $slides = this.$slidesWrapper.children();
 
-  for (var i=0; i<this.slides.length; i++) {
+  for (var i = 0; i < this.slides.length; i++) {
     this.attachElements($slides.eq(i), i);
   }
 
   // Need to force updating summary slide! This is normally done
   // only when summary slide is about to be viewed
   if (this.summarySlideObject !== undefined) {
-    this.summarySlideObject.updateSummarySlide(this.slides.length-1, true);
+    this.summarySlideObject.updateSummarySlide(this.slides.length - 1, true);
   }
 };
 
@@ -1920,11 +1928,11 @@ CuriousReader.prototype.jumpToSlide = function (slideNumber, noScroll = false, h
       for (var i = 0; i < instances.length; i++) {
         // TODO: Check instance type instead to avoid accidents?
         if (instanceParams[i] &&
-            instanceParams[i].action &&
-            instanceParams[i].action.params &&
-            instanceParams[i].action.params.cpAutoplay &&
-            !instanceParams[i].displayAsButton &&
-            typeof instances[i].play === 'function') {
+          instanceParams[i].action &&
+          instanceParams[i].action.params &&
+          instanceParams[i].action.params.cpAutoplay &&
+          !instanceParams[i].displayAsButton &&
+          typeof instances[i].play === 'function') {
 
           // Autoplay media if not button
           instances[i].play();
@@ -1986,14 +1994,14 @@ CuriousReader.prototype.enableOrDisableAudio = function (slideNumber) {
     let isTextPresent = false;
     if (that.elementInstances[slideNumber] !== undefined) {
       for (let i = 0; i < that.elementInstances[slideNumber].length; i++) {
-        if (that.elementInstances[slideNumber][i].libraryInfo.machineName == "H5P.AdvancedText") {
+        if (that.elementInstances[slideNumber][i].libraryInfo.machineName == "H5P.CRAdvancedText") {
           isTextPresent = true;
           if (that.editor.dnb !== undefined) {
             let $libraryButtonList = that.editor.dnb.$list;
             let crAudioButton = $($libraryButtonList)[0].children[2];
             if ($(crAudioButton).find('.shadowButton').length == 1) {
               $(crAudioButton).find('.shadowButton').remove();
-              let crHoverText =  $(crAudioButton)[0].children[1]
+              let crHoverText = $(crAudioButton)[0].children[1]
               $(crHoverText)[0].innerHTML = "Add Audio"
             }
           }
@@ -2006,12 +2014,12 @@ CuriousReader.prototype.enableOrDisableAudio = function (slideNumber) {
       let crAudioButton = $($libraryButtonList)[0].children[2];
       if ($(crAudioButton).find('.shadowButton').length == 0) {
         let shadowButton = '<a class="shadowButton" href="#" style="z-index: 9;"></a>'
-        $(shadowButton).on('click', function (e){
+        $(shadowButton).on('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
         });
         $(crAudioButton).append(shadowButton)
-        let crHoverText =  $(crAudioButton)[0].children[1]
+        let crHoverText = $(crAudioButton)[0].children[1]
         $(crHoverText).unbind()
         $(crHoverText)[0].innerHTML = "Please Add Text First";
       }
@@ -2030,7 +2038,7 @@ CuriousReader.prototype.setOverflowTabIndex = function () {
     return;
   }
 
-  this.$current.find('.h5p-element-inner').each( function () {
+  this.$current.find('.h5p-element-inner').each(function () {
     const $inner = $(this);
 
     // Currently, this rule is for tables only
@@ -2201,7 +2209,7 @@ CuriousReader.prototype.getCopyrights = function () {
 
   // Check for a common background image shared by all slides
   if (this.presentation && this.presentation.globalBackgroundSelector &&
-      this.presentation.globalBackgroundSelector.imageGlobalBackground) {
+    this.presentation.globalBackgroundSelector.imageGlobalBackground) {
 
     // Add image copyrights to the presentation scope
     var globalBackgroundImageParams = this.presentation.globalBackgroundSelector.imageGlobalBackground;
@@ -2216,7 +2224,7 @@ CuriousReader.prototype.getCopyrights = function () {
 
     // Check for a slide specific background image
     if (this.slides[slide] && this.slides[slide].slideBackgroundSelector &&
-        this.slides[slide].slideBackgroundSelector.imageSlideBackground) {
+      this.slides[slide].slideBackgroundSelector.imageSlideBackground) {
 
       // Add image copyrights to the slide scope
       var slideBackgroundImageParams = this.slides[slide].slideBackgroundSelector.imageSlideBackground;
@@ -2246,16 +2254,17 @@ CuriousReader.prototype.getCopyrights = function () {
           // Create a generic flat copyright list
           elementCopyrights = new H5P.ContentCopyrights();
           // In metadata alone there's no way of knowing what the machineName is.
-          H5P.findCopyrights(elementCopyrights, params, this.contentId, {metadata: metadata, machineName: instance.libraryInfo.machineName});
+          H5P.findCopyrights(elementCopyrights, params, this.contentId, {
+            metadata: metadata,
+            machineName: instance.libraryInfo.machineName
+          });
         }
         var label = (element + 1);
         if (params.contentName !== undefined) {
           label += ': ' + params.contentName;
-        }
-        else if (instance.getTitle !== undefined) {
+        } else if (instance.getTitle !== undefined) {
           label += ': ' + instance.getTitle();
-        }
-        else if (params.l10n && params.l10n.name) {
+        } else if (params.l10n && params.l10n.name) {
           label += ': ' + params.l10n.name;
         }
         elementCopyrights.setLabel(label);
@@ -2277,23 +2286,20 @@ CuriousReader.prototype.getCopyrights = function () {
 CuriousReader.prototype.pauseMedia = function (instance) {
   try {
     if (instance.pause !== undefined &&
-        (instance.pause instanceof Function ||
-          typeof instance.pause === 'function')) {
+      (instance.pause instanceof Function ||
+        typeof instance.pause === 'function')) {
       instance.pause();
-    }
-    else if (instance.video !== undefined &&
-             instance.video.pause !== undefined &&
-             (instance.video.pause instanceof Function ||
-               typeof instance.video.pause === 'function')) {
+    } else if (instance.video !== undefined &&
+      instance.video.pause !== undefined &&
+      (instance.video.pause instanceof Function ||
+        typeof instance.video.pause === 'function')) {
       instance.video.pause();
-    }
-    else if (instance.stop !== undefined &&
-             (instance.stop instanceof Function ||
-               typeof instance.stop === 'function')) {
+    } else if (instance.stop !== undefined &&
+      (instance.stop instanceof Function ||
+        typeof instance.stop === 'function')) {
       instance.stop();
     }
-  }
-  catch (err) {
+  } catch (err) {
     // Prevent crashing, but tell developers there's something wrong.
     H5P.error(err);
   }
