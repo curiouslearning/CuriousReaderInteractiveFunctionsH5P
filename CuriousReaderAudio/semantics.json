@@ -100,13 +100,14 @@
     "field": {
       "name": "eachWordTimeStampInfo",
       "type": "group",
-      "label": "Word duration",
+      "label": "Word Duration",
       "expanded": true,
       "fields": [
         {
           "name": "waveform",
           "type": "text",
-          "widget": "waveformInit"
+          "widget": "waveformInit",
+          "label": "Waveform"
         },
         {
           "name": "text",
