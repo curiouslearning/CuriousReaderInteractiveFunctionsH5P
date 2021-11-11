@@ -23,13 +23,14 @@ let WaveformInit = function (parent, field, params, setValue) {
  
   $(document).ready(() => {
     // making word textfield disable for user so they can't enter using keyboard
-    parent.children[1].$input[0].setAttribute('disabled',true);
+    // parent.children[1].$input[0].setAttribute('disabled',true);
     var wavesurfer = WaveSurfer.create({
       container: self.container[0],
-      waveColor: 'violet',
-      progressColor: 'purple',
+      waveColor: 'green',
+      progressColor: 'grey',
       fillParent: true,
       responsive : true,
+      barHeight: 4,
       plugins: [
         RegionsPlugin.create({
           regionsMinLength: 0.1,
@@ -39,7 +40,7 @@ let WaveformInit = function (parent, field, params, setValue) {
               start: self.startTime,
               end: self.endTime,
               loop: false,
-              color: 'hsla(400, 100%, 30%, 0.5)'
+              color: 'rgba(250, 203, 110, 0.5)'
             }
           ],
           dragSelection: {
@@ -48,7 +49,9 @@ let WaveformInit = function (parent, field, params, setValue) {
         })
       ]
     });
+
     $('.wavesurfer-handle').css("width", "4px");
+    $('.wavesurfer-handle').css("background-color", "#707070");
 
     let region;
     self.crAudioIndex = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields.length;
