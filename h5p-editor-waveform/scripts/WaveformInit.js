@@ -263,7 +263,7 @@ WaveformInit.prototype.getSentence=function(slides,slideIndex,prevData){
   for(let i=0;i<slides[slideIndex].elements.length;i++)
   {
     
-    if(slides[slideIndex].elements[i].action.library.split(' ')[0]=="H5P.AdvancedText")
+    if(slides[slideIndex].elements[i].action.library.split(' ')[0]=="H5P.CRAdvancedText")
     {
       var checkBoxWord=''
       sentenceWords=$(slides[slideIndex].elements[i].action.params.text)[0].innerText.split(' ')
