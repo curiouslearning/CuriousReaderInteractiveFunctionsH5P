@@ -30,7 +30,7 @@ let WaveformInit = function (parent, field, params, setValue) {
       progressColor: 'grey',
       fillParent: true,
       responsive : true,
-      barHeight: 4,
+      barHeight: 8,
       plugins: [
         RegionsPlugin.create({
           regionsMinLength: 0.1,
