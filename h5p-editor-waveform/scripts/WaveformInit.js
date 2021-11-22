@@ -24,7 +24,8 @@ let WaveformInit = function (parent, field, params, setValue) {
   $(document).ready(() => {
     // making word textfield disable for user so they can't enter using keyboard
     // parent.children[1].$input[0].setAttribute('disabled',true);
-    console.log("Waveform ready: " + self);
+    console.log("Waveform ready: ");
+    console.log(self);
     var wavesurfer = WaveSurfer.create({
       container: self.container[0],
       waveColor: 'green',
@@ -199,8 +200,9 @@ WaveformInit.prototype.constructor = WaveformInit;
  * @param {H5P.jQuery} $wrapper
  */
 WaveformInit.prototype.appendTo = function ($wrapper) {
-  console.log("Waveform append: " + this);
-  console.log("Wrapper: " + $wrapper);
+  console.log("Waveform append!");
+  console.log(this);
+  console.log($wrapper);
   var self = this;
   const id = ns.getNextFieldId(this.field);
   var html = H5PEditor.createFieldMarkup(this.field, '<div class="waveform" id="' + id + '" class="h5p-color-picker">', id);
