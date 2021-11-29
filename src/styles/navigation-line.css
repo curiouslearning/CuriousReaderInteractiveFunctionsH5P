@@ -204,6 +204,13 @@
   transform: rotate(90deg);
 }
 
+.h5p-course-presentation .h5p-footer .h5p-footer-toggle-full-screen {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+}
+
 /* Print button and full screen button (in footer) */
 .h5p-course-presentation .h5p-footer .h5p-footer-print:before,
 .h5p-course-presentation .h5p-footer .h5p-footer-toggle-full-screen:before {
