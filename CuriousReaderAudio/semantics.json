@@ -87,7 +87,11 @@
     "label": "Choose Glow Color",
     "description": "This will also change the text glow color to match",
     "optional": true,
-    "widget": "colorSelector"
+    "widget": "colorSelector",
+    "spectrum": {
+      "showInput": true
+    },
+    "default": "#ffd85a"
   },
   {
     "name": "timeStampForEachText",
