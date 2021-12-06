@@ -99,7 +99,7 @@
   display: none;
 }
 
-.field-name-text {
+.field-name-eachWordTimeStampInfo > .content > .field-name-text {
   visibility: hidden;
   display: none;
 }
@@ -115,4 +115,6 @@
 }
 .field-name-eachWordTimeStampInfo > .content > .h5peditor-label {
   display: inline-block;
+  margin-right: 10px;
+  color: #303030;
 }

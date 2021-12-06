@@ -97,7 +97,7 @@ H5PUpgrades['H5P.CuriousReader'] = (function () {
        * Asynchronous content upgrade hook.
        * Upgrades content parameters to support CP 1.5.
        *
-       * Converts H5P.Text elements into H5P.AdvancedText. This is to support
+       * Converts H5P.Text elements into H5P.CRAdvancedText. This is to support
        * more styling options for text.
        *
        * @params {Object} parameters
@@ -115,7 +115,7 @@ H5PUpgrades['H5P.CuriousReader'] = (function () {
               // Check if element type is text
               if (element.action && element.action.library &&
                   element.action.library.split(' ')[0] === 'H5P.Text') {
-                element.action.library = 'H5P.AdvancedText 1.0';
+                element.action.library = 'H5P.CRAdvancedText 1.1';
               }
             }
           }
@@ -126,7 +126,7 @@ H5PUpgrades['H5P.CuriousReader'] = (function () {
       },
 
       /**
-       * Increases width of H5P.AdvancedText to make old content keep proper dimensions.
+       * Increases width of H5P.CRAdvancedText to make old content keep proper dimensions.
        *
        * @param parameters
        * @param finished
@@ -142,7 +142,7 @@ H5PUpgrades['H5P.CuriousReader'] = (function () {
 
               // Check if element type is text
               if (element.action && element.action.library &&
-                  (element.action.library.split(' ')[0] === 'H5P.AdvancedText' ||
+                  (element.action.library.split(' ')[0] === 'H5P.CRAdvancedText' ||
                     element.action.library.split(' ')[0] === 'H5P.ContinuousText'
                   )) {
                 element.width += 1.7;
@@ -241,7 +241,7 @@ H5PUpgrades['H5P.CuriousReader'] = (function () {
        * Upgrades content parameters to support CP 1.17.
        *
        * - Adds small as default for button size
-       * - Converts H5P.AppearIn to H5P.AdvancedText
+       * - Converts H5P.AppearIn to H5P.CRAdvancedText
        *
        * @param {Object} parameters
        * @param {function} finished
@@ -263,7 +263,7 @@ H5PUpgrades['H5P.CuriousReader'] = (function () {
           }
         }
 
-        // Converts H5P.AppearIn to H5P.AdvancedText
+        // Converts H5P.AppearIn to H5P.CRAdvancedText
         if (parameters && parameters.presentation && parameters.presentation.slides) {
           var slides = parameters.presentation.slides;
 
@@ -277,7 +277,7 @@ H5PUpgrades['H5P.CuriousReader'] = (function () {
                 if (element.action && element.action.library &&
                     element.action.library.split(' ')[0] === 'H5P.AppearIn') {
 
-                  element.action.library = 'H5P.AdvancedText 1.1';
+                  element.action.library = 'H5P.CRAdvancedText 1.1';
 
                   var roomName = '';
 

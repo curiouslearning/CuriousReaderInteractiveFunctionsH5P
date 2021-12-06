@@ -401,7 +401,14 @@ const NavigationLine = (function ($) {
           'tabindex': '0'
         });
 
-        addClickAndKeyboardListeners(this.cp.$fullScreenButton, () => that.cp.toggleFullScreen());
+        addClickAndKeyboardListeners(this.cp.$fullScreenButton, () => {
+          that.cp.toggleFullScreen();
+          console.log(that.cp);
+          if (that.cp.currentSlideIndex === 0) {
+            that.cp.nextSlide();
+            this.cp.$fullScreenButton.hide();
+          }
+        });
 
         this.cp.$fullScreenButton.appendTo($rightFooter);
       }

@@ -4,6 +4,7 @@
     "type": "group",
     "importance": "high",
     "widget": "curiousreader",
+    "label": "Curious Reader v1.22.8-alpha",
     "fields": [
       {
         "name": "slides",
@@ -61,7 +62,7 @@
                     "type": "library",
                     "importance": "high",
                     "options": [
-                      "H5P.AdvancedText 1.1",
+                      "H5P.CRAdvancedText 1.1",
                       "H5P.Link 1.3",
                       "H5P.Image 1.1",
                       "H5P.CRAudio 1.4"
