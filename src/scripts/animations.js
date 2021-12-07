@@ -116,10 +116,10 @@ export const glow =({imageTobeAnimated, durationTime, glowColor}) =>{
     }else{
         durationTime = durationTime * 1000;
     }
-    imageTobeAnimated.css("box-shadow", "0 0 50px " + glowColor);
-    imageTobeAnimated.css("transition", "border 1s linear, box-shadow 1s linear");
+    imageTobeAnimated.css("box-shadow", "0 0 20px 20px" + glowColor);
+    imageTobeAnimated.css("transition", "border 0.3s linear, box-shadow 0.3s linear");
     setTimeout(function () {
-        imageTobeAnimated.css("box-shadow", "0 0 50px transparent");
+        imageTobeAnimated.css("box-shadow", "0 0 20px 20px transparent");
         imageTobeAnimated.css("transition", "border 1s linear, box-shadow 1s linear");
     }, durationTime);
 }
