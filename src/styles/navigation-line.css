@@ -80,6 +80,8 @@
   content: "\f0d9";
   color: orange;
   font-size: 4em;
+  -webkit-text-stroke: 0.05rem #303030;
+  text-shadow: 0rem 0.15rem 0.1rem #303030;
 }
 
 /* Next slide */
@@ -110,6 +112,8 @@
   content: "\f0da";
   color: orange;
   font-size: 4em;
+  -webkit-text-stroke: 0.05rem #303030;
+  text-shadow: 0rem 0.15rem 0.1rem #303030;
 }
 
 /* Slide counter */
