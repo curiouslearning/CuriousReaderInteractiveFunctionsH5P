@@ -937,16 +937,14 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
         }
       }
     }
-
-    if (audio != undefined && id == audio.subContentId) {
-      audio.playOnDemand(event.target.id)
+    if (audio != undefined && subContentId == audio.subContentId) {
+      audio.playOnDemand(event.target.id);
     }
 
-    var imgId = $(event.target).parent()[0].id
+    var imgId = $(event.target).parent()[0].id;
     if (audio != undefined && imgId != "" && instance.libraryInfo.machineName == "H5P.Image") {
-      audio.playOnDemand($(event.target).parent()[0].id.substr(3, $(event.target).parent()[0].id.length))
+      audio.playOnDemand($(event.target).parent()[0].id.substr(3, $(event.target).parent()[0].id.length));
     }
-
 
     if (element.willDoAnimation == true) {
       let imageTobeAnimated;
