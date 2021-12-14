@@ -237,7 +237,6 @@ H5P.CRAudio = (function ($) {
       if (self.parent != undefined) {
         $('.h5p-current').each(function (index, element) {
           let parentElement = $(element.children).find('#' + clickedTextId).parent('div');
-          console.log(parentElement);
           self.originalColor = parentElement.css('color');
           parentElement.css({
             "transform": 'scale(1.5)',
