@@ -159,26 +159,24 @@ H5P.CRAudio = (function ($) {
                       'color': self.glowColor,
                       // 'text-shadow': '0px 0px 5px ' + self.glowColor,
                     });
-                    $(this).find('#' + self.subContentId + j).parent('div').css('text-shadow', )
+                    $(this).find('#' + audioDivTextElementSpanId).parent('div').css('text-shadow', )
                     if (h5pCurrentInnerDiv.id.substr(0, 3) == 'img' && h5pCurrentInnerDiv.id != undefined) {
-                      if ('img' + self.subContentId + j == h5pCurrentInnerDiv.id) {
+                      if ('img' + audioDivTextElementSpanId == h5pCurrentInnerDiv.id) {
                         //self.glow($(this).find('#img' + self.subContentId + j).parent('div').parent('div'));
-                        self.parent.animation($(this).find('#img' + self.subContentId + j).parent('div').parent('div'), null, self.glowColor)
+                        self.parent.animation($(this).find('#img' + audioDivTextElementSpanId).parent('div').parent('div'), null, self.glowColor)
                       }
                     }
                   })
                 } else {
-                  $('#' + self.subContentId + j).css({
+                  $('#' + audioDivTextElementSpanId).css({
                     "color": self.originalTextColor,
                   })
                 }
               }
             } else if (word.highlighted) {
-              console.log("Removing the highlight on a word!");
-              console.log(word);
               if (self.parent != undefined) {
                 $('.h5p-current').each(function () {
-                  $(this).find('#' + self.subContentId + j).parent('div').css({
+                  $(this).find('#' + audioDivTextElementSpanId).parent('div').css({
                     "transform": 'scale(1)',
                     'z-index': '1',
                     'color': self.originalTextColor,
