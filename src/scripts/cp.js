@@ -1011,7 +1011,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
           if (instances[index][i].splittedWord != undefined) {
             if ((instances[index][i].splittedWord.length != 0 && instances[index][i].splittedWord[0].text != ''))
               for (let j = 0; j < instances[index][i].splittedWord.length; j++) {
-                slideTextElement = slideTextElement + "<div class='divText'><span id=" + instances[index][i].subContentId + j + ">" + instances[index][i].splittedWord[j].text.trim() + ' </span></div>'
+                slideTextElement = slideTextElement + "<div class='divText'><span id=" + instances[index][i].subContentId + "_" + j + ">" + instances[index][i].splittedWord[j].text.trim() + ' </span></div>'
               }
           }
         }
