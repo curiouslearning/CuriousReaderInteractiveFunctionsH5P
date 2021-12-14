@@ -140,13 +140,14 @@ H5P.CRAudio = (function ($) {
             if (word['endDuration'] > self.audio.duration) {
               word['endDuration'] = self.audio.duration;
             }
+            let audioDivTextElementSpanId = self.subContentId + '_' + j;
             if (time > word['startDuration'] && time < word['endDuration']) {
               if (!word.highlighted) {
                 word.highlighted = true;
                 if (self.parent != undefined) {
                   $('.h5p-current >div').each(function (index, element) {
                     var h5pCurrentInnerDiv = (element.children[0].children[0] != undefined) ? element.children[0].children[0] : element;
-                    let divTextParent = $(this).find('#' + self.subContentId + j).parent('div');
+                    let divTextParent = $(this).find('#' + audioDivTextElementSpanId).parent('div');
                     if (self.originalTextColor === undefined && divTextParent.css('color') !== undefined) {
                       self.originalTextColor = divTextParent.css('color');
                       console.log("highlighting!");
