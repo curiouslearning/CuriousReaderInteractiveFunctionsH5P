@@ -227,8 +227,8 @@ H5P.CRAudio = (function ($) {
     var self = this;
     if (!this.clickedByPlayOnDemand) {
       this.clickedByPlayOnDemand = true;
-      var index = clickedTextId.substr(clickedTextId.length - 1);
-      audioFile = this.splittedWord[index]
+      var index = clickedTextId.split('_')[1]; // get the index of the audio
+      audioFile = this.splittedWord[index];
       var demandAudio = document.createElement('audio');
       var source = document.createElement('source');
       if (audioFile.wordfile != undefined) {
