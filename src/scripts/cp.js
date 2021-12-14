@@ -925,8 +925,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     borderRadius: ele == '' ? '0%' : '50%',
     borderStyle: (this.editor !== undefined) && (ele === '-oval-animated') ? 'dotted' : 'none'
   }).click(function (event) {
-
-    let id = event.target.id.substr(0, event.target.id.length - 1);
+    let subContentId = event.target.id.split('_')[0];
     var audio;
     if (self.editor === undefined) {
       if (instance.libraryInfo.machineName == "H5P.Image" || instance.libraryInfo.machineName == "H5P.CRAdvancedText") {
