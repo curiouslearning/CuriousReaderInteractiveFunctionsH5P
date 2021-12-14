@@ -150,8 +150,6 @@ H5P.CRAudio = (function ($) {
                     let divTextParent = $(this).find('#' + audioDivTextElementSpanId).parent('div');
                     if (self.originalTextColor === undefined && divTextParent.css('color') !== undefined) {
                       self.originalTextColor = divTextParent.css('color');
-                      console.log("highlighting!");
-                      console.log(self.originalTextColor);
                     }
                     divTextParent.css({
                       "transform": 'scale(1.5)',
