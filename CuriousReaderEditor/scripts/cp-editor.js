@@ -1387,9 +1387,8 @@ H5PEditor.CuriousReader.prototype.generateForm = function (elementParams, type) 
   var elementFields = H5PEditor.$.extend(true, [], H5PEditor.CuriousReader.findField('elements', slides.field.fields).field.fields);
   let fieldsToHide = [];
   if (type === 'H5P.CRAdvancedText') {
-    console.log("Advanced Text");
-    // fieldsToHide = ['solution', 'alwaysDisplayComments', 'isEdit', 'displayAsButton', 'buttonSize', 'willDoAnimation', 'animationType'];
-    // self.hideFields(elementFields, fieldsToHide);
+    fieldsToHide = ['solution', 'alwaysDisplayComments', 'isEdit', 'displayAsButton', 'buttonSize', 'willDoAnimation', 'animationType'];
+    self.hideFields(elementFields, fieldsToHide);
   }
   if (type === 'H5P.Image') {
     fieldsToHide = ['solution', 'alwaysDisplayComments', 'displayAsButton', 'buttonSize'];

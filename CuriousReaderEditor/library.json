@@ -1,7 +1,7 @@
 {
   "title": "Course Presentation Editor",
   "majorVersion": 1,
-  "minorVersion": 22,
+  "minorVersion": 23,
   "patchVersion": 4,
   "runnable": 0,
   "machineName": "H5PEditor.CuriousReader",
@@ -62,7 +62,7 @@
     {
       "machineName": "H5P.CRAdvancedText",
       "majorVersion": 1,
-      "minorVersion": 1
+      "minorVersion": 2
     },
     {
       "machineName": "H5P.Link",
@@ -87,7 +87,7 @@
     {
       "machineName": "H5P.CRAudio",
       "majorVersion": 1,
-      "minorVersion": 4
+      "minorVersion": 5
     },
     {
       "machineName": "H5P.Blanks",
@@ -132,7 +132,7 @@
     {
       "machineName": "H5P.CuriousReader",
       "majorVersion": 1,
-      "minorVersion": 22
+      "minorVersion": 23
     },
     {
       "machineName": "H5P.MarkTheWords",

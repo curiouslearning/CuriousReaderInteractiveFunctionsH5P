@@ -115,7 +115,7 @@ H5PUpgrades['H5P.CuriousReader'] = (function () {
               // Check if element type is text
               if (element.action && element.action.library &&
                   element.action.library.split(' ')[0] === 'H5P.Text') {
-                element.action.library = 'H5P.CRAdvancedText 1.1';
+                element.action.library = 'H5P.CRAdvancedText 1.2';
               }
             }
           }
@@ -277,7 +277,7 @@ H5PUpgrades['H5P.CuriousReader'] = (function () {
                 if (element.action && element.action.library &&
                     element.action.library.split(' ')[0] === 'H5P.AppearIn') {
 
-                  element.action.library = 'H5P.CRAdvancedText 1.1';
+                  element.action.library = 'H5P.CRAdvancedText 1.2';
 
                   var roomName = '';
 

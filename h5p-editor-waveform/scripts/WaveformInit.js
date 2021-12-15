@@ -54,9 +54,9 @@ let WaveformInit = function (parent, field, params, setValue) {
     $('.wavesurfer-handle').css("background-color", "#707070");
 
     let region;
-    self.crAudioIndex = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields.length;
-    // let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
-    let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[0].parent.params.subContentId;
+    self.crAudioIndex = H5PEditor.renderableCommonFields["H5P.CRAudio 1.5"].fields.length;
+    // let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.5"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.5"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
+    let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.5"].fields[0].parent.params.subContentId;
     let path = self.audioParams.files ? self.audioParams.files[0].path : undefined;
     // let id =  self.parent.parent.parent.params.subContentId;
     if (path != undefined && id != undefined) {
@@ -146,8 +146,8 @@ let WaveformInit = function (parent, field, params, setValue) {
 
     $(self.container).parents('.h5p-craudio-editor').find(".h5p-add-file").first().parent().find('ul').on('DOMSubtreeModified',
       () => {
-        // let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
-        let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].parent.params.subContentId;
+        // let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.5"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.5"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
+        let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.5"].fields[self.crAudioIndex - 1].parent.params.subContentId;
         let path = self.audioParams.files ? self.audioParams.files[0].path : undefined;
         if (path != undefined && id != undefined) {
           let file = H5P.getPath(path, id);

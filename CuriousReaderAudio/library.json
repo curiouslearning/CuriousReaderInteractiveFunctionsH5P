@@ -3,7 +3,7 @@
   "contentType": "Media",
   "description": "Simple library that displays an audio player.",
   "majorVersion": 1,
-  "minorVersion": 4,
+  "minorVersion": 5,
   "patchVersion": 28,
   "runnable": 1,
   "machineName": "H5P.CRAudio",
@@ -41,7 +41,7 @@
 	  {
       "machineName": "H5PEditor.WaveformInit",
       "majorVersion": 1,
-      "minorVersion": 1
+      "minorVersion": 2
     }
   ],
     "metadataSettings": {
