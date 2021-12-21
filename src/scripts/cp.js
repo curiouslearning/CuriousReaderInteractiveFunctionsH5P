@@ -925,8 +925,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
     borderRadius: ele == '' ? '0%' : '50%',
     borderStyle: (this.editor !== undefined) && (ele === '-oval-animated') ? 'dotted' : 'none'
   }).click(function (event) {
-
-    let id = event.target.id.substr(0, event.target.id.length - 1);
+    let subContentId = event.target.id.split('_')[0];
     var audio;
     if (self.editor === undefined) {
       if (instance.libraryInfo.machineName == "H5P.Image" || instance.libraryInfo.machineName == "H5P.CRAdvancedText") {
@@ -938,16 +937,14 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
         }
       }
     }
-
-    if (audio != undefined && id == audio.subContentId) {
-      audio.playOnDemand(event.target.id)
+    if (audio != undefined && subContentId == audio.subContentId) {
+      audio.playOnDemand(event.target.id);
     }
 
-    var imgId = $(event.target).parent()[0].id
+    var imgId = $(event.target).parent()[0].id;
     if (audio != undefined && imgId != "" && instance.libraryInfo.machineName == "H5P.Image") {
-      audio.playOnDemand($(event.target).parent()[0].id.substr(3, $(event.target).parent()[0].id.length))
+      audio.playOnDemand($(event.target).parent()[0].id.substr(3, $(event.target).parent()[0].id.length));
     }
-
 
     if (element.willDoAnimation == true) {
       let imageTobeAnimated;
@@ -1011,7 +1008,7 @@ CuriousReader.prototype.attachElement = function (element, instance, $slide, ind
           if (instances[index][i].splittedWord != undefined) {
             if ((instances[index][i].splittedWord.length != 0 && instances[index][i].splittedWord[0].text != ''))
               for (let j = 0; j < instances[index][i].splittedWord.length; j++) {
-                slideTextElement = slideTextElement + "<div class='divText'><span id=" + instances[index][i].subContentId + j + ">" + instances[index][i].splittedWord[j].text.trim() + ' </span></div>'
+                slideTextElement = slideTextElement + "<div class='divText'><span id=" + instances[index][i].subContentId + "_" + j + ">" + instances[index][i].splittedWord[j].text.trim() + ' </span></div>'
               }
           }
         }
