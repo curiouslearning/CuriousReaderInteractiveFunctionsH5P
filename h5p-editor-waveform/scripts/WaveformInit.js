@@ -24,6 +24,7 @@ let WaveformInit = function (parent, field, params, setValue) {
   $(document).ready(() => {
     // making word textfield disable for user so they can't enter using keyboard
     // parent.children[1].$input[0].setAttribute('disabled',true);
+    if (!self.container || (self.container && self.container.length == 0)) return;
     console.log("Waveform ready: ");
     console.log(self);
     var wavesurfer = WaveSurfer.create({
