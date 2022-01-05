@@ -14,12 +14,11 @@ let WaveformInit = function (parent, field, params, setValue) {
 
   this.id = null;
   this.crAudioIndex = 0;
-  this.container;
+  this.container = null;
   this.audioParams = this.parent.parent.parent.params.params;
   this.startTime = this.parent.params.startDuration != undefined ? this.parent.params.startDuration : 0;
   this.endTime = this.parent.params.endDuration != undefined ? this.parent.params.endDuration : 0.2;
   this.audioDuration;
-  var self = this;
 }
 
 WaveformInit.prototype = Object.create(Parent.prototype);
@@ -30,6 +29,7 @@ WaveformInit.prototype.constructor = WaveformInit;
  * @param {*} $wrapper 
  */
 WaveformInit.prototype.init = function () {
+  var self = this;
   if (!self.container || (self.container && self.container.length == 0)) return;
   console.log("Waveform ready: ");
   console.log(self);
