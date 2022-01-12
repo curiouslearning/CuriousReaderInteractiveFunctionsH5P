@@ -96,6 +96,14 @@ WaveformInit.prototype.init = function () {
     //     region.play()
     //   }
     // })
+    let waveform = self.container[0];
+    let waveformParent = waveform.parentElement.parentElement;
+    console.log(waveformParent);
+    let startDurationField = waveformParent.querySelector('.field-name-startDuration');
+    let endDurationField = waveformParent.querySelector('.field-name-endDuration');
+
+    console.log(startDurationField);
+    console.log(endDurationField);
   });
 
   console.log("Testing: ");
