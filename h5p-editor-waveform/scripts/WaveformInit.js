@@ -123,7 +123,7 @@ WaveformInit.prototype.init = function () {
               }
               let inputStartTime = parseFloat(value);
               let inputEndTime = region.end <= parseFloat(value) ? parseFloat(value) + 0.2 : region.end;
-              params = {
+              let params = {
                 start: inputStartTime.toFixed(4),
                 end: inputEndTime.toFixed(4)
               }
@@ -143,11 +143,11 @@ WaveformInit.prototype.init = function () {
               }
               let inputStartTime = parseFloat(value) <= region.start ? 0 : region.start
               let inputEndTime = parseFloat(value);
-              params = {
+              let params = {
                 start: inputStartTime.toFixed(4),
                 end: inputEndTime.toFixed(4)
               }
-              region.update(params)
+              region.update(params);
             } else {
               $(this).parent().find('.h5p-errors').append("<p>The entered value must be Number not alphabet</p>")
             }
@@ -155,7 +155,7 @@ WaveformInit.prototype.init = function () {
         });
       }
     }
-  }, 4000);
+  }, 2000);
 
   wavesurfer.on('region-updated', (event) => {
     this.start = event.start;
