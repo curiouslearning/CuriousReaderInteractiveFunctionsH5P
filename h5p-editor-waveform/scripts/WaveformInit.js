@@ -98,6 +98,61 @@ WaveformInit.prototype.init = function () {
     // })
   });
 
+  console.log("Testing: ");
+  let waveform = self.container[0];
+  console.log(waveform);
+  let waveformParent = waveform.parentElement.parentElement;
+  console.log(waveformParent);
+  let startDurationField = waveformParent.querySelector('.field-name-startDuration');
+  console.log(startDurationField);
+  let endDurationField = waveformParent.querySelector('.field-name-endDuration');
+  console.log(endDurationField);
+  let startDurationFieldInput = startDurationField.querySelector('input');
+  let endDurationFieldInput = endDurationField.querySelector('input');
+
+  console.log(startDurationFieldInput);
+  console.log(endDurationFieldInput);
+
+  startDurationFieldInput.addEventListener("focusout", (e) => {
+    if (region != undefined) {
+      let value = e.target.value;
+      if (!isNaN(value)) {
+        if (parseFloat(value) > self.audioDuration) {
+          value = 0.0;
+        }
+        let inputStartTime = parseFloat(value);
+        let inputEndTime = region.end <= parseFloat(value) ? parseFloat(value) + 0.2 : region.end;
+        params = {
+          start: inputStartTime.toFixed(4),
+          end: inputEndTime.toFixed(4)
+        }
+        region.update(params)
+      } else {
+        $(this).parent().find('.h5p-errors').append("<p>The entered value must be Number not alphabet</p>")
+      }
+    }
+  });
+
+  endDurationFieldInput.addEventListener("focusout", (e) => {
+    if (region != undefined) {
+      let value = e.target.value;
+      if (!isNaN(value)) {
+        if (parseFloat(value) > self.audioDuration) {
+          value = self.audioDuration - 0.05;
+        }
+        let inputStartTime = parseFloat(value) <= region.start ? 0 : region.start
+        let inputEndTime = parseFloat(value);
+        params = {
+          start: inputStartTime.toFixed(4),
+          end: inputEndTime.toFixed(4)
+        }
+        region.update(params)
+      } else {
+        $(this).parent().find('.h5p-errors').append("<p>The entered value must be Number not alphabet</p>")
+      }
+    }
+  });
+
   wavesurfer.on('region-updated', (event) => {
     this.start = event.start;
     this.end = event.end;
@@ -152,56 +207,6 @@ WaveformInit.prototype.init = function () {
         region.play();
       }
     })
-    console.log("Testing: ");
-    let waveform = document.getElementById(this.id);
-    let waveformParent = waveform.parentElement.parentElement;
-    let startDurationField = waveformParent.querySelector('.field-name-startDuration');
-    let endDurationField = waveformParent.querySelector('.field-name-endDuration');
-    let startDurationFieldInput = startDurationField.querySelector('input');
-    let endDurationFieldInput = endDurationField.querySelector('input');
-
-    console.log(startDurationFieldInput);
-    console.log(endDurationFieldInput);
-
-    startDurationFieldInput.addEventListener("focusout", (e) => {
-      if (region != undefined) {
-        let value = e.target.value;
-        if (!isNaN(value)) {
-          if (parseFloat(value) > self.audioDuration) {
-            value = 0.0;
-          }
-          let inputStartTime = parseFloat(value);
-          let inputEndTime = region.end <= parseFloat(value) ? parseFloat(value) + 0.2 : region.end;
-          params = {
-            start: inputStartTime.toFixed(4),
-            end: inputEndTime.toFixed(4)
-          }
-          region.update(params)
-        } else {
-          $(this).parent().find('.h5p-errors').append("<p>The entered value must be Number not alphabet</p>")
-        }
-      }
-    });
-
-    endDurationFieldInput.addEventListener("focusout", (e) => {
-      if (region != undefined) {
-        let value = e.target.value;
-        if (!isNaN(value)) {
-          if (parseFloat(value) > self.audioDuration) {
-            value = self.audioDuration - 0.05;
-          }
-          let inputStartTime = parseFloat(value) <= region.start ? 0 : region.start
-          let inputEndTime = parseFloat(value);
-          params = {
-            start: inputStartTime.toFixed(4),
-            end: inputEndTime.toFixed(4)
-          }
-          region.update(params)
-        } else {
-          $(this).parent().find('.h5p-errors').append("<p>The entered value must be Number not alphabet</p>")
-        }
-      }
-    });
   }
 }
 
