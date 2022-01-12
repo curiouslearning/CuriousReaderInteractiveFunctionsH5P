@@ -153,7 +153,7 @@ WaveformInit.prototype.init = function () {
       }
     })
     console.log("Testing: ");
-    let waveform = document.getElementById(self.id);
+    let waveform = document.getElementById(this.id);
     let waveformParent = waveform.parentElement.parentElement;
     let startDurationField = waveformParent.querySelector('.field-name-startDuration');
     let endDurationField = waveformParent.querySelector('.field-name-endDuration');
