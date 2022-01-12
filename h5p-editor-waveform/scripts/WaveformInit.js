@@ -96,72 +96,66 @@ WaveformInit.prototype.init = function () {
     //     region.play()
     //   }
     // })
-    let waveform = self.container[0];
-    let waveformParent = waveform.parentElement.parentElement;
-    console.log(waveformParent);
-    let startDurationField = waveformParent.querySelector('.field-name-startDuration');
-    let endDurationField = waveformParent.querySelector('.field-name-endDuration');
-
-    console.log(startDurationField);
-    console.log(endDurationField);
   });
 
-  console.log("Testing: ");
-  if (self.container[0]) {
-    let waveform = self.container[0];
-    let waveformParent = waveform.parentElement.parentElement;
-    console.log(waveformParent);
-    let startDurationField = waveformParent.querySelector('.field-name-startDuration');
-    let endDurationField = waveformParent.querySelector('.field-name-endDuration');
+  setTimeout(() => {
+    console.log("Testing: ");
+    if (self.container[0]) {
+      let waveform = self.container[0];
+      let waveformParent = waveform.parentElement.parentElement;
+      console.log(waveformParent);
+      let startDurationField = waveformParent.querySelector('.field-name-startDuration');
+      let endDurationField = waveformParent.querySelector('.field-name-endDuration');
 
-    if (startDurationField && endDurationField) {
-      let startDurationFieldInput = startDurationField.querySelector('input');
-      let endDurationFieldInput = endDurationField.querySelector('input');
-    
-      console.log(startDurationFieldInput);
-      console.log(endDurationFieldInput);
-    
-      startDurationFieldInput.addEventListener("focusout", (e) => {
-        if (region != undefined) {
-          let value = e.target.value;
-          if (!isNaN(value)) {
-            if (parseFloat(value) > self.audioDuration) {
-              value = 0.0;
+      if (startDurationField && endDurationField) {
+        let startDurationFieldInput = startDurationField.querySelector('input');
+        let endDurationFieldInput = endDurationField.querySelector('input');
+      
+        console.log(startDurationFieldInput);
+        console.log(endDurationFieldInput);
+      
+        startDurationFieldInput.addEventListener("focusout", (e) => {
+          if (region != undefined) {
+            let value = e.target.value;
+            if (!isNaN(value)) {
+              if (parseFloat(value) > self.audioDuration) {
+                value = 0.0;
+              }
+              let inputStartTime = parseFloat(value);
+              let inputEndTime = region.end <= parseFloat(value) ? parseFloat(value) + 0.2 : region.end;
+              params = {
+                start: inputStartTime.toFixed(4),
+                end: inputEndTime.toFixed(4)
+              }
+              region.update(params)
+            } else {
+              $(this).parent().find('.h5p-errors').append("<p>The entered value must be Number not alphabet</p>")
             }
-            let inputStartTime = parseFloat(value);
-            let inputEndTime = region.end <= parseFloat(value) ? parseFloat(value) + 0.2 : region.end;
-            params = {
-              start: inputStartTime.toFixed(4),
-              end: inputEndTime.toFixed(4)
-            }
-            region.update(params)
-          } else {
-            $(this).parent().find('.h5p-errors').append("<p>The entered value must be Number not alphabet</p>")
           }
-        }
-      });
-    
-      endDurationFieldInput.addEventListener("focusout", (e) => {
-        if (region != undefined) {
-          let value = e.target.value;
-          if (!isNaN(value)) {
-            if (parseFloat(value) > self.audioDuration) {
-              value = self.audioDuration - 0.05;
+        });
+      
+        endDurationFieldInput.addEventListener("focusout", (e) => {
+          if (region != undefined) {
+            let value = e.target.value;
+            if (!isNaN(value)) {
+              if (parseFloat(value) > self.audioDuration) {
+                value = self.audioDuration - 0.05;
+              }
+              let inputStartTime = parseFloat(value) <= region.start ? 0 : region.start
+              let inputEndTime = parseFloat(value);
+              params = {
+                start: inputStartTime.toFixed(4),
+                end: inputEndTime.toFixed(4)
+              }
+              region.update(params)
+            } else {
+              $(this).parent().find('.h5p-errors').append("<p>The entered value must be Number not alphabet</p>")
             }
-            let inputStartTime = parseFloat(value) <= region.start ? 0 : region.start
-            let inputEndTime = parseFloat(value);
-            params = {
-              start: inputStartTime.toFixed(4),
-              end: inputEndTime.toFixed(4)
-            }
-            region.update(params)
-          } else {
-            $(this).parent().find('.h5p-errors').append("<p>The entered value must be Number not alphabet</p>")
           }
-        }
-      });
+        });
+      }
     }
-  }
+  }, 4000);
 
   wavesurfer.on('region-updated', (event) => {
     this.start = event.start;
