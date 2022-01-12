@@ -100,6 +100,8 @@ WaveformInit.prototype.init = function () {
     // })
   });
 
+  console.log(self.container);
+
   $(self.container).parent().parent().find('.field-name-startDuration').find('input').focusout(function (e) {
     if (region != undefined) {
       let value = e.target.value;
