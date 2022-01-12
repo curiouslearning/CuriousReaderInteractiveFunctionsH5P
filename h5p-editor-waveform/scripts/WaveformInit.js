@@ -99,13 +99,17 @@ WaveformInit.prototype.init = function () {
   });
 
   console.log("Testing: ");
-  console.log(self.id);
-  console.log(self.container[0]);
-  console.log(self.container[0].parentNode);
-  console.log(self.container[0].parentNode.parentNode);
-  console.log(self.container[0].parentNode.parentNode.querySelector('.field-name-startDuration'));
+  let waveform = document.getElementById(self.id);
+  let waveformParent = waveform.parentElement.parentElement;
+  let startDurationField = waveformParent.querySelector('.field-name-startDuration');
+  let endDurationField = waveformParent.querySelector('.field-name-endDuration');
+  let startDurationFieldInput = startDurationField.querySelector('input');
+  let endDurationFieldInput = endDurationField.querySelector('input');
 
-  $(self.container).parent().parent().find('.field-name-startDuration').find('input').focusout(function (e) {
+  console.log(startDurationFieldInput);
+  console.log(endDurationFieldInput);
+
+  startDurationFieldInput.addEventListener("focusout", (e) => {
     if (region != undefined) {
       let value = e.target.value;
       if (!isNaN(value)) {
@@ -125,7 +129,7 @@ WaveformInit.prototype.init = function () {
     }
   });
 
-  $(self.container).parent().parent().find('.field-name-endDuration').find('input').focusout(function (e) {
+  endDurationFieldInput.addEventListener("focusout", (e) => {
     if (region != undefined) {
       let value = e.target.value;
       if (!isNaN(value)) {
