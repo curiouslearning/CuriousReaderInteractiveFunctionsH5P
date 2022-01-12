@@ -13,6 +13,10 @@
     border-radius: 4px;
 }
 
+.wavesurfer-region {
+    z-index: 100;
+}
+
 /* .playRegion {
     position: absolute;
     right: 0%;

@@ -155,7 +155,7 @@ WaveformInit.prototype.init = function () {
         });
       }
     }
-  }, 2000);
+  }, 2000)
 
   wavesurfer.on('region-updated', (event) => {
     this.start = event.start;
@@ -169,38 +169,38 @@ WaveformInit.prototype.init = function () {
   });
 
   $(self.container).parents('.h5p-craudio-editor').find(".h5p-add-file").first().parent().find('ul').on('DOMSubtreeModified',
-    () => {
-      // let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
-      let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].parent.params.subContentId;
-      let path = self.audioParams.files ? self.audioParams.files[0].path : undefined;
-      if (path != undefined && id != undefined) {
+  () => {
+    // let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
+    let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].parent.params.subContentId;
+    let path = self.audioParams.files ? self.audioParams.files[0].path : undefined;
+    if (path != undefined && id != undefined) {
+      let file = H5P.getPath(path, id);
+      $.get(file).done(function () {
+        setTimeout(function () {
+          wavesurfer.load(file);
+        }, 1000)
+      }).fail(function () {
+        let id = H5PEditor.contentId;
         let file = H5P.getPath(path, id);
-        $.get(file).done(function () {
-          setTimeout(function () {
-            wavesurfer.load(file);
-          }, 1000)
-        }).fail(function () {
-          let id = H5PEditor.contentId;
-          let file = H5P.getPath(path, id);
-          setTimeout(function () {
-            wavesurfer.load(file);
-          }, 1000)
-        })
+        setTimeout(function () {
+          wavesurfer.load(file);
+        }, 1000)
+      })
+    }
+    if (region != undefined) {
+      let $startinput = $('#' + this.id).parent().parent().find('.field-name-startDuration').find('input');
+      let $endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input')
+      $startinput.val(0);
+      $endinput.val(0.2);
+      this.setValue(this.findField("startDuration", this.parent.field.fields), "" + 0);
+      this.setValue(this.findField("endDuration", this.parent.field.fields), "" + 0.2);
+      params = {
+        start: 0,
+        end: 0.2
       }
-      if (region != undefined) {
-        let $startinput = $('#' + this.id).parent().parent().find('.field-name-startDuration').find('input');
-        let $endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input')
-        $startinput.val(0);
-        $endinput.val(0.2);
-        this.setValue(this.findField("startDuration", this.parent.field.fields), "" + 0);
-        this.setValue(this.findField("endDuration", this.parent.field.fields), "" + 0.2);
-        params = {
-          start: 0,
-          end: 0.2
-        }
-        region.update(params)
-      }
-    });
+      region.update(params)
+    }
+  });
 
   if (this.id != null) {
     let regionId = this.id + "playRegion";
