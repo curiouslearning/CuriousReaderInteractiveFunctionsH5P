@@ -31,8 +31,6 @@ WaveformInit.prototype.constructor = WaveformInit;
 WaveformInit.prototype.init = function () {
   var self = this;
   if (!self.container || (self.container && self.container.length == 0)) return;
-  console.log("Waveform ready: ");
-  console.log(self);
   var wavesurfer = WaveSurfer.create({
     container: self.container[0],
     waveColor: 'green',
@@ -100,7 +98,11 @@ WaveformInit.prototype.init = function () {
     // })
   });
 
+  console.log("Testing: ");
   console.log(self.container);
+  console.log(self.container.parentNode);
+  console.log(self.container.parentNode.parentNode);
+  console.log(self.container.parentNode.parentNode.querySelector('.field-name-startDuration'));
 
   $(self.container).parent().parent().find('.field-name-startDuration').find('input').focusout(function (e) {
     if (region != undefined) {
