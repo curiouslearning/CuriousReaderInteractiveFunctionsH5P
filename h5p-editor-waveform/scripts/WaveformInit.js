@@ -99,10 +99,11 @@ WaveformInit.prototype.init = function () {
   });
 
   console.log("Testing: ");
-  console.log(self.container);
-  console.log(self.container.parentNode);
-  console.log(self.container.parentNode.parentNode);
-  console.log(self.container.parentNode.parentNode.querySelector('.field-name-startDuration'));
+  console.log(self.id);
+  console.log(self.container[0]);
+  console.log(self.container[0].parentNode);
+  console.log(self.container[0].parentNode.parentNode);
+  console.log(self.container[0].parentNode.parentNode.querySelector('.field-name-startDuration'));
 
   $(self.container).parent().parent().find('.field-name-startDuration').find('input').focusout(function (e) {
     if (region != undefined) {
@@ -207,9 +208,6 @@ WaveformInit.prototype.init = function () {
  * @param {H5P.jQuery} $wrapper
  */
 WaveformInit.prototype.appendTo = function ($wrapper) {
-  console.log("Waveform append!");
-  console.log(this);
-  console.log($wrapper);
   var self = this;
   const id = ns.getNextFieldId(this.field);
   var html = H5PEditor.createFieldMarkup(this.field, '<div class="waveform" id="' + id + '" class="h5p-color-picker">', id);
