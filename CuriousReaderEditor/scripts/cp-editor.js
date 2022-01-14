@@ -346,6 +346,19 @@ H5PEditor.CuriousReader.prototype.appendTo = function ($wrapper) {
   });
 
   this.updateSlidesSidebar();
+
+  // Add Docsie documentation link
+  setTimeout(() => {
+    let presentation = document.getElementsByClassName("field-name-presentation")[0];
+    if (presentation) {
+      let docsieLink = document.createElement("a");
+      docsieLink.setAttribute("href", "https://portals.docsie.io/curious-learning-glp/curious-learning-glp-docs/curious-learning-glp-docs-docs/deployment_sBUpMczhAf8UVjuVr/?doc=/");
+      docsieLink.setAttribute("target", "_blank");
+      docsieLink.setAttribute("class", "h5p-docsie-link");
+      docsieLink.innerHTML = "Please visit the documentation for more information about using Curious Reader.";
+      presentation.parentNode.insertBefore(docsieLink, presentation);
+    }
+  }, 5000);
 };
 
 /**
