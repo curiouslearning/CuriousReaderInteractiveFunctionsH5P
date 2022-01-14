@@ -347,15 +347,16 @@ H5PEditor.CuriousReader.prototype.appendTo = function ($wrapper) {
 
   this.updateSlidesSidebar();
 
-  console.log("Adding Docsie Link!");
   let extraTitleElement = document.getElementsByClassName("field-name-extraTitle")[0];
   if (extraTitleElement) {
     let docsieLink = document.createElement("a");
     docsieLink.setAttribute("href", "https://portals.docsie.io/curious-learning-glp/curious-learning-glp-docs/curious-learning-glp-docs-docs/deployment_sBUpMczhAf8UVjuVr/?doc=/");
     docsieLink.setAttribute("target", "_blank");
     docsieLink.setAttribute("class", "h5p-docsie-link");
-    docsieLink.innerHTML = "Please visit the documentation for more information about using Curious Reader.";
+    docsieLink.innerHTML = "Please visit the documentation for more information about using the Curious Reader editor.";
     extraTitleElement.parentNode.insertBefore(docsieLink, extraTitleElement.nextSibling);
+  } else {
+    console.log("Could not find the extraTitle element.");
   }
 };
 
