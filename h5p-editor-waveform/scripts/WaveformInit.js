@@ -99,20 +99,17 @@ WaveformInit.prototype.init = function () {
   });
 
   setTimeout(() => {
-    console.log("Testing: ");
     if (self.container[0]) {
+      // Add event listeners to start and end duration for this wavesurfer instance
       let waveform = self.container[0];
       let waveformParent = waveform.parentElement.parentElement;
-      console.log(waveformParent);
+
       let startDurationField = waveformParent.querySelector('.field-name-startDuration');
       let endDurationField = waveformParent.querySelector('.field-name-endDuration');
 
       if (startDurationField && endDurationField) {
         let startDurationFieldInput = startDurationField.querySelector('input');
         let endDurationFieldInput = endDurationField.querySelector('input');
-      
-        console.log(startDurationFieldInput);
-        console.log(endDurationFieldInput);
       
         startDurationFieldInput.addEventListener("focusout", (e) => {
           if (region != undefined) {
