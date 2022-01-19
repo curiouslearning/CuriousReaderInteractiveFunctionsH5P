@@ -153,7 +153,7 @@ WaveformInit.prototype.init = function () {
       }
 
       // Add audio loader observer on this wavesurfer instance
-      let filesField = document.getElementsByClassName["field-name-files"][0];
+      let filesField = document.getElementsByClassName("field-name-files")[0];
       console.log("FilesField: ", filesField);
       if (filesField) {
         let filesListElement = filesField.querySelector('ul');
