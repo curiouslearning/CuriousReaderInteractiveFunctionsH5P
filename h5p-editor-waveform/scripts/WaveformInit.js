@@ -154,14 +154,12 @@ WaveformInit.prototype.init = function () {
 
       // Add audio loader observer on this wavesurfer instance
       let filesField = document.getElementsByClassName("field-name-files")[0];
-      console.log("FilesField: ", filesField);
       if (filesField) {
         let filesListElement = filesField.querySelector('ul');
-        console.log("FilesListElement: ", filesListElement);
 
         const observerConfig = { attributes: true, childList: true, subtree: true };
 
-        const observer = new MutationObserver((mutationsList, observer) => { 
+        const observer = new MutationObserver((mutationsList, observer) => {
           let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].parent.params.subContentId;
           let path = self.audioParams.files ? self.audioParams.files[0].path : undefined;
           if (path != undefined && id != undefined) {
@@ -169,18 +167,18 @@ WaveformInit.prototype.init = function () {
             $.get(file).done(function () {
               setTimeout(function () {
                 wavesurfer.load(file);
-              }, 1000)
+              }, 1000);
             }).fail(function () {
               let id = H5PEditor.contentId;
               let file = H5P.getPath(path, id);
               setTimeout(function () {
                 wavesurfer.load(file);
-              }, 1000)
+              }, 1000);
             })
           }
           if (region != undefined) {
             let $startinput = $('#' + this.id).parent().parent().find('.field-name-startDuration').find('input');
-            let $endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input')
+            let $endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input');
             $startinput.val(0);
             $endinput.val(0.2);
             this.setValue(this.findField("startDuration", this.parent.field.fields), "" + 0);
@@ -196,7 +194,6 @@ WaveformInit.prototype.init = function () {
         observer.observe(filesListElement, observerConfig);
 
       }
-
     }
   }, 2000);
 
@@ -210,40 +207,6 @@ WaveformInit.prototype.init = function () {
     this.setValue(this.findField("startDuration", this.parent.field.fields), "" + this.start.toFixed(4));
     this.setValue(this.findField("endDuration", this.parent.field.fields), "" + this.end.toFixed(4));
   });
-
-  // $(self.container).parents('.h5p-craudio-editor').find(".h5p-add-file").first().parent().find('ul').on('DOMSubtreeModified',
-  // () => { 
-    // let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
-    // let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].parent.params.subContentId;
-    // let path = self.audioParams.files ? self.audioParams.files[0].path : undefined;
-    // if (path != undefined && id != undefined) {
-    //   let file = H5P.getPath(path, id);
-    //   $.get(file).done(function () {
-    //     setTimeout(function () {
-    //       wavesurfer.load(file);
-    //     }, 1000)
-    //   }).fail(function () {
-    //     let id = H5PEditor.contentId;
-    //     let file = H5P.getPath(path, id);
-    //     setTimeout(function () {
-    //       wavesurfer.load(file);
-    //     }, 1000)
-    //   })
-    // }
-    // if (region != undefined) {
-    //   let $startinput = $('#' + this.id).parent().parent().find('.field-name-startDuration').find('input');
-    //   let $endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input')
-    //   $startinput.val(0);
-    //   $endinput.val(0.2);
-    //   this.setValue(this.findField("startDuration", this.parent.field.fields), "" + 0);
-    //   this.setValue(this.findField("endDuration", this.parent.field.fields), "" + 0.2);
-    //   params = {
-    //     start: 0,
-    //     end: 0.2
-    //   }
-    //   region.update(params)
-    // }
-  // });
 
   if (this.id != null) {
     let regionId = this.id + "playRegion";
