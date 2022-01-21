@@ -9,6 +9,42 @@
   src: url('../fonts/DroidSans-Bold.ttf') format('truetype');
   font-weight: bold;
 }
+/* QuickSand fonts */
+@font-face {
+  font-family: 'QuickSandRegular';
+  src: url('../fonts/Quicksand-Regular.otf') format('opentype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'QuickSandBold';
+  src: url('../fonts/Quicksand-Bold.otf') format('opentype');
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'QuickSandLight';
+  src: url('../fonts/Quicksand-Light.otf') format('opentype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'QuickSandLightItalic';
+  src: url('../fonts/Quicksand-LightItalic.otf') format('opentype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'QuickSandItalic';
+  src: url('../fonts/Quicksand-Italic.otf') format('opentype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'QuickSandBoldItalic';
+  src: url('../fonts/Quicksand-BoldItalic.otf') format('opentype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'QuickSandDash';
+  src: url('../fonts/Quicksand_Dash.otf') format('opentype');
+  font-weight: normal;
+}
 
 /* IcoMoon font licensed under the GNU General Public License: http://www.gnu.org/licenses/gpl.html */
 @font-face {
