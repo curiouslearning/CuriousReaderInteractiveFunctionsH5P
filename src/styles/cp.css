@@ -12,37 +12,37 @@
 /* QuickSand fonts */
 @font-face {
   font-family: 'QuickSandRegular';
-  src: url('../fonts/Quicksand-Regular.otf') format('opentype');
+  src: url('../fonts/Quicksand-Regular.ttf') format('truetype');
   font-weight: normal;
 }
 @font-face {
   font-family: 'QuickSandBold';
-  src: url('../fonts/Quicksand-Bold.otf') format('opentype');
+  src: url('../fonts/Quicksand-Bold.ttf') format('truetype');
   font-weight: bold;
 }
 @font-face {
   font-family: 'QuickSandLight';
-  src: url('../fonts/Quicksand-Light.otf') format('opentype');
+  src: url('../fonts/Quicksand-Light.ttf') format('truetype');
   font-weight: normal;
 }
 @font-face {
   font-family: 'QuickSandLightItalic';
-  src: url('../fonts/Quicksand-LightItalic.otf') format('opentype');
+  src: url('../fonts/Quicksand-LightItalic.ttf') format('truetype');
   font-weight: normal;
 }
 @font-face {
   font-family: 'QuickSandItalic';
-  src: url('../fonts/Quicksand-Italic.otf') format('opentype');
+  src: url('../fonts/Quicksand-Italic.ttf') format('truetype');
   font-weight: normal;
 }
 @font-face {
   font-family: 'QuickSandBoldItalic';
-  src: url('../fonts/Quicksand-BoldItalic.otf') format('opentype');
+  src: url('../fonts/Quicksand-BoldItalic.ttf') format('truetype');
   font-weight: normal;
 }
 @font-face {
   font-family: 'QuickSandDash';
-  src: url('../fonts/Quicksand_Dash.otf') format('opentype');
+  src: url('../fonts/Quicksand_Dash.ttf') format('truetype');
   font-weight: normal;
 }
 
