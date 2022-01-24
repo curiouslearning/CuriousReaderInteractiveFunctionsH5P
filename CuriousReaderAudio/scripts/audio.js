@@ -153,7 +153,7 @@ H5P.CRAudio = (function ($) {
                     }
                     divTextParent.css({
                       "transform": 'scale(1.5)',
-                      'z-index': '2',
+                      'z-index': '100',
                       'color': self.glowColor,
                       // 'text-shadow': '0px 0px 5px ' + self.glowColor,
                     });
@@ -240,22 +240,22 @@ H5P.CRAudio = (function ($) {
           self.originalColor = parentElement.css('color');
           parentElement.css({
             "transform": 'scale(1.5)',
-            'z-index': '2',
+            'z-index': '100',
             'color': self.glowColor,
             // 'text-shadow': '0px 0px 5px ' + self.glowColor,
           });
 
-          // setTimeout(function () {
-          //   $(element.children).each(function () {
-          //     $(this).find('#' + clickedTextId).parent('div').css({
-          //       "transform": 'scale(1)',
-          //       'z-index': '1',
-          //       'color': self.originalColor,
-          //       // 'text-shadow': '0px 0px 5px transparent',
-          //     })
-          //     self.clickedByPlayOnDemand = false;
-          //   })
-          // }, 600)
+          setTimeout(function () {
+            $(element.children).each(function () {
+              $(this).find('#' + clickedTextId).parent('div').css({
+                "transform": 'scale(1)',
+                'z-index': '1',
+                'color': self.originalColor,
+                // 'text-shadow': '0px 0px 5px transparent',
+              })
+              // self.clickedByPlayOnDemand = false;
+            })
+          }, 600)
           let canWe = false;
           $(element.children).each(function (index, element) {
             $(demandAudio).on('canplaythrough', function (e) {
@@ -278,7 +278,7 @@ H5P.CRAudio = (function ($) {
       } else {
         $('#' + clickedTextId).parent('div').css({
           "transform": 'scale(1.5)',
-          'z-index': '2',
+          'z-index': '100',
           'text-shadow': '0px 0px 5px ' + self.glowColor,
         });
         setTimeout(function () {
