@@ -222,7 +222,7 @@ H5P.CRAudio = (function ($) {
 
   C.prototype.playOnDemand = function (clickedTextId) {
     var self = this;
-    if (!this.clickedByPlayOnDemand) {
+    if (!self.clickedByPlayOnDemand) {
       this.clickedByPlayOnDemand = true;
       var index = clickedTextId.split('_')[1]; // get the index of the audio
       audioFile = this.splittedWord[index];
@@ -245,17 +245,17 @@ H5P.CRAudio = (function ($) {
             // 'text-shadow': '0px 0px 5px ' + self.glowColor,
           });
 
-          setTimeout(function () {
-            $(element.children).each(function () {
-              $(this).find('#' + clickedTextId).parent('div').css({
-                "transform": 'scale(1)',
-                'z-index': '1',
-                'color': self.originalColor,
-                // 'text-shadow': '0px 0px 5px transparent',
-              })
-              self.clickedByPlayOnDemand = false;
-            })
-          }, 600)
+          // setTimeout(function () {
+          //   $(element.children).each(function () {
+          //     $(this).find('#' + clickedTextId).parent('div').css({
+          //       "transform": 'scale(1)',
+          //       'z-index': '1',
+          //       'color': self.originalColor,
+          //       // 'text-shadow': '0px 0px 5px transparent',
+          //     })
+          //     self.clickedByPlayOnDemand = false;
+          //   })
+          // }, 600)
           let canWe = false;
           $(element.children).each(function (index, element) {
             $(demandAudio).on('canplaythrough', function (e) {
