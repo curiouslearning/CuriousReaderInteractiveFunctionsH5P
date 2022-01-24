@@ -126,8 +126,8 @@ H5P.CRAudio = (function ($) {
         .addClass(PLAY_BUTTON_PAUSED);
     });
 
-    self.audio.addEventListener('timeupdate', function () {
-      if (self.clickByPlayOnDemand) {} else {
+    self.audio.addEventListener('timeupdate', () => {
+      if (this.clickedByPlayOnDemand) {} else {
         if (self.splittedWord != undefined) {
           var time = self.audio.currentTime,
             j = 0,
