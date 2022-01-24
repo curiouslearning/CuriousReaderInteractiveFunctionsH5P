@@ -111,7 +111,7 @@ H5P.CRAudio = (function ($) {
     });
 
     self.audio.addEventListener('play', () => {
-      this.clickByPlayOnDemand = false;
+      this.clickedByPlayOnDemand = false;
       audioButton
         .attr('aria-label', self.params.pauseAudio)
         .removeClass(PLAY_BUTTON)
