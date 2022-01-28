@@ -223,7 +223,7 @@ H5P.CRAudio = (function ($) {
 
   C.prototype.playOnDemand = function (clickedTextId) {
     var self = this;
-    if (!self.clickedByPlayOnDemand) {
+    // if (!self.clickedByPlayOnDemand) {
       this.clickedByPlayOnDemand = true;
       console.log(" AUDIO OBJECT ");
       console.log(this.audio);
@@ -280,20 +280,20 @@ H5P.CRAudio = (function ($) {
 
         })
 
-      } else {
-        $('#' + clickedTextId).parent('div').css({
-          "transform": 'scale(1.5)',
-          'z-index': '100',
-          'text-shadow': '0px 0px 5px ' + self.glowColor,
-        });
-        setTimeout(function () {
-          $('#' + clickedTextId).parent('div').css({
-            "transform": 'scale(1)',
-            'z-index': '1',
-            'text-shadow': '0px 0px 5px ' + self.glowColor,
-          })
-        }, 600)
-      }
+      // } else {
+      //   $('#' + clickedTextId).parent('div').css({
+      //     "transform": 'scale(1.5)',
+      //     'z-index': '100',
+      //     'text-shadow': '0px 0px 5px ' + self.glowColor,
+      //   });
+      //   setTimeout(function () {
+      //     $('#' + clickedTextId).parent('div').css({
+      //       "transform": 'scale(1)',
+      //       'z-index': '1',
+      //       'text-shadow': '0px 0px 5px ' + self.glowColor,
+      //     })
+      //   }, 600)
+      // }
     }
   }
 
