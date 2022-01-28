@@ -224,11 +224,38 @@ H5P.CRAudio = (function ($) {
   C.prototype.playOnDemand = function (clickedTextId) {
     var self = this;
 
+    if (!this.clickedByPlayOnDemand) {
+      for (j = 0; j < self.splittedWord.length; j++) {
+        word = self.splittedWord[j]
+        let audioDivTextElementSpanId = self.subContentId + '_' + j;
+        if (word.highlighted == undefined) {
+          word.highlighted = false
+        } else if (word.highlighted) {
+          if (self.parent != undefined) {
+            $('.h5p-current').each(function () {
+              $(this).find('#' + audioDivTextElementSpanId).parent('div').css({
+                "transform": 'scale(1)',
+                'z-index': '1',
+                'color': self.originalTextColor,
+                // 'text-shadow': '0px 0px 5px transparent',
+              });
+            });
+          } else {
+            $('#' + j).css({
+              "color": 'red',
+            })
+          }
+          word.highlighted = false;
+          self.originalTextColor = undefined;
+        }
+      }
+    }
+
     this.clickedByPlayOnDemand = true;
-    console.log(" AUDIO OBJECT ");
-    console.log(this.audio);
+
     this.audio.pause();
     this.audio.currentTime = 0;
+
     var index = clickedTextId.split('_')[1]; // get the index of the audio
     audioFile = this.splittedWord[index];
     var demandAudio = document.createElement('audio');
