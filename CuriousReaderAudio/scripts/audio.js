@@ -128,7 +128,7 @@ H5P.CRAudio = (function ($) {
     });
 
     self.audio.addEventListener('timeupdate', () => {
-      if (this.clickedByPlayOnDemand) {} else {
+      if (this.clickedByPlayOnDemand) { } else {
         if (self.splittedWord != undefined) {
           var time = self.audio.currentTime,
             j = 0,
@@ -225,6 +225,8 @@ H5P.CRAudio = (function ($) {
     var self = this;
     if (!self.clickedByPlayOnDemand) {
       this.clickedByPlayOnDemand = true;
+      console.log(" AUDIO OBJECT ");
+      console.log(this.audio);
       var index = clickedTextId.split('_')[1]; // get the index of the audio
       audioFile = this.splittedWord[index];
       var demandAudio = document.createElement('audio');
