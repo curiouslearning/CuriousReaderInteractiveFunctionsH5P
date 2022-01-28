@@ -227,6 +227,8 @@ H5P.CRAudio = (function ($) {
       this.clickedByPlayOnDemand = true;
       console.log(" AUDIO OBJECT ");
       console.log(this.audio);
+      this.audio.pause();
+      this.audio.currentTime = 0;
       var index = clickedTextId.split('_')[1]; // get the index of the audio
       audioFile = this.splittedWord[index];
       var demandAudio = document.createElement('audio');
