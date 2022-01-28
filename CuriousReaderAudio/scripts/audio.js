@@ -239,7 +239,6 @@ H5P.CRAudio = (function ($) {
         demandAudio.appendChild(source);
       }
       demandAudio.play();
-      this.audio.play();
       if (self.parent != undefined) {
         $('.h5p-current').each(function (index, element) {
           let parentElement = $(element.children).find('#' + clickedTextId).parent('div');
