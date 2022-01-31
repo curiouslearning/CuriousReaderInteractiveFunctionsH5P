@@ -266,44 +266,47 @@ H5P.CRAudio = (function ($) {
       source.type = audioFile.wordfile[0].mime;
       demandAudio.appendChild(source);
     }
-    demandAudio.play();
-    if (self.parent != undefined) {
-      $('.h5p-current').each((index, element) => {
-        let parentElement = $(element.children).find('#' + clickedTextId).parent('div');
-        self.originalColor = parentElement.css('color');
-        parentElement.css({
-          "transform": 'scale(1.5)',
-          'z-index': '100',
-          'color': self.glowColor
-        });
-
-        console.log(demandAudio);
-        console.log(demandAudio.duration);
-
-        setTimeout(() => {
-          $(element.children).each(function () {
-            $(this).find('#' + clickedTextId).parent('div').css({
-              "transform": 'scale(1)',
-              'z-index': '1',
-              'color': self.originalColor
-            })
-            // self.clickedByPlayOnDemand = false;
-          })
-        }, demandAudio.duration === NaN ? 600 : demandAudio.duration * 500);
-
-        let canWe = false;
-        $(element.children).each(function (index, element) {
-          $(demandAudio).on('canplaythrough', function (e) {
-            canWe = true;
-            self.parent.animation(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'), e.currentTarget.duration, self.glowColor)
+    demandAudio.addEventListener('loadedmetadata', (event) => {
+      demandAudio.play();
+      
+      if (self.parent != undefined) {
+        $('.h5p-current').each((index, element) => {
+          let parentElement = $(element.children).find('#' + clickedTextId).parent('div');
+          self.originalColor = parentElement.css('color');
+          parentElement.css({
+            "transform": 'scale(1.5)',
+            'z-index': '100',
+            'color': self.glowColor
           });
-          if (canWe == false) {
-            self.parent.animation(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'), null, self.glowColor)
-          }
+  
+          console.log(demandAudio);
+          console.log(demandAudio.duration);
+  
+          setTimeout(() => {
+            $(element.children).each(function () {
+              $(this).find('#' + clickedTextId).parent('div').css({
+                "transform": 'scale(1)',
+                'z-index': '1',
+                'color': self.originalColor
+              })
+              // self.clickedByPlayOnDemand = false;
+            })
+          }, demandAudio.duration === NaN ? 600 : demandAudio.duration * 500);
+  
+          let canWe = false;
+          $(element.children).each(function (index, element) {
+            $(demandAudio).on('canplaythrough', function (e) {
+              canWe = true;
+              self.parent.animation(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'), e.currentTarget.duration, self.glowColor)
+            });
+            if (canWe == false) {
+              self.parent.animation(($(element.children).find('#img' + clickedTextId)).parent('div').parent('div'), null, self.glowColor)
+            }
+          })
+  
         })
-
-      })
-    }
+      }
+    });
   }
 
 
