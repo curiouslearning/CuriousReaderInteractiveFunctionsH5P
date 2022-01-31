@@ -268,7 +268,7 @@ H5P.CRAudio = (function ($) {
     }
     demandAudio.addEventListener('loadedmetadata', (event) => {
       demandAudio.play();
-      
+
       if (self.parent != undefined) {
         $('.h5p-current').each((index, element) => {
           let parentElement = $(element.children).find('#' + clickedTextId).parent('div');
@@ -278,9 +278,6 @@ H5P.CRAudio = (function ($) {
             'z-index': '100',
             'color': self.glowColor
           });
-  
-          console.log(demandAudio);
-          console.log(demandAudio.duration);
   
           setTimeout(() => {
             $(element.children).each(function () {
