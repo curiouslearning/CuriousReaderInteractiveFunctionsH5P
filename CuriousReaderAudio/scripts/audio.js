@@ -285,7 +285,8 @@ H5P.CRAudio = (function ($) {
             })
             // self.clickedByPlayOnDemand = false;
           })
-        }, 600)
+        }, demandAudio.duration * 1000);
+        
         let canWe = false;
         $(element.children).each(function (index, element) {
           $(demandAudio).on('canplaythrough', function (e) {
