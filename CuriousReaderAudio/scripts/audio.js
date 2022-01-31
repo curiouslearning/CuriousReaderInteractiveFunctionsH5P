@@ -261,6 +261,7 @@ H5P.CRAudio = (function ($) {
     var demandAudio = document.createElement('audio');
     var source = document.createElement('source');
     if (audioFile.wordfile != undefined) {
+      demandAudio.preload = "metadata";
       source.src = H5P.getPath(audioFile.wordfile[0].path, this.contentId);
       source.type = audioFile.wordfile[0].mime;
       demandAudio.appendChild(source);
@@ -288,7 +289,7 @@ H5P.CRAudio = (function ($) {
             })
             // self.clickedByPlayOnDemand = false;
           })
-        }, demandAudio.duration * 500);
+        }, demandAudio.duration === NaN ? 600 : demandAudio.duration * 500);
 
         let canWe = false;
         $(element.children).each(function (index, element) {
