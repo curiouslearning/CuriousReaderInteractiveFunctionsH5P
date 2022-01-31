@@ -277,6 +277,7 @@ H5P.CRAudio = (function ($) {
         });
 
         console.log(demandAudio);
+        console.log(demandAudio.duration);
 
         setTimeout(() => {
           $(element.children).each(function () {
@@ -287,7 +288,7 @@ H5P.CRAudio = (function ($) {
             })
             // self.clickedByPlayOnDemand = false;
           })
-        }, 600);
+        }, demandAudio.duration * 500);
 
         let canWe = false;
         $(element.children).each(function (index, element) {
