@@ -267,7 +267,7 @@ H5P.CRAudio = (function ($) {
     }
     demandAudio.play();
     if (self.parent != undefined) {
-      $('.h5p-current').each(function (index, element) {
+      $('.h5p-current').each((index, element) => {
         let parentElement = $(element.children).find('#' + clickedTextId).parent('div');
         self.originalColor = parentElement.css('color');
         parentElement.css({
@@ -276,7 +276,9 @@ H5P.CRAudio = (function ($) {
           'color': self.glowColor
         });
 
-        setTimeout(function () {
+        console.log(demandAudio);
+
+        setTimeout(() => {
           $(element.children).each(function () {
             $(this).find('#' + clickedTextId).parent('div').css({
               "transform": 'scale(1)',
@@ -285,7 +287,7 @@ H5P.CRAudio = (function ($) {
             })
             // self.clickedByPlayOnDemand = false;
           })
-        }, demandAudio.duration * 500);
+        }, 600);
 
         let canWe = false;
         $(element.children).each(function (index, element) {
