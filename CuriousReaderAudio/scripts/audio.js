@@ -62,8 +62,6 @@ H5P.CRAudio = (function ($) {
       'class': INNER_CONTAINER + (transparentMode ? ' h5p-audio-transparent' : '')
     }).appendTo($container);
 
-
-
     var audioButton = $('<button/>', {
         'class': AUDIO_BUTTON + " " + PLAY_BUTTON,
         'aria-label': this.params.playAudio
