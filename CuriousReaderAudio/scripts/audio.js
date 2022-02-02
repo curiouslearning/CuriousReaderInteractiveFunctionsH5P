@@ -310,18 +310,22 @@ H5P.CRAudio = (function ($) {
                 'color': self.originalColor
               })
               // self.clickedByPlayOnDemand = false;
-              for (let j = 0; j < self.splittedWord.length; j++) {
-                word = self.splittedWord[j];
-                let audioDivTextElementSpanId = self.subContentId + '_' + j;
-                if (audioDivTextElementSpanId === clickedTextId) {
-                  if (word.highlighted) {
-                    console.log("Removing highlight on: " + clickedTextId);
-                    word.highlighted = false;
-                  }
-                }
-              }
             })
           }, demandAudio.duration === NaN ? 600 : demandAudio.duration * 750);
+
+          setTimeout(() => {
+            // Remove highlighting flag
+            for (let j = 0; j < self.splittedWord.length; j++) {
+              word = self.splittedWord[j];
+              let audioDivTextElementSpanId = self.subContentId + '_' + j;
+              if (audioDivTextElementSpanId === clickedTextId) {
+                if (word.highlighted) {
+                  console.log("Removing highlight on: " + clickedTextId);
+                  word.highlighted = false;
+                }
+              }
+            }
+          }, demandAudio.duration === NaN ? 600 : demandAudio.duration * 1000);
   
           let canWe = false;
           $(element.children).each(function (index, element) {
