@@ -157,15 +157,16 @@ WaveformInit.prototype.init = function () {
         // waveform if it exists
         let waveformElements = document.getElementsByClassName("waveform");
         for (let i = 0; i < waveformElements.length; i++) {
+          console.log(waveformElements[i]);
           if (waveformElements[i].id === self.container[0].id && i > 0) {
             let previousWaveformContent = waveformElements[i - 1].parentElement.parentElement;
             let previousEndDurationField = previousWaveformContent.querySelector('.field-name-endDuration');
             console.log(previousEndDurationField);
             if (previousEndDurationField) {
-              let previousEndDurationInput = endDurationField.querySelector('input');
+              let previousEndDurationInput = previousEndDurationField.querySelector('input');
               console.log(previousEndDurationInput);
-              startDurationFieldInput.value = previousEndDurationInput.value + 0.001;
-              endDurationFieldInput.value = previousEndDurationInput.value + 0.001 + 0.1;
+              startDurationFieldInput.value = parseFloat(previousEndDurationInput.value) + 0.001;
+              endDurationFieldInput.value = parseFloat(previousEndDurationInput.value) + 0.001 + 0.1;
             }
           }
         }
