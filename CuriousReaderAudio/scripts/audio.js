@@ -255,7 +255,7 @@ H5P.CRAudio = (function ($) {
       for (let j = 0; j < self.splittedWord.length; j++) {
         word = self.splittedWord[j];
         let audioDivTextElementSpanId = self.subContentId + '_' + j;
-        console.log(audioDivTextElementSpanId + " : " + clickedTextId + " --- " + audioDivTextElementSpanId === clickedTextId);
+        console.log(audioDivTextElementSpanId + " : " + clickedTextId + " --- " + (audioDivTextElementSpanId === clickedTextId));
         if (audioDivTextElementSpanId === clickedTextId) {
           if (word.highlighted) {
             return;
@@ -284,6 +284,7 @@ H5P.CRAudio = (function ($) {
       let audioDivTextElementSpanId = self.subContentId + '_' + j;
       if (audioDivTextElementSpanId === clickedTextId) {
         if (!word.highlighted) {
+          console.log("Highlighting: " + clickedTextId);
           word.highlighted = true;
         }
       }
@@ -314,6 +315,7 @@ H5P.CRAudio = (function ($) {
                 let audioDivTextElementSpanId = self.subContentId + '_' + j;
                 if (audioDivTextElementSpanId === clickedTextId) {
                   if (word.highlighted) {
+                    console.log("Removing highlight on: " + clickedTextId);
                     word.highlighted = false;
                   }
                 }
