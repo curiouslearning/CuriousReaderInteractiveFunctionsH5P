@@ -102,6 +102,8 @@ WaveformInit.prototype.init = function () {
     if (self.container[0]) {
       // Add event listeners to start and end duration for this wavesurfer instance
       let waveform = self.container[0];
+      console.log("Testing: ");
+      console.log(self.container[0]);
       let waveformParent = waveform.parentElement.parentElement;
 
       let startDurationField = waveformParent.querySelector('.field-name-startDuration');
@@ -150,6 +152,11 @@ WaveformInit.prototype.init = function () {
             }
           }
         });
+
+        // Set values of start duration and end duration based on previous
+        // waveform if it exists
+        console.log(self.container[0].parentElement);
+        console.log(self.container[0].previousSibling);
       }
 
       // Add audio loader observer on this wavesurfer instance
