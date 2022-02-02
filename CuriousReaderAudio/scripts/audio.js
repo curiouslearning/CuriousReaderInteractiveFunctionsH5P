@@ -255,7 +255,11 @@ H5P.CRAudio = (function ($) {
       for (let j = 0; j < self.splittedWord.length; j++) {
         word = self.splittedWord[j];
         let audioDivTextElementSpanId = self.subContentId + '_' + j;
-        console.log(audioDivTextElementSpanId);
+        if (audioDivTextElementSpanId === clickedTextId) {
+          if (word.highlighted) {
+            return;
+          }
+        }
       }
     }
 
