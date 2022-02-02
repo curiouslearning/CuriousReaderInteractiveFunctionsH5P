@@ -225,8 +225,8 @@ H5P.CRAudio = (function ($) {
     var self = this;
 
     if (!this.clickedByPlayOnDemand) {
-      for (j = 0; j < self.splittedWord.length; j++) {
-        word = self.splittedWord[j]
+      for (let j = 0; j < self.splittedWord.length; j++) {
+        word = self.splittedWord[j];
         let audioDivTextElementSpanId = self.subContentId + '_' + j;
         if (word.highlighted == undefined) {
           word.highlighted = false
@@ -248,6 +248,14 @@ H5P.CRAudio = (function ($) {
           word.highlighted = false;
           self.originalTextColor = undefined;
         }
+      }
+    } else {
+      console.log("Testing: ");
+      console.log(clickedTextId);
+      for (let j = 0; j < self.splittedWord.length; j++) {
+        word = self.splittedWord[j];
+        let audioDivTextElementSpanId = self.subContentId + '_' + j;
+        console.log(audioDivTextElementSpanId);
       }
     }
 
