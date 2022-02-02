@@ -225,6 +225,7 @@ H5P.CRAudio = (function ($) {
     var self = this;
 
     if (!this.clickedByPlayOnDemand) {
+      // Attempt to remove highlighting on text left from the autoplay
       for (let j = 0; j < self.splittedWord.length; j++) {
         word = self.splittedWord[j];
         let audioDivTextElementSpanId = self.subContentId + '_' + j;
@@ -250,14 +251,13 @@ H5P.CRAudio = (function ($) {
         }
       }
     } else {
-      console.log("Testing: ");
-      console.log(clickedTextId);
       for (let j = 0; j < self.splittedWord.length; j++) {
         word = self.splittedWord[j];
         let audioDivTextElementSpanId = self.subContentId + '_' + j;
-        console.log(audioDivTextElementSpanId + " : " + clickedTextId + " --- " + (audioDivTextElementSpanId === clickedTextId));
         if (audioDivTextElementSpanId === clickedTextId) {
           if (word.highlighted) {
+            // If the word is currently highlighted, return to prevent the bug
+            // where the original color gets changed
             return;
           }
         }
@@ -284,7 +284,6 @@ H5P.CRAudio = (function ($) {
       let audioDivTextElementSpanId = self.subContentId + '_' + j;
       if (audioDivTextElementSpanId === clickedTextId) {
         if (!word.highlighted) {
-          console.log("Highlighting: " + clickedTextId);
           word.highlighted = true;
         }
       }
@@ -301,7 +300,8 @@ H5P.CRAudio = (function ($) {
             'z-index': '100',
             'color': self.glowColor
           });
-  
+          
+          // Timeout for starting to removethe highlight effect on word
           setTimeout(() => {
             $(element.children).each(function () {
               $(this).find('#' + clickedTextId).parent('div').css({
@@ -313,8 +313,8 @@ H5P.CRAudio = (function ($) {
             })
           }, demandAudio.duration === NaN ? 600 : demandAudio.duration * 750);
 
+          // Remove highlighting flag timeout with full duration
           setTimeout(() => {
-            // Remove highlighting flag
             for (let j = 0; j < self.splittedWord.length; j++) {
               word = self.splittedWord[j];
               let audioDivTextElementSpanId = self.subContentId + '_' + j;
