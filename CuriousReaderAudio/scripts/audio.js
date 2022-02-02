@@ -255,6 +255,7 @@ H5P.CRAudio = (function ($) {
       for (let j = 0; j < self.splittedWord.length; j++) {
         word = self.splittedWord[j];
         let audioDivTextElementSpanId = self.subContentId + '_' + j;
+        console.log(audioDivTextElementSpanId + " : " + clickedTextId + " --- " + audioDivTextElementSpanId === clickedTextId);
         if (audioDivTextElementSpanId === clickedTextId) {
           if (word.highlighted) {
             return;
@@ -278,6 +279,15 @@ H5P.CRAudio = (function ($) {
       source.type = audioFile.wordfile[0].mime;
       demandAudio.appendChild(source);
     }
+    for (let j = 0; j < self.splittedWord.length; j++) {
+      word = self.splittedWord[j];
+      let audioDivTextElementSpanId = self.subContentId + '_' + j;
+      if (audioDivTextElementSpanId === clickedTextId) {
+        if (!word.highlighted) {
+          word.highlighted = true;
+        }
+      }
+    }
     demandAudio.addEventListener('loadedmetadata', (event) => {
       demandAudio.play();
 
@@ -299,6 +309,15 @@ H5P.CRAudio = (function ($) {
                 'color': self.originalColor
               })
               // self.clickedByPlayOnDemand = false;
+              for (let j = 0; j < self.splittedWord.length; j++) {
+                word = self.splittedWord[j];
+                let audioDivTextElementSpanId = self.subContentId + '_' + j;
+                if (audioDivTextElementSpanId === clickedTextId) {
+                  if (word.highlighted) {
+                    word.highlighted = false;
+                  }
+                }
+              }
             })
           }, demandAudio.duration === NaN ? 600 : demandAudio.duration * 750);
   
