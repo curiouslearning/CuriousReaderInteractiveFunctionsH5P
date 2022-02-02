@@ -320,7 +320,6 @@ H5P.CRAudio = (function ($) {
               let audioDivTextElementSpanId = self.subContentId + '_' + j;
               if (audioDivTextElementSpanId === clickedTextId) {
                 if (word.highlighted) {
-                  console.log("Removing highlight on: " + clickedTextId);
                   word.highlighted = false;
                 }
               }
