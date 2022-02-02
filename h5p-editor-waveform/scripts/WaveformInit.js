@@ -113,7 +113,7 @@ WaveformInit.prototype.init = function () {
         let startDurationFieldInput = startDurationField.querySelector('input');
         let endDurationFieldInput = endDurationField.querySelector('input');
       
-        startDurationFieldInput.addEventListener("focusout", (e) => {
+        startDurationFieldInput.addEventListener("change", (e) => {
           if (region != undefined) {
             let value = e.target.value;
             if (!isNaN(value)) {
@@ -133,7 +133,7 @@ WaveformInit.prototype.init = function () {
           }
         });
       
-        endDurationFieldInput.addEventListener("focusout", (e) => {
+        endDurationFieldInput.addEventListener("change", (e) => {
           if (region != undefined) {
             let value = e.target.value;
             if (!isNaN(value)) {
@@ -155,8 +155,20 @@ WaveformInit.prototype.init = function () {
 
         // Set values of start duration and end duration based on previous
         // waveform if it exists
-        console.log(self.container[0].parentElement);
-        console.log(self.container[0].previousSibling);
+        let waveformElements = document.getElementsByClassName("waveform");
+        for (let i = 0; i < waveformElements.length; i++) {
+          if (waveformElements[i].id === self.container[0].id && i > 0) {
+            let previousWaveformContent = waveformElements[i - 1].parentElement.parentElement;
+            let previousEndDurationField = previousWaveformContent.querySelector('.field-name-endDuration');
+            console.log(previousEndDurationField);
+            if (previousEndDurationField) {
+              let previousEndDurationInput = endDurationField.querySelector('input');
+              console.log(previousEndDurationInput);
+              startDurationFieldInput.value = previousEndDurationInput.value + 0.001;
+              endDurationFieldInput.value = previousEndDurationInput.value + 0.001 + 0.1;
+            }
+          }
+        }
       }
 
       // Add audio loader observer on this wavesurfer instance
