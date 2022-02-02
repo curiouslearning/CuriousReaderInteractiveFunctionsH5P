@@ -167,9 +167,10 @@ WaveformInit.prototype.init = function () {
               console.log(previousEndDurationInput);
               startDurationFieldInput.value = parseFloat(previousEndDurationInput.value) + 0.001;
               endDurationFieldInput.value = parseFloat(previousEndDurationInput.value) + 0.001 + 0.1;
-
-              startDurationFieldInput.trigger('change');
-              endDurationFieldInput.trigger('change');
+              
+              var event = new Event('change');
+              startDurationFieldInput.dispatchEvent(event);
+              endDurationFieldInput.dispatchEvent(event);
             }
           }
         }
