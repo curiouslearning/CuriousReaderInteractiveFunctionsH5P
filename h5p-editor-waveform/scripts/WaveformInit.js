@@ -103,8 +103,6 @@ WaveformInit.prototype.init = function () {
     if (self.container[0]) {
       // Add event listeners to start and end duration for this wavesurfer instance
       let waveform = self.container[0];
-      console.log("Testing: ");
-      console.log(self.container[0]);
       let waveformParent = waveform.parentElement.parentElement;
 
       let startDurationField = waveformParent.querySelector('.field-name-startDuration');
@@ -127,14 +125,12 @@ WaveformInit.prototype.init = function () {
         // waveform if it exists
         let waveformElements = document.getElementsByClassName("waveform");
         for (let i = 0; i < waveformElements.length; i++) {
-          console.log(waveformElements[i]);
           if (waveformElements[i].id === self.container[0].id && i > 0) {
             let previousWaveformContent = waveformElements[i - 1].parentElement.parentElement;
             let previousEndDurationField = previousWaveformContent.querySelector('.field-name-endDuration');
-            console.log(previousEndDurationField);
             if (previousEndDurationField) {
               let previousEndDurationInput = previousEndDurationField.querySelector('input');
-              console.log(previousEndDurationInput);
+
               startDurationFieldInput.value = parseFloat(previousEndDurationInput.value) + 0.001;
               endDurationFieldInput.value = parseFloat(previousEndDurationInput.value) + 0.001 + 0.1;
               
