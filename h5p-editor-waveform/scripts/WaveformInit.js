@@ -58,7 +58,8 @@ WaveformInit.prototype.init = function () {
   $('.wavesurfer-handle').css("width", "4px");
   $('.wavesurfer-handle').css("background-color", "#707070");
 
-  let region;
+  this.region = undefined;
+
   self.crAudioIndex = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields.length;
   // let path = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex- 1].params.files ? H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[self.crAudioIndex - 1].params.files[0].path : undefined;
   let id = H5PEditor.renderableCommonFields["H5P.CRAudio 1.4"].fields[0].parent.params.subContentId;
@@ -80,8 +81,8 @@ WaveformInit.prototype.init = function () {
   }
 
 
-  wavesurfer.on('ready', function () {
-    region = Object.values(wavesurfer.regions.list)[0];
+  wavesurfer.on('ready', () => {
+    this.region = Object.values(wavesurfer.regions.list)[0];
     let width = self.parent.parent.parent.parent.cp.width + (self.parent.parent.parent.parent.cp.width * 0.25);
     self.audioDuration = wavesurfer.getDuration();
     // wavesurfer.params.minPxPerSec = width / wavesurfer.getDuration();
@@ -112,45 +113,14 @@ WaveformInit.prototype.init = function () {
       if (startDurationField && endDurationField) {
         let startDurationFieldInput = startDurationField.querySelector('input');
         let endDurationFieldInput = endDurationField.querySelector('input');
-      
-        startDurationFieldInput.addEventListener("change", (e) => {
-          if (region != undefined) {
-            let value = e.target.value;
-            if (!isNaN(value)) {
-              if (parseFloat(value) > self.audioDuration) {
-                value = 0.0;
-              }
-              let inputStartTime = parseFloat(value);
-              let inputEndTime = region.end <= parseFloat(value) ? parseFloat(value) + 0.2 : region.end;
-              let params = {
-                start: inputStartTime.toFixed(4),
-                end: inputEndTime.toFixed(4)
-              }
-              region.update(params)
-            } else {
-              $(this).parent().find('.h5p-errors').append("<p>The entered value must be Number not alphabet</p>")
-            }
-          }
+        
+        // Add focusout event handlers
+        startDurationFieldInput.addEventListener("focusout", (e) => {
+          this.startDurationValueChangeHandler(e.target.value);
         });
       
-        endDurationFieldInput.addEventListener("change", (e) => {
-          if (region != undefined) {
-            let value = e.target.value;
-            if (!isNaN(value)) {
-              if (parseFloat(value) > self.audioDuration) {
-                value = self.audioDuration - 0.05;
-              }
-              let inputStartTime = parseFloat(value) <= region.start ? 0 : region.start
-              let inputEndTime = parseFloat(value);
-              let params = {
-                start: inputStartTime.toFixed(4),
-                end: inputEndTime.toFixed(4)
-              }
-              region.update(params);
-            } else {
-              $(this).parent().find('.h5p-errors').append("<p>The entered value must be Number not alphabet</p>")
-            }
-          }
+        endDurationFieldInput.addEventListener("focusout", (e) => {
+          this.endDurationValueChangeHandler(e.target.value);
         });
 
         // Set values of start duration and end duration based on previous
@@ -168,8 +138,8 @@ WaveformInit.prototype.init = function () {
               startDurationFieldInput.value = parseFloat(previousEndDurationInput.value) + 0.001;
               endDurationFieldInput.value = parseFloat(previousEndDurationInput.value) + 0.001 + 0.1;
               
-              startDurationFieldInput.onchange();
-              endDurationFieldInput.onchange();
+              this.startDurationValueChangeHandler(startDurationFieldInput.value);
+              this.endDurationValueChangeHandler(endDurationFieldInput.value);
             }
           }
         }
@@ -199,7 +169,7 @@ WaveformInit.prototype.init = function () {
               }, 1000);
             })
           }
-          if (region != undefined) {
+          if (this.region != undefined) {
             let $startinput = $('#' + this.id).parent().parent().find('.field-name-startDuration').find('input');
             let $endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input');
             $startinput.val(0);
@@ -210,7 +180,7 @@ WaveformInit.prototype.init = function () {
               start: 0,
               end: 0.2
             };
-            region.update(params);
+            this.region.update(params);
           }
         });
 
@@ -224,7 +194,7 @@ WaveformInit.prototype.init = function () {
     this.start = event.start;
     this.end = event.end;
     this.$startinput = $('#' + this.id).parent().parent().find('.field-name-startDuration').find('input');
-    this.$endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input')
+    this.$endinput = $('#' + this.id).parent().parent().find('.field-name-endDuration').find('input');
     this.$startinput.val(this.start.toFixed(4));
     this.$endinput.val(this.end.toFixed(4));
     this.setValue(this.findField("startDuration", this.parent.field.fields), "" + this.start.toFixed(4));
@@ -240,6 +210,44 @@ WaveformInit.prototype.init = function () {
         region.play();
       }
     })
+  }
+}
+
+WaveformInit.prototype.startDurationValueChangeHandler = function(value) {
+  if (this.region != undefined) {
+    if (!isNaN(value)) {
+      if (parseFloat(value) > this.audioDuration) {
+        value = 0.0;
+      }
+      let inputStartTime = parseFloat(value);
+      let inputEndTime = this.region.end <= parseFloat(value) ? parseFloat(value) + 0.2 : this.region.end;
+      let params = {
+        start: inputStartTime.toFixed(4),
+        end: inputEndTime.toFixed(4)
+      };
+      this.region.update(params);
+    } else {
+      $(this).parent().find('.h5p-errors').append("<p>The entered value must be Number not alphabet</p>")
+    }
+  }
+}
+
+WaveformInit.prototype.endDurationValueChangeHandler = function(value) {
+  if (this.region != undefined) {
+    if (!isNaN(value)) {
+      if (parseFloat(value) > this.audioDuration) {
+        value = self.audioDuration - 0.05;
+      }
+      let inputStartTime = parseFloat(value) <= this.region.start ? 0 : this.region.start;
+      let inputEndTime = parseFloat(value);
+      let params = {
+        start: inputStartTime.toFixed(4),
+        end: inputEndTime.toFixed(4)
+      };
+      this.region.update(params);
+    } else {
+      $(this).parent().find('.h5p-errors').append("<p>The entered value must be Number not alphabet</p>")
+    }
   }
 }
 
