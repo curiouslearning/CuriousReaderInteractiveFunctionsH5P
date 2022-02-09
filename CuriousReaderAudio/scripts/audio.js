@@ -126,7 +126,6 @@ H5P.CRAudio = (function ($) {
     });
 
     setInterval(() => {
-      console.log("Time update: " + self.audio.currentTime);
       if (this.clickedByPlayOnDemand) { } else {
         if (self.splittedWord != undefined) {
           var time = self.audio.currentTime,
@@ -145,7 +144,6 @@ H5P.CRAudio = (function ($) {
               if (!word.highlighted) {
                 word.highlighted = true;
                 if (self.parent != undefined) {
-                  console.log("Highlighted word: " + word['startDuration'] + " - " + word['endDuration']);
                   $('.h5p-current >div').each(function (index, element) {
                     var h5pCurrentInnerDiv = (element.children[0].children[0] != undefined) ? element.children[0].children[0] : element;
                     let divTextParent = $(this).find('#' + audioDivTextElementSpanId).parent('div');
