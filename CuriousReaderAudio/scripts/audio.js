@@ -125,7 +125,7 @@ H5P.CRAudio = (function ($) {
         .addClass(PLAY_BUTTON_PAUSED);
     });
 
-    setTimeout(() => {
+    setInterval(() => {
       console.log("Time update: " + self.audio.currentTime);
       if (this.clickedByPlayOnDemand) { } else {
         if (self.splittedWord != undefined) {
