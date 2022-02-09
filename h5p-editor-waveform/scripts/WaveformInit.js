@@ -201,7 +201,7 @@ WaveformInit.prototype.init = function () {
     let regionId = this.id + "playRegion";
     let $playRegionButton = $('<button id = ' + regionId + ' class = "playRegion">Play</button>');
     $(self.container).parent('div').append($playRegionButton);
-    $($playRegionButton).on('click', function () {
+    $($playRegionButton).on('click', () => {
       if (this.region != undefined) {
         this.region.play();
       }
