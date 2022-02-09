@@ -226,8 +226,6 @@ H5P.CRAudio = (function ($) {
   C.prototype.playOnDemand = function (clickedTextId) {
     var self = this;
 
-    console.log("Play on demand");
-
     if (!this.clickedByPlayOnDemand) {
       // Attempt to remove highlighting on text left from the autoplay
       for (let j = 0; j < self.splittedWord.length; j++) {
