@@ -4,22 +4,7 @@
   "description": "Simple library that displays an audio player.",
   "majorVersion": 1,
   "minorVersion": 4,
-  "patchVersion": 59,
-  "runnable": 1,
-  "machineName": "H5P.CRAudio",
-  "embedTypes": [
-    "iframe"
-  ],
-  "author": "Joubel",
-  "coreApi": {
-    "majorVersion": 1,
-    "minorVersion": 19
-  },
-  "preloadedJs": [
-    {
-      "path": "scripts/audio.js"
-    }
-  ],
+  "patchVersion": 60, 
   "preloadedCss": [
     {
       "path": "styles/audio.css"

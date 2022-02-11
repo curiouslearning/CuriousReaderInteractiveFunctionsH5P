@@ -502,11 +502,36 @@ H5P.CRAudio.prototype.attachFlash = function ($wrapper) {
  * @returns {undefined}
  */
 H5P.CRAudio.prototype.stop = function () {
+  console.log("Audio Stop called");
+  for (let j = 0; j < self.splittedWord.length; j++) {
+    word = self.splittedWord[j];
+    let audioDivTextElementSpanId = self.subContentId + '_' + j;
+    if (word.highlighted == undefined) {
+      word.highlighted = false
+    } else if (word.highlighted) {
+      if (self.parent != undefined) {
+        $('.h5p-current').each(function () {
+          $(this).find('#' + audioDivTextElementSpanId).parent('div').css({
+            "transform": 'scale(1)',
+            'z-index': '1',
+            'color': self.originalTextColor,
+            // 'text-shadow': '0px 0px 5px transparent',
+          });
+        });
+      } else {
+        $('#' + j).css({
+          "color": 'red',
+        })
+      }
+      word.highlighted = false;
+      self.originalTextColor = undefined;
+    }
+  }
   if (this.flowplayer !== undefined) {
     this.flowplayer.stop().close().unload();
   }
   if (this.audio !== undefined) {
-    this.audio.pause();
+    this.audio.stop();
   }
 };
 

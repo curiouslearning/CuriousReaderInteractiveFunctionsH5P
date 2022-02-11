@@ -2286,19 +2286,17 @@ CuriousReader.prototype.pauseMedia = function (instance) {
     if (instance.stop !== undefined &&
       (instance.stop instanceof Function ||
         typeof instance.stop === 'function')) {
-      instance.stop();
       console.log("Stop Called!");
+      instance.stop();
     } else if (instance.video !== undefined &&
       instance.video.pause !== undefined &&
       (instance.video.pause instanceof Function ||
         typeof instance.video.pause === 'function')) {
       instance.video.pause();
-      console.log("Video Pause Called!");
     } else if (instance.pause !== undefined &&
       (instance.pause instanceof Function ||
         typeof instance.pause === 'function')) {
       instance.pause();
-      console.log("Pause Called!");
     }
   } catch (err) {
     // Prevent crashing, but tell developers there's something wrong.
