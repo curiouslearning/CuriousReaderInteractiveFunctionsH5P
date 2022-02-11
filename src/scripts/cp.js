@@ -1884,11 +1884,15 @@ CuriousReader.prototype.jumpToSlide = function (slideNumber, noScroll = false, h
   // Stop media on old slide
   // this is done no mather what autoplay says
   var instances = this.elementInstances[previousSlideIndex];
+  console.log("Instane logs");
+  console.log(instances);
+  console.log(this.elementInstances);
   if (instances !== undefined) {
     for (var i = 0; i < instances.length; i++) {
       if (!this.slides[previousSlideIndex].elements[i].displayAsButton) {
         // Only pause media elements displayed as posters.
         that.pauseMedia(instances[i]);
+        console.log("Pausing media" + instances[i]);
       }
     }
   }
