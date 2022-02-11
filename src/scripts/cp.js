@@ -1886,13 +1886,11 @@ CuriousReader.prototype.jumpToSlide = function (slideNumber, noScroll = false, h
   var instances = this.elementInstances[previousSlideIndex];
   console.log("Instane logs");
   console.log(instances);
-  console.log(this.elementInstances);
   if (instances !== undefined) {
     for (var i = 0; i < instances.length; i++) {
       if (!this.slides[previousSlideIndex].elements[i].displayAsButton) {
         // Only pause media elements displayed as posters.
         that.pauseMedia(instances[i]);
-        console.log("Pausing media" + instances[i]);
       }
     }
   }
@@ -2282,20 +2280,25 @@ CuriousReader.prototype.getCopyrights = function () {
  * @param {object} instance
  */
 CuriousReader.prototype.pauseMedia = function (instance) {
+  console.log("Pausing media: ");
+  console.log(instance);
   try {
     if (instance.pause !== undefined &&
       (instance.pause instanceof Function ||
         typeof instance.pause === 'function')) {
       instance.pause();
+      console.log("Pause Called!");
     } else if (instance.video !== undefined &&
       instance.video.pause !== undefined &&
       (instance.video.pause instanceof Function ||
         typeof instance.video.pause === 'function')) {
       instance.video.pause();
+      console.log("Video Pause Called!");
     } else if (instance.stop !== undefined &&
       (instance.stop instanceof Function ||
         typeof instance.stop === 'function')) {
       instance.stop();
+      console.log("Stop Called!");
     }
   } catch (err) {
     // Prevent crashing, but tell developers there's something wrong.
