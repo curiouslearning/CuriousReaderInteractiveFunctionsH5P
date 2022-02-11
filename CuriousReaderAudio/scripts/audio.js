@@ -125,7 +125,7 @@ H5P.CRAudio = (function ($) {
         .addClass(PLAY_BUTTON_PAUSED);
     });
 
-    self.audio.addEventListener('timeupdate', () => {
+    setInterval(() => {
       if (this.clickedByPlayOnDemand) { } else {
         if (self.splittedWord != undefined) {
           var time = self.audio.currentTime,
@@ -191,11 +191,15 @@ H5P.CRAudio = (function ($) {
           }
         }
       }
-    });
+    }, 60);
 
+    // self.audio.addEventListener('timeupdate', () => {
+      
+    // });
 
     this.$audioButton = audioButton;
-    //Scale icon to container
+
+    // Scale icon to container
     self.resize();
   };
 
