@@ -506,9 +506,12 @@ H5P.CRAudio.prototype.stop = function () {
   if (this.flowplayer !== undefined) {
     this.flowplayer.stop().close().unload();
   }
-  console.log(this.audio);
-  if (this.audio !== undefined && this.audio.stop !== undefined) {
-    this.audio.stop();
+  // if (this.audio !== undefined && this.audio.stop !== undefined) {
+  //   this.audio.stop();
+  // }
+  if (this.audio !== undefined && this.audio.pause !== undefined) {
+    this.audio.pause();
+    this.audio.currentTime = 0;
   }
   for (let j = 0; j < this.splittedWord.length; j++) {
     let word = this.splittedWord[j];
