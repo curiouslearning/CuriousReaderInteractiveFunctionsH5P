@@ -503,6 +503,12 @@ H5P.CRAudio.prototype.attachFlash = function ($wrapper) {
  */
 H5P.CRAudio.prototype.stop = function () {
   console.log("Audio Stop called");
+  if (this.flowplayer !== undefined) {
+    this.flowplayer.stop().close().unload();
+  }
+  if (this.audio !== undefined) {
+    this.audio.stop();
+  }
   for (let j = 0; j < this.splittedWord.length; j++) {
     let word = this.splittedWord[j];
     let audioDivTextElementSpanId = self.subContentId + '_' + j;
@@ -510,6 +516,9 @@ H5P.CRAudio.prototype.stop = function () {
       word.highlighted = false
     } else if (word.highlighted) {
       if (this.parent != undefined) {
+        document.querySelector(".h5p-current").each(() => {
+          console.log("Query selector is working fine!");
+        });
         $('.h5p-current').each(function () {
           $(this).find('#' + audioDivTextElementSpanId).parent('div').css({
             "transform": 'scale(1)',
@@ -526,12 +535,6 @@ H5P.CRAudio.prototype.stop = function () {
       word.highlighted = false;
       this.originalTextColor = undefined;
     }
-  }
-  if (this.flowplayer !== undefined) {
-    this.flowplayer.stop().close().unload();
-  }
-  if (this.audio !== undefined) {
-    this.audio.stop();
   }
 };
 
