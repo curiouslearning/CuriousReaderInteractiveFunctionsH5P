@@ -506,7 +506,7 @@ H5P.CRAudio.prototype.stop = function () {
   if (this.flowplayer !== undefined) {
     this.flowplayer.stop().close().unload();
   }
-  if (this.audio !== undefined) {
+  if (this.audio !== undefined && this.audio.stop !== undefined) {
     this.audio.stop();
   }
   for (let j = 0; j < this.splittedWord.length; j++) {
