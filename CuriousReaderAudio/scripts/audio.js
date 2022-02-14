@@ -506,19 +506,19 @@ H5P.CRAudio.prototype.stop = function () {
   if (this.flowplayer !== undefined) {
     this.flowplayer.stop().close().unload();
   }
+  console.log(this.audio);
   if (this.audio !== undefined && this.audio.stop !== undefined) {
     this.audio.stop();
   }
   for (let j = 0; j < this.splittedWord.length; j++) {
     let word = this.splittedWord[j];
-    let audioDivTextElementSpanId = self.subContentId + '_' + j;
+    let audioDivTextElementSpanId = this.subContentId + '_' + j;
     if (word.highlighted == undefined) {
       word.highlighted = false
     } else if (word.highlighted) {
       if (this.parent != undefined) {
-        document.querySelector(".h5p-current").each(() => {
-          console.log("Query selector is working fine!");
-        });
+        let h5pCurrentElements = document.querySelector(".h5p-current");
+        console.log(h5pCurrentElements);
         $('.h5p-current').each(function () {
           $(this).find('#' + audioDivTextElementSpanId).parent('div').css({
             "transform": 'scale(1)',
