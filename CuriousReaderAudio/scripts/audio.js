@@ -505,9 +505,6 @@ H5P.CRAudio.prototype.stop = function () {
   if (this.flowplayer !== undefined) {
     this.flowplayer.stop().close().unload();
   }
-  // if (this.audio !== undefined && this.audio.stop !== undefined) {
-  //   this.audio.stop();
-  // }
   if (this.audio !== undefined && this.audio.pause !== undefined) {
     this.audio.pause();
     this.audio.currentTime = 0;
