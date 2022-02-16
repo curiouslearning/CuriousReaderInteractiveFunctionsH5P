@@ -525,8 +525,10 @@ H5P.CRAudio.prototype.stop = function () {
 
         let wordElement = document.getElementById(audioDivTextElementSpanId);
         let wordElementParent = wordElement.parentElement;
-        console.log(wordElement);
-        console.log(wordElementParent);
+        
+        wordElementParent.style.transform = "scale(1)";
+        wordElementParent.style.zIndex = "1";
+        wordElementParent.style.color = this.originalTextColor;
 
         // for (let i = 0; i < divElements.length; i++) {
         //   let textElement = divElements[i].querySelector("#" + audioDivTextElementSpanId);
