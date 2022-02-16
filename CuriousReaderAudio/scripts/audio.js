@@ -502,7 +502,6 @@ H5P.CRAudio.prototype.attachFlash = function ($wrapper) {
  * @returns {undefined}
  */
 H5P.CRAudio.prototype.stop = function () {
-  console.log("Audio Stop called");
   if (this.flowplayer !== undefined) {
     this.flowplayer.stop().close().unload();
   }
