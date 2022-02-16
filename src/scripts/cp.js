@@ -1884,8 +1884,7 @@ CuriousReader.prototype.jumpToSlide = function (slideNumber, noScroll = false, h
   // Stop media on old slide
   // this is done no mather what autoplay says
   var instances = this.elementInstances[previousSlideIndex];
-  console.log("Instane logs");
-  console.log(instances);
+  
   if (instances !== undefined) {
     for (var i = 0; i < instances.length; i++) {
       if (!this.slides[previousSlideIndex].elements[i].displayAsButton) {
