@@ -520,29 +520,12 @@ H5P.CRAudio.prototype.stop = function () {
       word.highlighted = false
     } else if (word.highlighted) {
       if (this.parent != undefined) {
-        // let h5pCurrentElements = document.querySelector(".h5p-current");
-        // let divElements = h5pCurrentElements.getElementsByTagName("div");
-
         let wordElement = document.getElementById(audioDivTextElementSpanId);
         let wordElementParent = wordElement.parentElement;
         
         wordElementParent.style.transform = "scale(1)";
         wordElementParent.style.zIndex = "1";
         wordElementParent.style.color = this.originalTextColor;
-
-        // for (let i = 0; i < divElements.length; i++) {
-        //   let textElement = divElements[i].querySelector("#" + audioDivTextElementSpanId);
-        //   console.log(textElement);
-        // }
-        // console.log(h5pCurrentElements);
-        // $('.h5p-current').each(function () {
-        //   $(this).find('#' + audioDivTextElementSpanId).parent('div').css({
-        //     "transform": 'scale(1)',
-        //     'z-index': '1',
-        //     'color': this.originalTextColor,
-        //     // 'text-shadow': '0px 0px 5px transparent',
-        //   });
-        // });
       } else {
         $('#' + j).css({
           "color": 'red',
