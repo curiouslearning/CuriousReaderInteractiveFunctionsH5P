@@ -2280,13 +2280,10 @@ CuriousReader.prototype.getCopyrights = function () {
  * @param {object} instance
  */
 CuriousReader.prototype.pauseMedia = function (instance) {
-  console.log("Pausing media: ");
-  console.log(instance);
   try {
     if (instance.stop !== undefined &&
       (instance.stop instanceof Function ||
         typeof instance.stop === 'function')) {
-      console.log("Stop Called!");
       instance.stop();
     } else if (instance.video !== undefined &&
       instance.video.pause !== undefined &&
