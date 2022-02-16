@@ -521,6 +521,11 @@ H5P.CRAudio.prototype.stop = function () {
     } else if (word.highlighted) {
       if (this.parent != undefined) {
         let h5pCurrentElements = document.querySelector(".h5p-current");
+        let divElements = h5pCurrentElements.getElementsByTagName("div");
+        for (let i = 0; i < divElements.length; i++) {
+          let textElement = divElements[i].querySelector("#" + audioDivTextElementSpanId);
+          console.log(textElement);
+        }
         console.log(h5pCurrentElements);
         $('.h5p-current').each(function () {
           $(this).find('#' + audioDivTextElementSpanId).parent('div').css({
