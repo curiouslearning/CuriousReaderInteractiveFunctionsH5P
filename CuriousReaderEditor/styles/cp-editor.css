@@ -633,10 +633,6 @@
   display: none !important;
 }
 
-.field-name-willDoAnimation {
-  display: none !important;
-}
-
 .field-name-displayAsButton {
   display: none !important;
 }
@@ -645,7 +641,7 @@
   display: none !important;
 }
 
-.h5p-image-editor > .dield-name-title {
+.h5p-image-editor > .field-name-title {
   display: none !important;
 }
 

@@ -45,27 +45,3 @@
 .h5p-advanced-text.h5p-frame {
   margin: 1em;
 }
-
-.field-name-solution {
-  display: none !important;
-}
-
-.field-name-alwaysDisplayComments {
-  display: none !important;
-}
-
-.field-name-willDoAnimation {
-  display: none !important;
-}
-
-.field-name-displayAsButton {
-  display: none !important;
-}
-
-.h5p-image-editor > .field-name-alt {
-  display: none !important;
-}
-
-.h5p-image-editor > .dield-name-title {
-  display: none !important;
-}
