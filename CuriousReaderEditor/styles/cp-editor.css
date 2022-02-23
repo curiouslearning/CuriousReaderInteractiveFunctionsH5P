@@ -624,3 +624,28 @@
   content: "\f0c1";
 }
 
+/* Hide fields in the text and image editors */
+.field-name-solution {
+  display: none !important;
+}
+
+.field-name-alwaysDisplayComments {
+  display: none !important;
+}
+
+.field-name-willDoAnimation {
+  display: none !important;
+}
+
+.field-name-displayAsButton {
+  display: none !important;
+}
+
+.h5p-image-editor > .field-name-alt {
+  display: none !important;
+}
+
+.h5p-image-editor > .dield-name-title {
+  display: none !important;
+}
+
