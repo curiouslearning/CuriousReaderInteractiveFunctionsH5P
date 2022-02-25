@@ -17,6 +17,14 @@
   cursor: pointer;
 }
 
+.h5p-advanced-text > p {
+  color: inherit;
+  font-weight: 800;
+  -webkit-text-stroke: 0.1rem #303030;
+  text-shadow: 0rem 0.15rem 0.1rem #303030;
+  cursor: pointer;
+}
+
 .h5p-advanced-text ul,
 .h5p-advanced-text ol {
   padding: 0;
