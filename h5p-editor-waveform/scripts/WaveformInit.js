@@ -24,6 +24,8 @@ let WaveformInit = function (parent, field, params, setValue) {
 WaveformInit.prototype = Object.create(Parent.prototype);
 WaveformInit.prototype.constructor = WaveformInit;
 
+WaveformInit.wordIndicesUsedInSentence = [];
+
 /**
  * Initialize the waveform editor.
  * @param {*} $wrapper 
@@ -263,6 +265,7 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
   // $wrapper.append('<label class="h5peditor-label"><input id="field-words-125" type="checkbox">Will Do Animation</label>')
   //let checkBoxElementForWord=$wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides,self.parent.parent.parent.parent.cp.currentSlideIndex))
   let checkBoxElementForWord = $wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides, this.parent.parent.parent.params.params.currIndex, this.parent.params.text))
+  // console.log(checkBoxElementForWord);
   self.$item.appendTo($wrapper);
   self.container = self.$item.find('#' + this.id);
   $(checkBoxElementForWord).on('change', function (event) {
@@ -314,18 +317,23 @@ WaveformInit.prototype.validate = function () {
 };
 
 WaveformInit.prototype.getSentence = function (slides, slideIndex, prevData) {
+  // console.log("Get sentence called!");
   var sentenceWords = [];
-  var splittedPrevData = (prevData != undefined) ? prevData.split(' ') : []
-  for (let i = 0; i < slides[slideIndex].elements.length; i++) {
+  var splittedPrevData = (prevData != undefined) ? prevData.split(' ') : [];
+  // let alreadyFoundSplittedPrevDataWord = false;
 
+  for (let i = 0; i < slides[slideIndex].elements.length; i++) {
     if (slides[slideIndex].elements[i].action.library.split(' ')[0] == "H5P.CRAdvancedText") {
       var checkBoxWord = ''
       sentenceWords = $(slides[slideIndex].elements[i].action.params.text)[0].innerText.split(' ')
       for (let j = 0; j < sentenceWords.length; j++) {
         var def = (splittedPrevData.indexOf(sentenceWords[j]) !== -1) ? true : false
         if (sentenceWords[j].replace(/  +/g, ' ') != '') {
+          // if (def && !alreadyFoundSplittedPrevDataWord && WaveformInit.wordIndicesUsedInSentence.indexOf(j) == -1) {
           if (def) {
             checkBoxWord = checkBoxWord + '<label class="h5peditor-label id =' + this.id + j + '"><input id=' + this.id + j + ' type="checkbox" value="' + sentenceWords[j] + '"checked>' + sentenceWords[j] + '</label>'
+            // alreadyFoundSplittedPrevDataWord = true;
+            // WaveformInit.wordIndicesUsedInSentence.push(j);
           } else {
             checkBoxWord = checkBoxWord + '<label class="h5peditor-label id =' + this.id + j + '"><input id=' + this.id + j + ' type="checkbox" value="' + sentenceWords[j] + '">' + sentenceWords[j] + '</label>'
           }
@@ -333,6 +341,7 @@ WaveformInit.prototype.getSentence = function (slides, slideIndex, prevData) {
       }
     }
   }
+  // console.log(WaveformInit.wordIndicesUsedInSentence);
   return checkBoxWord;
 }
 
