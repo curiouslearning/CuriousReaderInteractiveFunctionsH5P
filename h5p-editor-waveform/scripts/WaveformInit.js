@@ -311,7 +311,7 @@ WaveformInit.prototype.checkIfWordIsUsedInOtherWaveform = function (slideIndex, 
   let wordIndex = parseInt(inputId.split('_')[1]);
   if (slideCheckboxInfo !== null && slideCheckboxInfo !== undefined) {
     for (let i = 0; i < slideCheckboxInfo.length; i++) {
-      if (slideCheckboxInfo[i].index === wordIndex) {
+      if (parseInt(slideCheckboxInfo[i].index) === wordIndex) {
         return true;
       }
     }
