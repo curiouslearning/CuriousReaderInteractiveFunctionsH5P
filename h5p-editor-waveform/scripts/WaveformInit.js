@@ -275,16 +275,19 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
     console.log(event.target);
     console.log(event.target.id);
     console.log(event.target.value);
-    console.log(WaveformInit.pageBasedWordIndicesUsedInSentence);
-    console.log(self.checkIfWordIsUsedInOtherWaveform(slideIndex, event.target.id));
+    let isAlreadyUsed = self.checkIfWordIsUsedInOtherWaveform(slideIndex, event.target.id);
     if ($('#' + event.target.id).is(':checked')) {
-      wordText = wordText + ' ' + event.target.value + ' ';
-      $('#' + event.target.id).attr('checked', true);
-      this.$word = $('#' + id).parent().parent().find('.field-name-text').find('input');
-      this.$word.val((wordText.trim()).replace(/  +/g, ' '));
-      $(this.$word).attr('checked', true);
-      self.setValue(self.findField("text", self.parent.field.fields), "" + wordText.replace(/  +/g, ' '));
-      //WaveformInit.self2.setValue(H5PEditor.CuriousReader.findField("text",self2.parent.field.fields),"Sam-ple data")
+      if (isAlreadyUsed) {
+        $('#' + event.target.id).attr('checked', false);
+      } else {
+        wordText = wordText + ' ' + event.target.value + ' ';
+        $('#' + event.target.id).attr('checked', true);
+        this.$word = $('#' + id).parent().parent().find('.field-name-text').find('input');
+        this.$word.val((wordText.trim()).replace(/  +/g, ' '));
+        $(this.$word).attr('checked', true);
+        self.setValue(self.findField("text", self.parent.field.fields), "" + wordText.replace(/  +/g, ' '));
+        WaveformInit.pageBasedWordIndicesUsedInSentence[slideIndex.toString()].push({'id': event.target.id});
+      }
     } else {
       $('#' + event.target.id).attr('checked', false);
       let tempWordText = wordText.replace(event.target.value, '');
@@ -293,7 +296,11 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
       self.setValue(self.findField("text", self.parent.field.fields), "" + wordText.replace(/  +/g, ' '));
       $(this.$word).attr('checked', false);
       this.$word.val((wordText.trim()).replace(/  +/g, ' '));
+      WaveformInit.pageBasedWordIndicesUsedInSentence[slideIndex.toString()].filter(function(obj) {
+          return obj.id === event.target.id;
+      });
     }
+    console.log(WaveformInit.pageBasedWordIndicesUsedInSentence);
   })
   self.setValue(self.findField("text", self.parent.field.fields), "" + this.parent.params.text);
   self.init();
@@ -350,7 +357,7 @@ WaveformInit.prototype.getSentence = function (slides, slideIndex, prevData) {
       for (let j = 0; j < sentenceWords.length; j++) {
         var def = (splittedPrevData.indexOf(sentenceWords[j]) !== -1) ? true : false;
         if (sentenceWords[j].replace(/  +/g, ' ') != '') {
-          if (def && !alreadyFoundSplittedPrevDataWord && WaveformInit.pageBasedWordIndicesUsedInSentence[slideIndex.toString()].indexOf(j) == -1) {
+          if (def && !alreadyFoundSplittedPrevDataWord && !this.checkIfWordIsUsedInOtherWaveform(slideIndex, this.id + j)) {
             checkBoxWord = checkBoxWord + '<label class="h5peditor-label id =' + this.id + j + '"><input id=' + this.id + j + ' type="checkbox" value="' + sentenceWords[j] + '"checked>' + sentenceWords[j] + '</label>';
             alreadyFoundSplittedPrevDataWord = true;
             WaveformInit.pageBasedWordIndicesUsedInSentence[slideIndex.toString()].push({"index": j, "id": this.id + j});
