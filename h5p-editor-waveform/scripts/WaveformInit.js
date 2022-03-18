@@ -278,7 +278,8 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
     let isAlreadyUsed = self.checkIfWordIsUsedInOtherWaveform(slideIndex, event.target.id);
     if ($('#' + event.target.id).is(':checked')) {
       if (isAlreadyUsed) {
-        $('#' + event.target.id).attr('checked', false);
+        let input = document.getElementById(event.target.id).find('input');
+        input.checked = false;
       } else {
         wordText = wordText + ' ' + event.target.value + ' ';
         $('#' + event.target.id).attr('checked', true);
