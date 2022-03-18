@@ -264,8 +264,10 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
   $wrapper.append('<h1 class="test">Select word(s)</h1>')
   // $wrapper.append('<label class="h5peditor-label"><input id="field-words-125" type="checkbox">Will Do Animation</label>')
   //let checkBoxElementForWord=$wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides,self.parent.parent.parent.parent.cp.currentSlideIndex))
-  let checkBoxElementForWord = $wrapper.append(this.getSentence(self.parent.parent.parent.parent.cp.slides, this.parent.parent.parent.params.params.currIndex, this.parent.params.text))
-  // console.log(checkBoxElementForWord);
+  let slides = self.parent.parent.parent.parent.cp.slides;
+  let slideIndex = this.parent.parent.parent.params.params.currIndex;
+  let paramText = this.parent.params.text;
+  let checkBoxElementForWord = $wrapper.append(this.getSentence(slides, slideIndex, paramText));
   self.$item.appendTo($wrapper);
   self.container = self.$item.find('#' + this.id);
   console.log(checkBoxElementForWord);
@@ -274,6 +276,7 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
     console.log(event.target.id);
     console.log(event.target.value);
     console.log(WaveformInit.pageBasedWordIndicesUsedInSentence);
+    console.log(self.checkIfWordIsUsedInOtherWaveform(slideIndex, event.target.id));
     if ($('#' + event.target.id).is(':checked')) {
       wordText = wordText + ' ' + event.target.value + ' ';
       $('#' + event.target.id).attr('checked', true);
@@ -295,6 +298,21 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
   self.setValue(self.findField("text", self.parent.field.fields), "" + this.parent.params.text);
   self.init();
 };
+
+WaveformInit.prototype.checkIfWordIsUsedInOtherWaveform = function (slideIndex, inputId) {
+  WaveformInit.pageBasedWordIndicesUsedInSentence[slideIndex.toString()].push({"index": j, "id": this.id + j});
+  let slideCheckboxInfo = WaveformInit.pageBasedWordIndicesUsedInSentence[slideIndex.toString()];
+  if (slideCheckboxInfo !== null || slideCheckboxInfo !== undefined) {
+    for (let i = 0; i < slideCheckboxInfo.length; i++) {
+      if (slideCheckboxInfo[i].id === inputId) {
+        return true;
+      }
+    }
+  } else {
+    WaveformInit.pageBasedWordIndicesUsedInSentence[slideIndex.toString()] = [];
+  }
+  return false;
+}
 
 WaveformInit.prototype.findField = function (name, fields) {
   for (var i = 0; i < fields.length; i++) {
@@ -336,7 +354,7 @@ WaveformInit.prototype.getSentence = function (slides, slideIndex, prevData) {
           if (def && !alreadyFoundSplittedPrevDataWord && WaveformInit.pageBasedWordIndicesUsedInSentence[slideIndex.toString()].indexOf(j) == -1) {
             checkBoxWord = checkBoxWord + '<label class="h5peditor-label id =' + this.id + j + '"><input id=' + this.id + j + ' type="checkbox" value="' + sentenceWords[j] + '"checked>' + sentenceWords[j] + '</label>';
             alreadyFoundSplittedPrevDataWord = true;
-            WaveformInit.pageBasedWordIndicesUsedInSentence[slideIndex.toString()].push(j);
+            WaveformInit.pageBasedWordIndicesUsedInSentence[slideIndex.toString()].push({"index": j, "id": this.id + j});
           } else {
             checkBoxWord = checkBoxWord + '<label class="h5peditor-label id =' + this.id + j + '"><input id=' + this.id + j + ' type="checkbox" value="' + sentenceWords[j] + '">' + sentenceWords[j] + '</label>';
           }
