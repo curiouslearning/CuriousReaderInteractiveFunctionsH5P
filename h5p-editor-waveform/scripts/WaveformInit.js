@@ -301,7 +301,7 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
 
 WaveformInit.prototype.checkIfWordIsUsedInOtherWaveform = function (slideIndex, inputId) {
   let slideCheckboxInfo = WaveformInit.pageBasedWordIndicesUsedInSentence[slideIndex.toString()];
-  if (slideCheckboxInfo !== null || slideCheckboxInfo !== undefined) {
+  if (slideCheckboxInfo !== null && slideCheckboxInfo !== undefined) {
     for (let i = 0; i < slideCheckboxInfo.length; i++) {
       if (slideCheckboxInfo[i].id === inputId) {
         return true;
