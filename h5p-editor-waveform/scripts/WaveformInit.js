@@ -270,11 +270,7 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
   let checkBoxElementForWord = $wrapper.append(this.getSentence(slides, slideIndex, paramText));
   self.$item.appendTo($wrapper);
   self.container = self.$item.find('#' + this.id);
-  console.log(checkBoxElementForWord);
   $(checkBoxElementForWord).on('change', function (event) {
-    console.log(event.target);
-    console.log(event.target.id);
-    console.log(event.target.value);
     let isAlreadyUsed = self.checkIfWordIsUsedInOtherWaveform(slideIndex, event.target.id);
     if ($('#' + event.target.id).is(':checked')) {
       if (isAlreadyUsed) {
@@ -300,7 +296,6 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
           return obj.id !== event.target.id;
       });
     }
-    console.log(WaveformInit.pageBasedWordIndicesUsedInSentence);
   })
   self.setValue(self.findField("text", self.parent.field.fields), "" + this.parent.params.text);
   self.init();
@@ -358,7 +353,7 @@ WaveformInit.prototype.getSentence = function (slides, slideIndex, prevData) {
       for (let j = 0; j < sentenceWords.length; j++) {
         var def = (splittedPrevData.indexOf(sentenceWords[j]) !== -1) ? true : false;
         if (sentenceWords[j].replace(/  +/g, ' ') != '') {
-          if (def && !alreadyFoundSplittedPrevDataWord && !this.checkIfWordIsUsedInOtherWaveform(slideIndex, this.id + j)) {
+          if (def && !alreadyFoundSplittedPrevDataWord && !this.checkIfWordIsUsedInOtherWaveform(slideIndex, this.id + '_' + j)) {
             checkBoxWord = checkBoxWord + '<label class="h5peditor-label"><input id=' + this.id + '_' + j + ' type="checkbox" value="' + sentenceWords[j] + '"checked>' + sentenceWords[j] + '</label>';
             alreadyFoundSplittedPrevDataWord = true;
             WaveformInit.pageBasedWordIndicesUsedInSentence[slideIndex.toString()].push({"index": j, "id": this.id + j});
@@ -369,7 +364,6 @@ WaveformInit.prototype.getSentence = function (slides, slideIndex, prevData) {
       }
     }
   }
-  console.log(WaveformInit.pageBasedWordIndicesUsedInSentence);
   return checkBoxWord;
 }
 
