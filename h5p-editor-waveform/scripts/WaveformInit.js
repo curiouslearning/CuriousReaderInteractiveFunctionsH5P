@@ -297,7 +297,7 @@ WaveformInit.prototype.appendTo = function ($wrapper) {
       $(this.$word).attr('checked', false);
       this.$word.val((wordText.trim()).replace(/  +/g, ' '));
       WaveformInit.pageBasedWordIndicesUsedInSentence[slideIndex.toString()] = WaveformInit.pageBasedWordIndicesUsedInSentence[slideIndex.toString()].filter(function(obj) {
-          return obj.id === event.target.id;
+          return obj.id !== event.target.id;
       });
     }
     console.log(WaveformInit.pageBasedWordIndicesUsedInSentence);
