@@ -1908,6 +1908,8 @@ CuriousReader.prototype.jumpToSlide = function (slideNumber, noScroll = false, h
     that.trigger('changedSlide', that.$current.index());
   }, 1);
 
+  console.log('Current Slide index: ' + that.currentSlideIndex + ' Length: ' + that.slides.length);
+
   setTimeout(function () {
     // Done animating
     that.$slidesWrapper.children().removeClass('h5p-animate');
