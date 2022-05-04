@@ -4,7 +4,7 @@
     "type": "group",
     "importance": "high",
     "widget": "curiousreader",
-    "label": "Curious Reader v1.22.37-alpha",
+    "label": "Curious Reader v1.22.38-alpha",
     "fields": [
       {
         "name": "slides",

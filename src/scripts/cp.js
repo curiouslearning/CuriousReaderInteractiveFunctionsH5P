@@ -1908,7 +1908,14 @@ CuriousReader.prototype.jumpToSlide = function (slideNumber, noScroll = false, h
     that.trigger('changedSlide', that.$current.index());
   }, 1);
 
-  console.log('Current Slide index: ' + that.currentSlideIndex + ' Length: ' + that.slides.length);
+  // console.log('Current Slide index: ' + that.currentSlideIndex + ' Length: ' + that.slides.length);
+
+  if (that.currentSlideIndex === that.slides.length - 1) {
+    window.parent.postMessage({
+      'func': 'lastSlideReached',
+      'message': 'Last slide reached!'
+    }, 'https://curiousreader.org/');
+  }
 
   setTimeout(function () {
     // Done animating
