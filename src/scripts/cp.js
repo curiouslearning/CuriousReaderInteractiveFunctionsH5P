@@ -1911,7 +1911,7 @@ CuriousReader.prototype.jumpToSlide = function (slideNumber, noScroll = false, h
   // console.log('Current Slide index: ' + that.currentSlideIndex + ' Length: ' + that.slides.length);
 
   if (that.currentSlideIndex === that.slides.length - 1) {
-    window.parent.postMessage({
+    window.top.postMessage({
       'func': 'lastSlideReached',
       'message': 'Last slide reached!'
     }, 'https://curiousreader.org/');
